@@ -20,7 +20,7 @@
           <div class="row">
             <div class="col">
               <label>Username</label>
-              <input type="text" required v-model="email" />
+              <input type="text" required v-model="username" />
             </div>
           </div>
           <div class="row">
@@ -76,6 +76,7 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
+      username: "",
       password: "",
       confirmPassword: "",
       year: "",
@@ -101,7 +102,6 @@ export default {
   background-color: #d9d9d9;
   text-align: start;
   right: 5%;
-  margin-top: 50px;
   border-bottom: 5px solid #9c9c9c;
 }
 .butn {
@@ -119,7 +119,7 @@ input,
 select {
   margin-right: 5px;
   display: block;
-  padding: 10px 6px;
+  padding: 5px 3px;
   width: 100%;
   border: none;
   border-bottom: 2px solid #ddd;
