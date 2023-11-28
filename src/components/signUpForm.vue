@@ -85,6 +85,26 @@ export default {
       gender: "",
     };
   },
+  methods:{
+    signUp() {
+      let userObj = {
+        email: this.email,
+        password: this.password,
+        favourites:[],
+        watchlist:[],
+        userName:this.usersignUp,
+        gender:this.gender
+      };
+      console.log(userObj);
+      fetch('http://localhost:8000/usersData',{
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(userObj)
+        }).then(()=>{
+            console.log("done");
+        })
+    }
+  }
 };
 </script>
 
