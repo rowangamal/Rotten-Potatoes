@@ -83,7 +83,7 @@ export default {
       month: "",
       day: "",
       gender: "",
-      passwordLength: flase,
+      passwordLength: false,
       passwordCapital: false,
       passwordNumber: false,
       passwordsmall: false,
