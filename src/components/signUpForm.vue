@@ -83,28 +83,64 @@ export default {
       month: "",
       day: "",
       gender: "",
+      passwordLength: flase,
+      passwordCapital: false,
+      passwordNumber: false,
+      passwordsmall: false,
     };
   },
-  methods:{
+  methods: {
+    matchPassword(password, confirmPassword) {
+      if (this.password !== this.confirmPassword) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    checkPassword(password){
+      if(this.password.length>=8){
+        this.passwordLength = true;
+      }
+      if(this.password.match(/[A-Z]/)){
+        this.passwordCapital = true;
+      }
+      if(this.password.match(/[0-9]/)){
+        this.passwordNumber = true;
+      }
+      if(this.password.match(/[a-z]/)){
+        this.passwordsmall = true;
+      }
+      if(this.passwordLength && this.passwordCapital && this.passwordNumber && this.passwordsmall){
+        return true;
+      }
+      else{
+        return false;
+      }
+    },
     signUp() {
+      if(!this.checkPassword(this.password)&&!this.matchPassword(this.password,this.confirmPassword)){
+        return;
+      }
+      else{
       let userObj = {
         email: this.email,
         password: this.password,
-        favourites:[],
-        watchlist:[],
-        userName:this.usersignUp,
-        gender:this.gender
+        favourites: [],
+        watchlist: [],
+        userName: this.usersignUp,
+        gender: this.gender,
       };
       console.log(userObj);
-      fetch('http://localhost:8000/usersData',{
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(userObj)
-        }).then(()=>{
-            console.log("done");
-        })
-    }
-  }
+      fetch("http://localhost:8000/usersData", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userObj),
+      }).then(() => {
+        console.log("done");
+      });
+      }
+    },
+  },
 };
 </script>
 
@@ -155,11 +191,11 @@ select {
 h3 {
   text-align: center;
 }
- section {
+section {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 60px;
   height: 1000px;
-} 
+}
 </style>
