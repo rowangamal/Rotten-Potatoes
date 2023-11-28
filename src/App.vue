@@ -15,6 +15,11 @@ export default {
     signUpForm,
     loginForm,
   },
+  data() {
+    return {
+      login: false,
+    };
+  },
 };
 </script>
 
