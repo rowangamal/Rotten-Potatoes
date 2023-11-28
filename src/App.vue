@@ -1,7 +1,7 @@
 <template>
   <!-- <navBar/> -->
-  <signUpForm />
-  <!-- <loginForm /> -->
+  <!-- <signUpForm /> -->
+  <loginForm />
 </template>
 
 <script>

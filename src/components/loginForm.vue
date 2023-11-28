@@ -21,7 +21,7 @@
             <h6>Forget Your Password</h6>
           </div>
           <div class="row">
-            <button class="butn">Login</button>
+            <button @click="logIn" class="butn">Login</button>
           </div>
         </form>
       </div>
