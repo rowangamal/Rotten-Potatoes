@@ -18,10 +18,10 @@
               <label>Password</label>
               <input type="password" required v-model="password" />
             </div>
-            <a href=""></a>
+            <h6>Forget Your Password</h6>
           </div>
           <div class="row">
-            <button class="btn butn">Login</button>
+            <button class="butn">Login</button>
           </div>
         </form>
       </div>
@@ -77,6 +77,8 @@ select {
   background-color: #ee9e3f;
   border-radius: 50px;
   margin-top: 30px;
+  padding: 10px;
+  border: 0px solid transparent;
 }
 label {
   margin: 25px 0px 15px;
@@ -90,4 +92,11 @@ label {
   align-items: center;
   height: 600px;
 } 
+
+h6{
+    direction: rtl;
+    cursor: pointer;
+    padding: 20px;
+    text-decoration: underline;
+}
 </style>
