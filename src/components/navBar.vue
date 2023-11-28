@@ -3,7 +3,7 @@
     <ul class="nav nav-pills">
       <li class="nav-item">
         <a class="nav-link" href="index.html"
-          ><img src="..\assets\logo.jpg" alt=""
+          ><img src="..\assets\Group 5.png" alt=""
         /></a>
       </li>
 

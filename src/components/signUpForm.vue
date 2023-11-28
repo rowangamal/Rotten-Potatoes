@@ -1,6 +1,9 @@
 <template>
-  <section>
-    <div class="container">
+  <div class="container">
+    <section>
+      <div class="img">
+        <img src="..\assets\image 3.png" alt="" />
+      </div>
       <div class="form">
         <h3>New member? Welcome!</h3>
         <form>
@@ -12,6 +15,12 @@
             <div class="col-6">
               <label>Last name</label>
               <input type="text" required v-model="lastName" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Username</label>
+              <input type="text" required v-model="email" />
             </div>
           </div>
           <div class="row">
@@ -56,8 +65,8 @@
           </div>
         </form>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -119,12 +128,18 @@ select {
   margin-bottom: 20px;
 }
 
+.img {
+  width: 65%;
+}
+
 h3 {
   text-align: center;
 }
-section{
-  background-color: #ee9e3f;
-  margin-top: -60px;
+ section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 60px;
   height: 1000px;
-}
+} 
 </style>

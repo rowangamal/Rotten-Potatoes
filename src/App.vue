@@ -1,38 +1,39 @@
 <template>
   <!-- <navBar/> -->
   <signUpForm />
+  <!-- <loginForm /> -->
 </template>
 
 <script>
-import navBar from './components/navBar.vue'
-import signUpForm from './components/signUpForm.vue'
+import navBar from "./components/navBar.vue";
+import signUpForm from "./components/signUpForm.vue";
+import loginForm from "./components/loginForm.vue";
 export default {
-  
-  name: 'App',
+  name: "App",
   components: {
     navBar,
-    signUpForm
-  }
-}
+    signUpForm,
+    loginForm,
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Monomaniac One", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-img{
+img {
   width: 100%;
   height: 100%;
 }
-
 </style>
