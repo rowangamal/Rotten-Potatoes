@@ -30,7 +30,31 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    logIn(){
+      let found=false;
+      fetch('http://localhost:8000/usersData')
+      .then(res=>{
+        return res.json();
+      }).then(data=>{
+        for(let i=0;i<data.length;i++){
+          if(data[i].email===this.email && data[i].password===this.password){
+            found=true;
+          }
+        }
+
+      if(found){
+        alert('user found');
+      }
+      else{
+        alert('user is not found');
+      }
+      });
+      
+    }
+  }
+};
 </script>
 
 <style>
