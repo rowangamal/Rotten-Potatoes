@@ -1,0 +1,19 @@
+{
+  "usersData": [
+    {
+      "email": "ahmed ",
+      "password": "ali",
+      "favourites": [],
+      "id": 1
+    },
+    {
+      "email": "xddgfsfxg",
+      "password": "hfghrfthrfr",
+      "favourites": [],
+      "watchlist": [],
+      "userName": "fgdfgdgdf",
+      "gender": "random",
+      "id": 2
+    }
+  ]
+}
