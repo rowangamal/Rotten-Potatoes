@@ -1,19 +1,12 @@
 {
   "usersData": [
     {
-      "email": "ahmed ",
-      "password": "ali",
-      "favourites": [],
-      "id": 1
-    },
-    {
-      "email": "xddgfsfxg",
-      "password": "hfghrfthrfr",
+      "email": "abdullhabdelftah@gmail.com",
+      "password": "7nky",
       "favourites": [],
       "watchlist": [],
-      "userName": "fgdfgdgdf",
-      "gender": "random",
-      "id": 2
+      "gender": "male",
+      "id": 1
     }
   ]
 }

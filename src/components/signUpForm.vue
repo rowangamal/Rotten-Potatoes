@@ -61,7 +61,7 @@
             </select>
           </div>
           <div class="row">
-            <button class="btn butn">Submit</button>
+            <button @click="signUp" class="btn butn">Submit</button>
           </div>
         </form>
       </div>
