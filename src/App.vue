@@ -1,5 +1,5 @@
 <template>
-  <navBar :loginState="this.loginState" v-show="state===''" @changeState="changeState"/>
+  <navBar :loginState="this.loginState" @login="login" v-show="state===''" @changeState="changeState"/>
   <signUpForm  v-show="state =='signUpForm'" @changeState="changeState"/>
   <loginForm v-show="state=='loginForm'" @changeState="changeState" @login="login"/>
 </template>
@@ -27,7 +27,7 @@ export default {
     },
     login(newLogin) {
       this.loginState = newLogin;
-    },
+    }
   },
 
 };

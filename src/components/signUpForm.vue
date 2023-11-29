@@ -224,7 +224,6 @@ export default {
       ) {
         event.preventDefault();
       } else {
-        this.$emit("changeState", "loginForm");
         let userObj = {
           email: this.email,
           password: this.password,
@@ -240,6 +239,7 @@ export default {
           body: JSON.stringify(userObj),
         }).then(() => {
           console.log("done");
+          this.$emit("changeState", "loginForm");
         });
       }
     },

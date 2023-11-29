@@ -50,6 +50,7 @@
         ></a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="#">msh 3arf lesa</a></li>
+          <li><button v-if="loginState" class="dropdown-item" @click="login">Sign Out</button></li>
         </ul>
       </li>
     </ul>
@@ -69,6 +70,10 @@ export default {
     changeStateSignup() {
       this.$emit("changeState", "signUpForm");
     },
+    login() {
+      this.$emit("login", false);
+      localStorage.removeItem("token");
+    }
   },
 };
 </script>

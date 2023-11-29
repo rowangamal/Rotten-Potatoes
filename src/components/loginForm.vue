@@ -51,16 +51,18 @@
 
 <script>
 export default {
+  created() {
+    this.checkLoggedIn();
+  },
   methods: {
     changeStateSignup() {
       this.$emit("changeState", "signUpForm");
     },
     logIn() {
       let found = false;
+      const fakeToken = 'your-fake-token';
       fetch("http://localhost:8000/usersData")
-        .then((res) => {
-          return res.json();
-        })
+        .then((res) => res.json())
         .then((data) => {
           for (let i = 0; i < data.length; i++) {
             if (
@@ -70,15 +72,26 @@ export default {
               found = true;
             }
           }
-
           if (found) {
-            alert("user found");
+            localStorage.setItem("token", fakeToken);
+            alert("User found");
             this.$emit("changeState", "");
             this.$emit("login", true);
           } else {
-            alert("user is not found");
+            alert("User not found");
           }
+        })
+        .catch((error) => {
+          console.error("Error during login:", error);
+          alert("An error occurred during login");
         });
+    },
+    checkLoggedIn() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        this.$emit("changeState", "");
+        this.$emit("login", true);
+      }
     },
   },
 };
