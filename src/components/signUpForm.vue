@@ -5,6 +5,9 @@
         <img src="..\assets\image 3.png" alt="" />
       </div>
       <div class="form">
+        <h2 @click="changeStateBack">
+          <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
+        </h2>
         <h3>New member? Welcome!</h3>
         <form>
           <div class="row justify-content-between">
@@ -32,25 +35,70 @@
           <div class="row">
             <div class="col">
               <label>Create password</label>
-              <input type="password" required v-model="password" />
+              <input
+                type="password"
+                required
+                v-model="password"
+                @input="checkPassword(this.password)"
+              />
+              <div
+                v-show="!passwordValid && password.length > 0"
+                class="alert alert-danger"
+                role="alert"
+              >
+                <h5>
+                  Password Should Contain Capital Letter,Small Letter and Number
+                  and over 8 lentgh
+                </h5>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="col">
               <label>Confirm password</label>
-              <input type="password" required v-model="confirmPassword" />
+              <input
+                type="password"
+                required
+                v-model="confirmPassword"
+                @blur="matchPassword(this.password, this.confirmPassword)"
+              />
+              <div
+                v-show="
+                  !matchPassword(this.password, this.confirmPassword) &&
+                  confirmPassword.length > 0
+                "
+                class="alert alert-danger"
+                role="alert"
+              >
+                <h5>Password Doesn't Match</h5>
+              </div>
             </div>
           </div>
           <div class="row justify-content-between">
             <label>Birthday date</label>
             <div class="col-4">
-              <input type="text" placeholder="DD" v-model="day" />
+              <input
+                type="text"
+                placeholder="DD"
+                v-model="day"
+                @input="formatDatePart('day')"
+              />
             </div>
             <div class="col-4">
-              <input type="text" placeholder="MM" v-model="month" />
+              <input
+                type="text"
+                placeholder="MM"
+                v-model="month"
+                @input="formatDatePart('month')"
+              />
             </div>
             <div class="col-4">
-              <input type="text" placeholder="YYYY" v-model="year" />
+              <input
+                type="text"
+                placeholder="YYYY"
+                v-model="year"
+                @input="formatDatePart('year')"
+              />
             </div>
           </div>
           <div class="row">
@@ -71,6 +119,7 @@
 
 <script>
 export default {
+  props: ["changeState"],
   data() {
     return {
       firstName: "",
@@ -87,9 +136,35 @@ export default {
       passwordCapital: false,
       passwordNumber: false,
       passwordsmall: false,
+      passwordValid: false,
     };
   },
   methods: {
+    formatDatePart(part) {
+      let formattedValue = "";
+
+      switch (part) {
+        case "day":
+          formattedValue = this.day.replace(/\D/g, "").slice(0, 2);
+          this.day =
+            formattedValue && formattedValue <= 31 ? formattedValue : "";
+          break;
+
+        case "month":
+          formattedValue = this.month.replace(/\D/g, "").slice(0, 2);
+          this.month =
+            formattedValue && formattedValue <= 12 ? formattedValue : "";
+          break;
+
+        case "year":
+          formattedValue = this.year.replace(/\D/g, "").slice(0, 4);
+          this.year = formattedValue;
+          break;
+
+        default:
+          break;
+      }
+    },
     matchPassword(password, confirmPassword) {
       if (this.password !== this.confirmPassword) {
         return false;
@@ -97,47 +172,67 @@ export default {
         return true;
       }
     },
-    checkPassword(password){
-      if(this.password.length>=8){
+    checkPassword(password) {
+      if (this.password.length >= 8) {
         this.passwordLength = true;
+      } else {
+        this.passwordLength = false;
       }
-      if(this.password.match(/[A-Z]/)){
+      if (this.password.match(/[A-Z]/)) {
         this.passwordCapital = true;
+      } else {
+        this.passwordCapital = false;
       }
-      if(this.password.match(/[0-9]/)){
+      if (this.password.match(/[0-9]/)) {
         this.passwordNumber = true;
+      } else {
+        this.passwordNumber = false;
       }
-      if(this.password.match(/[a-z]/)){
+      if (this.password.match(/[a-z]/)) {
         this.passwordsmall = true;
+      } else {
+        this.passwordsmall = false;
       }
-      if(this.passwordLength && this.passwordCapital && this.passwordNumber && this.passwordsmall){
+      if (
+        this.passwordLength &&
+        this.passwordCapital &&
+        this.passwordNumber &&
+        this.passwordsmall
+      ) {
+        this.passwordValid = true;
         return true;
-      }
-      else{
+      } else {
+        this.passwordValid = false;
         return false;
       }
     },
-    signUp() {
-      if(!this.checkPassword(this.password)&&!this.matchPassword(this.password,this.confirmPassword)){
-        return;
-      }
-      else{
-      let userObj = {
-        email: this.email,
-        password: this.password,
-        favourites: [],
-        watchlist: [],
-        userName: this.usersignUp,
-        gender: this.gender,
-      };
-      console.log(userObj);
-      fetch("http://localhost:8000/usersData", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userObj),
-      }).then(() => {
-        console.log("done");
-      });
+    changeStateBack() {
+      this.$emit("changeState", "");
+    },
+    signUp(event) {
+      if (
+        !this.checkPassword(this.password) ||
+        !this.matchPassword(this.password, this.confirmPassword)
+      ) {
+        event.preventDefault();
+      } else {
+        this.$emit("changeState", "login");
+        let userObj = {
+          email: this.email,
+          password: this.password,
+          favourites: [],
+          watchlist: [],
+          userName: this.userName,
+          gender: this.gender,
+        };
+        console.log(userObj);
+        fetch("http://localhost:8000/usersData", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userObj),
+        }).then(() => {
+          console.log("done");
+        });
       }
     },
   },
@@ -154,16 +249,26 @@ export default {
   position: absolute;
   border-radius: 40px;
   padding: 50px;
-  max-width: 400px;
-  background-color: #d9d9d9;
+  max-width: 380px;
+  background-color: #e0dbdb;
   text-align: start;
   right: 5%;
   border-bottom: 5px solid #9c9c9c;
+  top: -20px;
 }
 .butn {
-  background-color: #ee9e3f;
+  background-color: #BF7934;
   border-radius: 50px;
   margin-top: 30px;
+}
+.alert {
+  margin-top: 10px;
+  padding: 7px 10px;
+}
+h5 {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 }
 label {
   margin: 25px 0px 15px;
@@ -175,13 +280,10 @@ input,
 select {
   margin-right: 5px;
   display: block;
-  padding: 5px 3px;
+  padding: 2px 1px;
   width: 100%;
   border: none;
   border-bottom: 2px solid #ddd;
-}
-select {
-  margin-bottom: 20px;
 }
 
 .img {
@@ -190,6 +292,11 @@ select {
 
 h3 {
   text-align: center;
+}
+h2 {
+  text-align: start;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
 section {
   display: flex;

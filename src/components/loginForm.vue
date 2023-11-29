@@ -90,7 +90,7 @@ select {
   border-radius: 40px;
   padding: 80px;
   width: 400px;
-  background-color: #d9d9d9;
+  background-color: #e0dbdb;
   text-align: start;
   right: 5%;
   margin-top: 50px;
@@ -98,7 +98,7 @@ select {
   top: 30px;
 }
 .butn {
-  background-color: #ee9e3f;
+  background-color: #BF7934;
   border-radius: 50px;
   margin-top: 30px;
   padding: 10px;

@@ -30,7 +30,7 @@
         <a class="nav-link links" href="#"><p>Watch list</p></a>
       </li>
       <li class="nav-item">
-        <a v-if="!login" class="nav-link links" href="#"><p>Signup/Login</p></a>
+        <a @click="changeStateSignup" v-if="!login" class="nav-link links" ><p>Signup/Login</p></a>
         <a v-else class="nav-link links" href="#"
           ><i class="fa-solid fa-user"></i
         ></a>
@@ -57,13 +57,17 @@ export default {
       login: false,
     };
   },
-  methods: {},
+  methods: {
+        changeStateSignup() {
+      this.$emit('changeState', 'signUp');
+    },
+  },
 };
 </script>
 
 <style scoped>
 nav {
-  background-color: #ee9e3f;
+  background-color: #EF9E3F;
   position: fixed;
   top: 0;
   width: 100%;
@@ -77,10 +81,11 @@ a {
   text-decoration: none;
   color: #fff;
   font-size: 14px;
+  cursor: pointer;
 }
 img {
-  width: 140px;
-  height: 60px;
+  width: 100px;
+  height: 45px;
 }
 .dropdown-item {
   color: #000;

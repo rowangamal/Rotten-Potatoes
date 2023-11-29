@@ -1,7 +1,7 @@
 <template>
-  <!-- <navBar/> -->
-  <!-- <signUpForm /> -->
-  <loginForm />
+  <navBar v-show="state===''" @changeState="changeState"/>
+  <signUpForm  v-show="state =='signUp'" @changeState="changeState"/>
+  <loginForm v-show="state=='login'"/>
 </template>
 
 <script>
@@ -18,8 +18,15 @@ export default {
   data() {
     return {
       login: false,
+      state : "",
     };
   },
+    methods: {
+    changeState(newState) {
+      this.state = newState;
+    }
+  },
+
 };
 </script>
 
