@@ -9,7 +9,12 @@
 
       <li class="nav-item">
         <div class="input-group">
-          <input v-model="search" type="text" style="width: 500px" class="form-control" />
+          <input
+            v-model="search"
+            type="text"
+            style="width: 500px"
+            class="form-control"
+          />
           <div class="input-group-append searchbtn">
             <a
               class="nav-link dropdown-toggle"
@@ -30,7 +35,9 @@
         <a class="nav-link links" href="#"><p>Watch list</p></a>
       </li>
       <li class="nav-item">
-        <a @click="changeStateSignup" v-if="!login" class="nav-link links" ><p>Signup/Login</p></a>
+        <a @click="changeStateSignup" v-if="!loginState" class="nav-link links"
+          ><p>Signup/Login</p></a
+        >
         <a v-else class="nav-link links" href="#"
           ><i class="fa-solid fa-user"></i
         ></a>
@@ -54,12 +61,13 @@ export default {
   data() {
     return {
       search: "",
-      login: false,
+      loginState: this.loginState,
     };
   },
+  props: ["loginState"],
   methods: {
-        changeStateSignup() {
-      this.$emit('changeState', 'signUp');
+    changeStateSignup() {
+      this.$emit("changeState", "signUpForm");
     },
   },
 };
@@ -67,7 +75,7 @@ export default {
 
 <style scoped>
 nav {
-  background-color: #EF9E3F;
+  background-color: #ef9e3f;
   position: fixed;
   top: 0;
   width: 100%;

@@ -1,7 +1,7 @@
 <template>
-  <navBar v-show="state===''" @changeState="changeState"/>
-  <signUpForm  v-show="state =='signUp'" @changeState="changeState"/>
-  <loginForm v-show="state=='login'"/>
+  <navBar :loginState="this.loginState" v-show="state===''" @changeState="changeState"/>
+  <signUpForm  v-show="state =='signUpForm'" @changeState="changeState"/>
+  <loginForm v-show="state=='loginForm'" @changeState="changeState" @login="login"/>
 </template>
 
 <script>
@@ -17,14 +17,17 @@ export default {
   },
   data() {
     return {
-      login: false,
-      state : "",
+      loginState: false,// state that control showing and hiding things depends on login state
+      state : "", // state that control the components that will be shown
     };
   },
     methods: {
     changeState(newState) {
       this.state = newState;
-    }
+    },
+    login(newLogin) {
+      this.loginState = newLogin;
+    },
   },
 
 };

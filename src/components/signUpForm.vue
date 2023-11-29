@@ -111,6 +111,11 @@
           <div class="row">
             <button @click="signUp" class="btn butn">Submit</button>
           </div>
+          <div class="row">
+            <h6 class="center" @click="changeStateLogin">
+              Already have an account? Login
+            </h6>
+          </div>
         </form>
       </div>
     </section>
@@ -140,6 +145,9 @@ export default {
     };
   },
   methods: {
+    changeStateLogin() {
+      this.$emit("changeState", "loginForm");
+    },
     formatDatePart(part) {
       let formattedValue = "";
 
@@ -216,7 +224,7 @@ export default {
       ) {
         event.preventDefault();
       } else {
-        this.$emit("changeState", "login");
+        this.$emit("changeState", "loginForm");
         let userObj = {
           email: this.email,
           password: this.password,
@@ -254,10 +262,10 @@ export default {
   text-align: start;
   right: 5%;
   border-bottom: 5px solid #9c9c9c;
-  top: -20px;
+  top: 20px;
 }
 .butn {
-  background-color: #BF7934;
+  background-color: #bf7934;
   border-radius: 50px;
   margin-top: 30px;
 }
@@ -288,6 +296,8 @@ select {
 
 .img {
   width: 65%;
+  position: relative;
+  top: -130px;
 }
 
 h3 {
@@ -304,5 +314,16 @@ section {
   align-items: center;
   margin-top: 60px;
   height: 1000px;
+}
+h6 {
+  direction: rtl;
+  cursor: pointer;
+  padding: 20px;
+  text-decoration: underline;
+}
+.center {
+  margin: 0 auto;
+  cursor: pointer;
+  text-align: center;
 }
 </style>
