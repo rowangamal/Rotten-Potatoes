@@ -2,18 +2,21 @@
   <navBar :loginState="this.loginState" @login="login" v-show="state===''" @changeState="changeState"/>
   <signUpForm  v-show="state =='signUpForm'" @changeState="changeState"/>
   <loginForm v-show="state=='loginForm'" @changeState="changeState" @login="login"/>
+  <carousel v-show="state==''"/>
 </template>
 
 <script>
 import navBar from "./components/navBar.vue";
 import signUpForm from "./components/signUpForm.vue";
 import loginForm from "./components/loginForm.vue";
+import carousel from "./components/carousel.vue";
 export default {
   name: "App",
   components: {
     navBar,
     signUpForm,
     loginForm,
+    carousel,
   },
   data() {
     return {
