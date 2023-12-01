@@ -2,6 +2,8 @@
   <navBar :loginState="this.loginState" @login="login" v-show="state===''" @changeState="changeState"/>
   <signUpForm  v-show="state =='signUpForm'" @changeState="changeState"/>
   <loginForm v-show="state=='loginForm'" @changeState="changeState" @login="login"/>
+  <forgetPassword v-show="state=='forgetPassword'" @changeState="changeState"/>
+  <securityForm v-show="state=='securityForm'" @changeState="changeState"/>
   <carousel v-show="state==''"/>
 </template>
 
@@ -10,6 +12,8 @@ import navBar from "./components/navBar.vue";
 import signUpForm from "./components/signUpForm.vue";
 import loginForm from "./components/loginForm.vue";
 import carousel from "./components/carousel.vue";
+import forgetPassword from "./components/forgetPassword.vue";
+import securityForm from './components/securityForm.vue';
 export default {
   name: "App",
   components: {
@@ -17,6 +21,8 @@ export default {
     signUpForm,
     loginForm,
     carousel,
+    forgetPassword,
+    securityForm,
   },
   data() {
     return {

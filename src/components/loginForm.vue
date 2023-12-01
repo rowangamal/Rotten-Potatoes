@@ -5,6 +5,9 @@
         <img src="..\assets\image 2.png" alt="" />
       </div>
       <div class="form">
+        <h2 @click="changeStateBack">
+          <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
+        </h2>
         <h3>Hi Again!</h3>
         <form>
           <div class="row">
@@ -18,7 +21,7 @@
               <label>Password</label>
               <input type="password" required v-model="password" />
             </div>
-            <h6>Forget Your Password</h6>
+            <h6 @click="changeStateForget"> Forget Your Password</h6>
           </div>
           <div class="row">
             <button @click="logIn" class="butn">Login</button>
@@ -50,6 +53,7 @@
 </template>
 
 <script>
+
 export default {
   created() {
     this.checkLoggedIn();
@@ -58,9 +62,15 @@ export default {
     changeStateSignup() {
       this.$emit("changeState", "signUpForm");
     },
+      changeStateBack() {
+        this.$emit("changeState", "");
+      },
+      changeStateForget() {
+        this.$emit("changeState", "forgetPassword");
+      },
     logIn() {
       let found = false;
-      const fakeToken = 'your-fake-token';
+      const fakeToken = "your-fake-token";
       fetch("http://localhost:8000/usersData")
         .then((res) => res.json())
         .then((data) => {
@@ -120,6 +130,11 @@ input {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+h2 {
+  text-align: start;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
 .form {
   position: absolute;

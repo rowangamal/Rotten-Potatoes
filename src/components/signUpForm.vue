@@ -74,6 +74,32 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <label>Security Question</label>
+            <select v-model="securityQuestion" required>
+              <option class="selectOpt" value="pet">
+                What was the name of your first pet?
+              </option>
+              <option class="selectOpt" value="city">
+                In which city were you born?
+              </option>
+              <option class="selectOpt" value="favorite-book">
+                What is your favorite book or movie?
+              </option>
+              <option class="selectOpt" value="childhood">
+                What is the name of your favorite childhood friend?
+              </option>
+              <option class="selectOpt" value="graduate">
+                In which year did you graduate from high school or college?
+              </option>
+            </select>
+          </div>
+          <div v-show="securityQuestion" class="row">
+            <div class="col">
+              <label>Answer</label>
+              <input type="text" required v-model="securityAnswer" />
+            </div>
+          </div>
           <div class="row justify-content-between">
             <label>Birthday date</label>
             <div class="col-4">
@@ -133,6 +159,8 @@ export default {
       username: "",
       password: "",
       confirmPassword: "",
+      securityQuestion: "",
+      securityAnswer: "",
       year: "",
       month: "",
       day: "",
@@ -227,8 +255,12 @@ export default {
         let userObj = {
           email: this.email,
           password: this.password,
+          securityQuestion: this.securityQuestion,
+          securityAnswer: this.securityAnswer,
           favourites: [],
           watchlist: [],
+          firstName: this.firstName,
+          lastName: this.lastName,
           userName: this.userName,
           gender: this.gender,
         };
@@ -240,6 +272,8 @@ export default {
         }).then(() => {
           console.log("done");
           this.$emit("changeState", "loginForm");
+        }).catch((error) => {
+          console.error("Error during signup:", error);
         });
       }
     },
@@ -292,6 +326,11 @@ select {
   width: 100%;
   border: none;
   border-bottom: 2px solid #ddd;
+}
+
+select {
+  width: 92%;
+  margin-left: 12px;
 }
 
 .img {
