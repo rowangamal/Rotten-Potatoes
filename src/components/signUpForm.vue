@@ -77,19 +77,19 @@
           <div class="row">
             <label>Security Question</label>
             <select v-model="securityQuestion" required>
-              <option class="selectOpt" value="pet">
+              <option class="selectOpt" value="What was the name of your first pet?">
                 What was the name of your first pet?
               </option>
-              <option class="selectOpt" value="city">
+              <option class="selectOpt" value="In which city were you born?">
                 In which city were you born?
               </option>
-              <option class="selectOpt" value="favorite-book">
+              <option class="selectOpt" value="What is your favorite book or movie?">
                 What is your favorite book or movie?
               </option>
-              <option class="selectOpt" value="childhood">
+              <option class="selectOpt" value="What is the name of your favorite childhood friend?">
                 What is the name of your favorite childhood friend?
               </option>
-              <option class="selectOpt" value="graduate">
+              <option class="selectOpt" value="In which year did you graduate from high school or college?">
                 In which year did you graduate from high school or college?
               </option>
             </select>

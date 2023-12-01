@@ -79,6 +79,9 @@ export default {
 </script>
 
 <style scoped>
+*{
+  z-index: 2;
+}
 nav {
   background-color: #ef9e3f;
   position: fixed;

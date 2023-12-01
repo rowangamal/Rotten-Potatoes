@@ -4,7 +4,14 @@
   <loginForm v-show="state=='loginForm'" @changeState="changeState" @login="login"/>
   <forgetPassword v-show="state=='forgetPassword'" @changeState="changeState"/>
   <securityForm v-show="state=='securityForm'" @changeState="changeState"/>
-  <carousel v-show="state==''"/>
+  <h1 v-show="state==''">TRENDING</h1>
+  <carousel :category="cat" v-show="state==''"/>
+  <h1 v-show="state==''">NOW PLAYING</h1>
+  <carousel :category="cat2" v-show="state==''"/>
+  <h1 v-show="state==''">TOP RATED</h1>
+  <carousel :category="cat3" v-show="state==''"/>
+  <h1 v-show="state==''">UPCOMING</h1>
+  <carousel :category="cat4" v-show="state==''"/>
 </template>
 
 <script>
@@ -28,6 +35,10 @@ export default {
     return {
       loginState: false,// state that control showing and hiding things depends on login state
       state : "", // state that control the components that will be shown
+      cat:"popular",
+      cat2:"now_playing",
+      cat3:"top_rated",
+      cat4:"upcoming"
     };
   },
     methods: {

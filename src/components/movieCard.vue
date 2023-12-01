@@ -30,6 +30,9 @@ h2 {
   font-size: 16px;
   font-weight: bold;
   margin: 0;
+  word-wrap: break-word ;
+  word-break: break-all;
+  white-space: normal;
 }
 p {
   font-size: 10px;
@@ -43,9 +46,9 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  position: relative;
+  bottom: 260px;
+  left: -59px;
 }
 .img {
   margin-top: 5px;
@@ -71,6 +74,8 @@ p {
 .card .img img {
   overflow: hidden;
   transition: all 0.5s ease-in-out;
+  height: 259.3px;
+  width: 172.8px;
 }
 .layer{
     position: absolute;

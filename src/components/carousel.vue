@@ -17,11 +17,11 @@
 <script>
 import movieCard from "./movieCard.vue";
 export default {
+  props:["category"],
   components: {
     movieCard,
   },
     created() {
-        console.log(this.trending())  
         this.movies=this.trending() 
         console.log(this.movies)
     },
@@ -41,10 +41,10 @@ export default {
 };
       let m=[]
 
-    fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
+    fetch(`https://api.themoviedb.org/3/movie/${this.category}?language=en-US&page=1`, options)
       .then(response => response.json())
       .then(response => {
-        for(let i=0;i<response.results.length;i++){
+        for(let i=0;i<17;i++){
           let x={
             title:response.results[i].title,
             rate:response.results[i].vote_average,
@@ -55,7 +55,22 @@ export default {
         }
       })
       .catch(err => console.error(err));
-        return m;
+      
+      fetch(`https://api.themoviedb.org/3/movie/${this.category}?language=en-US&page=2`, options)
+      .then(response => response.json())
+      .then(response => {
+        for(let i=0;i<17;i++){
+          let x={
+            title:response.results[i].title,
+            rate:response.results[i].vote_average,
+            img:"https://image.tmdb.org/t/p/original"+response.results[i].poster_path,
+            date:response.results[i].release_date
+          }
+          this.movies.push(x)
+        }
+      })
+      .catch(err => console.error(err));
+      return m;
       }
   }
 };

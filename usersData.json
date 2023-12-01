@@ -15,6 +15,18 @@
       "watchlist": [],
       "gender": "male",
       "id": 2
+    },
+    {
+      "email": "bahaatayson@gmail.com",
+      "password": "Abdullah1234",
+      "securityQuestion": "In which city were you born?",
+      "securityAnswer": "roma",
+      "favourites": [],
+      "watchlist": [],
+      "firstName": "bahaa",
+      "lastName": "mohamed",
+      "gender": "male",
+      "id": 3
     }
   ]
 }
