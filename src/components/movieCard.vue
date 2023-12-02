@@ -10,13 +10,14 @@
       </div>
       <h2>{{ title }}</h2>
       <p>{{ date }}</p>
+
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["img", "title", "date", "rate"],
+  props: ["img", "title", "date", "rate" ],
 };
 </script>
 

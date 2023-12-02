@@ -27,6 +27,7 @@
 
 <script>
 export default {
+  props: ["email", "question", "answer"],
   data() {
     return {
       answer: "",

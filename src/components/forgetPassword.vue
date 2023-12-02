@@ -35,6 +35,8 @@ export default {
     data() {
         return {
         email: "",
+        question: "",
+        answer: "",
         };
     },
   methods: {
@@ -45,7 +47,8 @@ export default {
       this.$emit("changeState", "loginForm");
     },
     changeStateSecurity() {
-      this.$emit("changeState", "securityForm");
+      //e3ml el fetch hena w a3ml check 3la el email w a3ml check 3la el question w el answer
+      this.$emit("changeStateSecurity", "securityForm", this.email , this.question , this.answer);
     },
   },
 };

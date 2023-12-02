@@ -1,17 +1,37 @@
 <template>
-  <navBar :loginState="this.loginState" @login="login" v-show="state===''" @changeState="changeState"/>
-  <signUpForm  v-show="state =='signUpForm'" @changeState="changeState"/>
-  <loginForm v-show="state=='loginForm'" @changeState="changeState" @login="login"/>
-  <forgetPassword v-show="state=='forgetPassword'" @changeState="changeState"/>
-  <securityForm v-show="state=='securityForm'" @changeState="changeState"/>
-  <h1 v-show="state==''">TRENDING</h1>
-  <carousel :category="cat" v-show="state==''"/>
-  <h1 v-show="state==''">NOW PLAYING</h1>
-  <carousel :category="cat2" v-show="state==''"/>
-  <h1 v-show="state==''">TOP RATED</h1>
-  <carousel :category="cat3" v-show="state==''"/>
-  <h1 v-show="state==''">UPCOMING</h1>
-  <carousel :category="cat4" v-show="state==''"/>
+  <navBar
+    :loginState="this.loginState"
+    @login="login"
+    v-show="state === ''"
+    @changeState="changeState"
+  />
+  <signUpForm v-show="state == 'signUpForm'" @changeState="changeState" />
+  <loginForm
+    v-show="state == 'loginForm'"
+    @changeState="changeState"
+    @login="login"
+  />
+  <forgetPassword
+    v-show="state == 'forgetPassword'"
+    @changeStateSecurity="changeStateSecurity"
+  />
+  <securityForm
+    v-show="state == 'securityForm'"
+    @changeState="changeState"
+    :email="this.email"
+    :question="this.question"
+    :answer="this.answer"
+  />
+  <div class="carousel">
+    <h3 v-show="state == ''">Trending Now</h3>
+    <carousel :category="cat" v-show="state == ''" />
+    <h3 v-show="state == ''">Now Playing</h3>
+    <carousel :category="cat2" v-show="state == ''" />
+    <h3 v-show="state == ''">Top Rated</h3>
+    <carousel :category="cat3" v-show="state == ''" />
+    <h3 v-show="state == ''">Upcoming</h3>
+    <carousel :category="cat4" v-show="state == ''" />
+  </div>
 </template>
 
 <script>
@@ -20,7 +40,7 @@ import signUpForm from "./components/signUpForm.vue";
 import loginForm from "./components/loginForm.vue";
 import carousel from "./components/carousel.vue";
 import forgetPassword from "./components/forgetPassword.vue";
-import securityForm from './components/securityForm.vue';
+import securityForm from "./components/securityForm.vue";
 export default {
   name: "App",
   components: {
@@ -33,23 +53,31 @@ export default {
   },
   data() {
     return {
-      loginState: false,// state that control showing and hiding things depends on login state
-      state : "", // state that control the components that will be shown
-      cat:"popular",
-      cat2:"now_playing",
-      cat3:"top_rated",
-      cat4:"upcoming"
+      loginState: false, // state that control showing and hiding things depends on login state
+      state: "", // state that control the components that will be shown
+      cat: "popular",
+      cat2: "now_playing",
+      cat3: "top_rated",
+      cat4: "upcoming",
+      email: "",
+      question: "",
+      answer: "",
     };
   },
-    methods: {
+  methods: {
     changeState(newState) {
       this.state = newState;
     },
+    changeStateSecurity(newState, Email, Question, Answer) {
+      this.state = newState;
+      this.email = Email;
+      this.question = Question;
+      this.answer = Answer;
+    },
     login(newLogin) {
       this.loginState = newLogin;
-    }
+    },
   },
-
 };
 </script>
 
@@ -70,5 +98,14 @@ export default {
 img {
   width: 100%;
   height: 100%;
+}
+h3 {
+  text-align: left;
+  margin-left: 5%;
+  margin-bottom: 20px;
+  margin-top: 100px;
+}
+.carousel {
+  margin-top: 100px;
 }
 </style>
