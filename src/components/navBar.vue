@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       search: "",
-      loginState: this.loginState,
+      
     };
   },
   props: ["loginState"],

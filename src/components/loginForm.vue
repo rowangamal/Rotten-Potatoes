@@ -55,6 +55,12 @@
 <script>
 
 export default {
+  data(){
+    return{
+      email:"",
+      password:"",  
+    }
+  },
   created() {
     this.checkLoggedIn();
   },

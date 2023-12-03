@@ -12,7 +12,7 @@
               <p class="rate">
                 <i class="fa-solid fa-star imark"></i>{{ rate }}
               </p>
-              <p class="data">some data</p>
+              <p v-for="genre in genres" :key="genre.id" class="data">{{genre.name}}</p>
             </div>
             <p class="moviedescription">
               {{ description }}
@@ -20,7 +20,10 @@
             <button type="button" class="btn trailer">
               Play Now <i class="fa-solid fa-play"></i>
             </button>
-            <button type="button" class="btn trailer">Trailer</button>
+            <button @click="inVid" type="button" class="btn trailer">Trailer</button>
+            <div v-show="video" class="vid">
+              <iframe v :src="video" frameborder="0"></iframe>
+            </div>
           </div>
           <div class="artists flex-fill">
             <h1 class="actors">Actors</h1>
@@ -29,7 +32,7 @@
         </div>
       </div>
     </section>
-    <section class="cont">
+    <section v-bind:style="{ 'background-image': 'url(' + backDrop + ')' }" class="cont">
       <div class="overlay"></div>
       <div class="overlay1"></div>
 
@@ -97,11 +100,12 @@ export default {
   components: {
     carousel,
   },
-  created(){
-    
-  },
   data() {
     return {
+      actors:[],
+      video:"",
+      cat:"",
+      text:"",
       isloggedin: true,
       image: "",
       backDrop:"",
@@ -114,15 +118,61 @@ export default {
         { comment: "this movie is cool", user: "pola" },
         { comment: "what the hell have I just watched", user: "hany" },
       ],
-      text: "",
-      id:0,
-      cat:""
+      genres:[]
     };
   },
-  mounted(){
-    this.loadData();
+  updated(){ 
+      this.loadData();
+      this.actorFetch();
   },
   methods: {
+    inVid(){
+      const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNjQ3YWZiMWU3ZjAwODk2M2M3MTU4MjM5N2VlNjVjMSIsInN1YiI6IjY1NTAxZDM3OTY1M2Y2MDExYmZkYzkzYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7PEbDmBQNqrY3JJ7bRgmJV8S8tPVS8ziZ4TkWSJ2IqU'
+      }
+    };
+
+      fetch(`https://api.themoviedb.org/3/movie/${this.id}/videos?language=en-US`, options)
+        .then(response => response.json())
+        .then(response =>{
+          for(let i=0;i<response.results.length;i++){
+            if(response.results[i].type==="Trailer"){
+              this.video="https://www.youtube.com/embed/"+response.results[i].key;
+            }
+          }
+        })
+        .catch(err => console.error(err));
+      
+    },
+    actorFetch(){
+      let z=[];
+      const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNjQ3YWZiMWU3ZjAwODk2M2M3MTU4MjM5N2VlNjVjMSIsInN1YiI6IjY1NTAxZDM3OTY1M2Y2MDExYmZkYzkzYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7PEbDmBQNqrY3JJ7bRgmJV8S8tPVS8ziZ4TkWSJ2IqU'
+      }
+};
+
+    fetch(`https://api.themoviedb.org/3/movie/${this.id}/credits?language=en-US`, options)
+      .then(response => response.json())
+      .then(response => {
+        // for(let i=0;i<response.cast.length;i++){
+        //   let x={
+        //     name:response.cast[i].name,
+        //     character:response.cast[i].character,
+        //     image:response.cast[i].profile_path
+        //   }
+        //   this.actors.push(x);
+        // }
+        this.actors=response.cast;
+      })
+      .catch(err => console.error(err));
+      
+    },
     mouseOver(index) {
       if (!this.clicked) {
         this.usersRate = index;
@@ -139,6 +189,7 @@ export default {
     },
     loadData(){
       let movId=this.id;
+      
       const options = {
       method: 'GET',
       headers: {
@@ -147,12 +198,14 @@ export default {
       }
     };
 
-    fetch(`https://api.themoviedb.org/3/movie/${movId}?language=en-US`, options)
+    fetch(`https://api.themoviedb.org/3/movie/${this.id}?language=en-US`, options)
       .then(response => response.json())
       .then(response =>{
         this.title=response.title;
         this.description=response.overview;
         this.backDrop="https://image.tmdb.org/t/p/original"+response.backdrop_path;
+        this.rate=response.vote_average;
+        this.genres=response.genres;
       })
       .catch(err => console.error(err));
         }

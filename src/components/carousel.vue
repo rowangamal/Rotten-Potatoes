@@ -24,7 +24,7 @@ export default {
   components: {
     movieCard,
   },
-  beforeMount() {
+  created() {
     
     this.movies = this.trending();
     
@@ -97,7 +97,8 @@ export default {
           }
         })
         .catch((err) => console.error(err));
-      return m;}
+      return m;
+    }
     },
   },
 };
