@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       loginState: false, // state that control showing and hiding things depends on login state
-      state: "", // state that control the components that will be shown
+      state: "MoviePage", // state that control the components that will be shown
       cat: "popular",
       cat2: "now_playing",
       cat3: "top_rated",
