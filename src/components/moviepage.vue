@@ -1,6 +1,6 @@
 <template>
   <div class="all">
-    <section class="cont">
+    <section v-bind:style="{ 'background-image': 'url(' + backDrop + ')' }" class="cont">
       <div class="d-flex flex-column justify-content-end mov">
         <div class="overlay"></div>
         <div class="movieDetails d-flex justify-content-between">
@@ -93,25 +93,34 @@
 <script>
 import carousel from "./carousel.vue";
 export default {
-  props: ["index"],
+  props: ["index","id"],
   components: {
     carousel,
+  },
+  created(){
+    
   },
   data() {
     return {
       isloggedin: true,
-      image: "./az5ucwh1vcg71.jpg",
-      rate: 8,
+      image: "",
+      backDrop:"",
+      rate:null,
       usersRate: 0,
       clicked: false,
       title: "Dune",
-      description:
-        "A noble family becomes embroiled in a war for control over the galaxy's most valuable asset while its heir becomes troubled by visions of a dark future.",
+      description:"",
       comments: [
         { comment: "this movie is cool", user: "pola" },
         { comment: "what the hell have I just watched", user: "hany" },
       ],
+      text: "",
+      id:0,
+      cat:""
     };
+  },
+  mounted(){
+    this.loadData();
   },
   methods: {
     mouseOver(index) {
@@ -129,6 +138,7 @@ export default {
       this.clicked = true;
     },
     loadData(){
+      let movId=this.id;
       const options = {
       method: 'GET',
       headers: {
@@ -137,9 +147,13 @@ export default {
       }
     };
 
-    fetch(`https://api.themoviedb.org/3/movie/${movie_id}?language=en-US`, options)
+    fetch(`https://api.themoviedb.org/3/movie/${movId}?language=en-US`, options)
       .then(response => response.json())
-      .then(response => console.log(response))
+      .then(response =>{
+        this.title=response.title;
+        this.description=response.overview;
+        this.backDrop="https://image.tmdb.org/t/p/original"+response.backdrop_path;
+      })
       .catch(err => console.error(err));
         }
   },
@@ -171,7 +185,6 @@ export default {
 .cont {
   position: relative;
   color: #fff;
-  background: url("./az5ucwh1vcg71.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

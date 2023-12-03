@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { storeID } from './id';
 export default {
   props: ["img", "title", "date", "rate","id"],
   data() {
@@ -24,6 +25,7 @@ export default {
   },
   methods: {
     openmoviepage(){
+      storeID.ID=this.id;
       this.$emit("openmoviepage",this.id);
     }
   }

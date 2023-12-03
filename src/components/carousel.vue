@@ -17,15 +17,17 @@
 </template>
 
 <script>
+
 import movieCard from "./movieCard.vue";
 export default {
   props: ["category"],
   components: {
     movieCard,
   },
-  created() {
+  beforeMount() {
+    
     this.movies = this.trending();
-    console.log(this.movies);
+    
   },
   data() {
     return {
@@ -42,6 +44,7 @@ export default {
       this.changeStateMovie();
     },
     trending() {
+      if(this.category){
       const options = {
         method: "GET",
         headers: {
@@ -58,6 +61,7 @@ export default {
       )
         .then((response) => response.json())
         .then((response) => {
+          
           for (let i = 0; i < 17; i++) {
             let x = {
               title: response.results[i].title,
@@ -93,7 +97,7 @@ export default {
           }
         })
         .catch((err) => console.error(err));
-      return m;
+      return m;}
     },
   },
 };

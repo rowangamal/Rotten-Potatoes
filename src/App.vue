@@ -33,6 +33,7 @@
     <carousel :category="cat4" v-show="state == ''" @changeStateMovie="changeStateMovie"/>
   </div>
   <moviepage
+  :id="id"
   v-show="state == 'MoviePage'"
   />
 </template>
