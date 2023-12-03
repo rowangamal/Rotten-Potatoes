@@ -24,13 +24,13 @@
   />
   <div class="carousel" v-show="state==''">
     <h3 v-show="state == ''">Trending Now</h3>
-    <carousel :category="cat" v-show="state == ''" @changeState="changeState" />
+    <carousel :category="cat" v-show="state == ''" @changeStateMovie="changeStateMovie" />
     <h3 v-show="state == ''">Now Playing</h3>
-    <carousel :category="cat2" v-show="state == ''" @changeState="changeState"/>
+    <carousel :category="cat2" v-show="state == ''" @changeStateMovie="changeStateMovie"/>
     <h3 v-show="state == ''">Top Rated</h3>
-    <carousel :category="cat3" v-show="state == ''" @changeState="changeState"/>
+    <carousel :category="cat3" v-show="state == ''" @changeStateMovie="changeStateMovie"/>
     <h3 v-show="state == ''">Upcoming</h3>
-    <carousel :category="cat4" v-show="state == ''" @changeState="changeState"/>
+    <carousel :category="cat4" v-show="state == ''" @changeStateMovie="changeStateMovie"/>
   </div>
   <moviepage
   v-show="state == 'MoviePage'"
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       loginState: false, // state that control showing and hiding things depends on login state
-      state: "MoviePage", // state that control the components that will be shown
+      state: "", // state that control the components that will be shown
       cat: "popular",
       cat2: "now_playing",
       cat3: "top_rated",
@@ -69,6 +69,7 @@ export default {
       email: "",
       question: "",
       answer: "",
+      id: "",
     };
   },
   methods: {
@@ -83,6 +84,11 @@ export default {
     },
     login(newLogin) {
       this.loginState = newLogin;
+    },
+    changeStateMovie(newState, Id) {
+      this.state = newState;
+      this.id = Id;
+      console.log(this.id);
     },
   },
 };

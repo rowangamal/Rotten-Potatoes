@@ -17,10 +17,14 @@
 
 <script>
 export default {
-  props: ["img", "title", "date", "rate","id" ],
+  props: ["img", "title", "date", "rate","id"],
+  data() {
+    return {
+    };
+  },
   methods: {
     openmoviepage(){
-      this.$emit("openMovie","MoviePage",this.id);
+      this.$emit("openmoviepage",this.id);
     }
   }
 };
