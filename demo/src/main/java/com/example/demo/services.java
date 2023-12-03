@@ -24,12 +24,12 @@ public class services {
         ArrayList<UserData> usersData = userDataService.getUsersData();
         usersData.add(userData);
         userDataService.writeUsersData(usersData);
-        System.out.println("hi");
         return usersData;
     }
 
     @GetMapping("/users/{email}")
     public UserData getUsers(@PathVariable String email ) {
+        System.out.println("hi");
         return userDataService.getUserByEmail(email);
     }
     @PutMapping("/updatePassword/{email}")
@@ -42,10 +42,7 @@ public class services {
         if (existingUserOptional.isPresent()) {
             UserData existingUser = existingUserOptional.get();
             existingUser.updatePassword(newPassword);
-
-
             userDataService.writeUsersData(usersData);
-
             return ResponseEntity.ok(existingUser);
         } else {
             return ResponseEntity.notFound().build();

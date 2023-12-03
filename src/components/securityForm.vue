@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  props: ["email", "question", "answer"],
+  props: ["email", "question", "aanswer"],
   data() {
     return {
       answer: "",
@@ -41,7 +41,10 @@ export default {
       this.$emit("changeState", "loginForm");
     },
     changeStateSecurity() {
-      this.$emit("changeState", "securityForm");
+      if(this.answer===this.aanswer){
+        this.$emit("changeState", "securityForm");
+      }
+      
     },
   },
 };

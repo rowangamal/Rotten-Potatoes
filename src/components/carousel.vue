@@ -10,6 +10,8 @@
         :rate="movie.rate"
         :title="movie.title"
         :date="movie.date"
+        :id="movie.id"
+        @openmoviepage="openmoviepage"
       />
     </div>
   </div>
@@ -53,7 +55,8 @@ export default {
             title:response.results[i].title,
             rate:response.results[i].vote_average,
             img:"https://image.tmdb.org/t/p/original"+response.results[i].poster_path,
-            date:response.results[i].release_date
+            date:response.results[i].release_date,
+            id:response.results[i].id
           }
           this.movies.push(x)
         }
@@ -68,13 +71,17 @@ export default {
             title:response.results[i].title,
             rate:response.results[i].vote_average,
             img:"https://image.tmdb.org/t/p/original"+response.results[i].poster_path,
-            date:response.results[i].release_date
+            date:response.results[i].release_date,
+            id:response.results[i].id
           }
           this.movies.push(x)
         }
       })
       .catch(err => console.error(err));
       return m;
+      },
+      openmoviepage(){
+        this.$emit('MoviePage',id)
       }
   }
 };
