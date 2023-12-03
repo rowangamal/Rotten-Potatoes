@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" @click="openmoviepage">
     <div class="img">
         <div class="layer"></div>
       <img :src="img" alt="" />
@@ -18,6 +18,11 @@
 <script>
 export default {
   props: ["img", "title", "date", "rate" ],
+  methods: {
+    openmoviepage(){
+      this.$emit("changeState", "MoviePage");
+    }
+  }
 };
 </script>
 

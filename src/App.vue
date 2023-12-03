@@ -2,7 +2,7 @@
   <navBar
     :loginState="this.loginState"
     @login="login"
-    v-show="state === ''"
+    v-show="state == '' || state == 'MoviePage'"
     @changeState="changeState"
   />
   <signUpForm v-show="state == 'signUpForm'" @changeState="changeState" />
@@ -22,16 +22,19 @@
     :question="this.question"
     :answer="this.answer"
   />
-  <div class="carousel">
+  <div class="carousel" v-show="state==''">
     <h3 v-show="state == ''">Trending Now</h3>
-    <carousel :category="cat" v-show="state == ''" />
+    <carousel :category="cat" v-show="state == ''" @changeState="changeState" />
     <h3 v-show="state == ''">Now Playing</h3>
-    <carousel :category="cat2" v-show="state == ''" />
+    <carousel :category="cat2" v-show="state == ''" @changeState="changeState"/>
     <h3 v-show="state == ''">Top Rated</h3>
-    <carousel :category="cat3" v-show="state == ''" />
+    <carousel :category="cat3" v-show="state == ''" @changeState="changeState"/>
     <h3 v-show="state == ''">Upcoming</h3>
-    <carousel :category="cat4" v-show="state == ''" />
+    <carousel :category="cat4" v-show="state == ''" @changeState="changeState"/>
   </div>
+  <moviepage
+  v-show="state == 'MoviePage'"
+  />
 </template>
 
 <script>
@@ -41,6 +44,8 @@ import loginForm from "./components/loginForm.vue";
 import carousel from "./components/carousel.vue";
 import forgetPassword from "./components/forgetPassword.vue";
 import securityForm from "./components/securityForm.vue";
+import moviepage from "./components/moviepage.vue";
+import movieCard from "./components/movieCard.vue";
 export default {
   name: "App",
   components: {
@@ -50,6 +55,8 @@ export default {
     carousel,
     forgetPassword,
     securityForm,
+    moviepage ,
+    movieCard ,
   },
   data() {
     return {
@@ -107,5 +114,9 @@ h3 {
 }
 .carousel {
   margin-top: 100px;
+}
+.moviepage{
+  margin: 0px ;
+  padding: 0px ;
 }
 </style>

@@ -2,6 +2,7 @@
   <div class="scrollable-row">
     <div class="row flex-nowrap">
       <movieCard
+        @changeState = "changeState"
         class="col-2"
         v-for="movie in movies"
         :key="movie"
@@ -31,6 +32,9 @@ export default {
     };
   },
   methods:{
+    changeState(){
+      this.$emit("changeState", "MoviePage");
+    } ,
     trending(){
       const options = {
       method: 'GET',
