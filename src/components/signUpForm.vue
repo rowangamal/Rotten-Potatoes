@@ -261,18 +261,43 @@ export default {
           watchlist: [],
           firstName: this.firstName,
           lastName: this.lastName,
-          userName: this.userName,
+          userName: this.username,
           gender: this.gender,
         };
         console.log(userObj);
-        fetch("http://localhost:8000/usersData", {
+        fetch(`http://localhost:8080/users`)
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else if (res.status === 404) {
+            throw new Error("User not found");
+          } else {
+            throw new Error(`Error: ${res.status}`);
+          }
+        })
+        .then((user) => {
+          for (let i = 0; i < user.length; i++) {
+              if (user[i].email === this.email || user[i].userName === this.username) {
+                alert("User already exists");
+                return;
+              }
+            }
+        })
+        .catch((error) => {
+          console.error("Error during Signup:", error);
+          alert("An error occurred during Signup");
+        });
+
+        fetch("http://localhost:8080/users/add", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(userObj),
-        }).then(() => {
+        })
+        .then(() => {
           console.log("done");
           this.$emit("changeState", "loginForm");
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.error("Error during signup:", error);
         });
       }

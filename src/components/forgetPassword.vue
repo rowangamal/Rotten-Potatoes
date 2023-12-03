@@ -47,7 +47,27 @@ export default {
       this.$emit("changeState", "loginForm");
     },
     changeStateSecurity() {
-      //e3ml el fetch hena w a3ml check 3la el email w a3ml check 3la el question w el answer
+      const email=this.email
+      console.log(email);
+      fetch(`http://localhost:8080/users/${email}`)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else if (res.status === 404) {
+        throw new Error("User not found");
+      } else {
+        throw new Error(`Error: ${res.status}`);
+      }
+    })
+    .then((user) => {
+      console.log(user);
+      this.question=user.securityQuestion;
+      this.answer=user.securityAnswer;
+    })
+    .catch((error) => {
+      console.error("Error", error);
+      alert("An error occurred");
+    });
       this.$emit("changeStateSecurity", "securityForm", this.email , this.question , this.answer);
     },
   },

@@ -68,34 +68,37 @@ export default {
       changeStateForget() {
         this.$emit("changeState", "forgetPassword");
       },
-    logIn() {
-      let found = false;
-      const fakeToken = "your-fake-token";
-      fetch("http://localhost:8000/usersData")
-        .then((res) => res.json())
-        .then((data) => {
-          for (let i = 0; i < data.length; i++) {
-            if (
-              data[i].email === this.email &&
-              data[i].password === this.password
-            ) {
-              found = true;
-            }
-          }
-          if (found) {
-            localStorage.setItem("token", fakeToken);
-            alert("User found");
-            this.$emit("changeState", "");
-            this.$emit("login", true);
-          } else {
-            alert("User not found");
-          }
-        })
-        .catch((error) => {
-          console.error("Error during login:", error);
-          alert("An error occurred during login");
-        });
-    },
+      logIn() {
+      const email = this.email;
+      const password = this.password;
+
+  fetch(`http://localhost:8080/users/${email}`)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else if (res.status === 404) {
+        throw new Error("User not found");
+      } else {
+        throw new Error(`Error: ${res.status}`);
+      }
+    })
+    .then((user) => {
+      console.log(user);
+      if (user.password === password) {
+        const fakeToken = "your-fake-token";
+        localStorage.setItem("token", fakeToken);
+        alert("User found");
+        this.$emit("changeState", "");
+        this.$emit("login", true);
+      } else {
+        alert("Incorrect password");
+      }
+    })
+    .catch((error) => {
+      console.error("Error during login:", error);
+      alert("An error occurred during login");
+    });
+},
     checkLoggedIn() {
       const token = localStorage.getItem("token");
       if (token) {
