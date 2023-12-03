@@ -277,6 +277,10 @@ input[type="text"]:focus {
 .fa-bookmark {
   font-size: 36px;
 }
+.fa-bookmark:hover{
+  color: #ef9e3f;
+  cursor: pointer;
+}
 h1 {
   margin-left: 18px;
   text-transform: capitalize;
