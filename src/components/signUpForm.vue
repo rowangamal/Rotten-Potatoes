@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div class="overlay" v-show="isChecked&termsDisplay" @click="termsDisplay=!termsDisplay"></div> <!--for popup-->
     <section>
       <div class="img">
         <img src="..\assets\image 3.png" alt="" />
@@ -135,6 +136,57 @@
             </select>
           </div>
           <div class="row">
+            <div class="check">
+              <input type="checkbox" id="myCheckbox" v-model="isChecked" @click="termsDisplay=true" />
+              <label for="myCheckbox">Check terms and conditions</label>
+              <div class="popup" v-show="isChecked&termsDisplay">
+                <div id="terms-and-conditions">
+                  <h1>Potatoes and Conditions</h1>
+                  <br>
+                  <ol>
+                    <li><strong>Acceptance of Terms</strong>
+                      <ul>
+                        <li>By accessing or using Rotten Potatoes, you agree to comply with and be bound by these Terms and Conditions of Use. If you do not agree with any part of these terms, you may not access the website.</li>
+                      </ul>
+                    </li>
+
+                    <li><strong>User Accounts</strong>
+                      <ul>
+                        <li>Users may be required to create an account to access certain features of the website. You are responsible for maintaining the confidentiality of your account and password.</li>
+                        <li>You agree to provide accurate, current, and complete information during the registration process.</li>
+                      </ul>
+                    </li>
+
+                    <li><strong>Content and Intellectual Property</strong>
+                      <ul>
+                        <li>Rotten Potatoes contains text, images, videos, and other content protected by intellectual property laws. You may not modify, publish, transmit, distribute, perform, or create derivative works from any content.</li>
+                        <li>Users are encouraged to submit content (e.g., reviews, comments) but grant [Your Website] a non-exclusive, worldwide, royalty-free license to use, reproduce, modify, publish, and distribute such content.</li>
+                      </ul>
+                    </li>
+
+                    <li><strong>Privacy</strong>
+                      <ul>
+                        <li>Rotten Potatoes values user privacy. Our Privacy Policy outlines the types of information collected, how it is used, and how it is protected. By using the website, you consent to the terms of the Privacy Policy.</li>
+                      </ul>
+                    </li>
+                    <li><strong>User Conduct</strong>
+                      <ul>
+                        <li>Users agree not to engage in any conduct that restricts or inhibits any other user from using or enjoying [Your Website].</li>
+                        <li>Users may not use the website for any unlawful purpose or in violation of any applicable laws.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Disclaimer of Warranties</strong>
+                      <ul>
+                        <li>Rotten Potatoes is provided "as is" without any representations or warranties, express or implied.</li>
+                        <li>Rotten Potatoes does not warrant that the website will be error-free, secure, or continuously available.</li>
+                      </ul>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
             <button @click="signUp" class="btn butn">Submit</button>
           </div>
           <div class="row">
@@ -170,6 +222,8 @@ export default {
       passwordNumber: false,
       passwordsmall: false,
       passwordValid: false,
+      isChecked: false,
+      termsDisplay: false,
     };
   },
   methods: {
@@ -248,7 +302,8 @@ export default {
     signUp(event) {
       if (
         !this.checkPassword(this.password) ||
-        !this.matchPassword(this.password, this.confirmPassword)
+        !this.matchPassword(this.password, this.confirmPassword) ||
+        !this.isChecked
       ) {
         event.preventDefault();
       } else {
@@ -390,4 +445,42 @@ h6 {
   cursor: pointer;
   text-align: center;
 }
+.check {
+  display: flex;
+  flex-flow: row;
+  align-items: space-evenly;
+}
+#myCheckbox {
+  margin-right: 10px;
+  width: auto;
+  height: auto;
+}
+.popup {
+      /* display: none; */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 600px;
+      font: 14px/1.5 Helvetica, Verdana, sans-serif;
+      padding: 20px;
+      padding-left: 30px;
+      background-color: #fff;
+      /* background-image: url("../assets/potatoterms.png"); */
+      background-size:cover ;     
+      backdrop-filter: blur(5px); 
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      z-index: 2;
+}
+.overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7); /* Semi-transparent grayish background */
+      z-index: 1;
+    }
 </style>
