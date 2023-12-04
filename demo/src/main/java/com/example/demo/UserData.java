@@ -105,4 +105,21 @@ public class UserData {
     public void updatePassword(String newPassword) {
         this.password = newPassword;
     }
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", securityQuestion='" + securityQuestion + '\'' +
+                ", securityAnswer='" + securityAnswer + '\'' +
+                ", favourites=" + favourites +
+                ", watchlist=" + watchlist +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", id=" + id +
+                ", userName='" + userName + '\'' +
+                '}';
+    }
 }

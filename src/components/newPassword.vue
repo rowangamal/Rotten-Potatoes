@@ -8,24 +8,27 @@
         <h2 @click="changeStateLogin">
           <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
         </h2>
-        <h3>One More Step!</h3>
+        <h3>Here We Go!</h3>
         <div class="row">
           <div class="col">
-            <label>Question</label>
-            <p>{{ question }}</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label>Answer</label>
-            <input type="text" required v-model="Qanswer" />
+            <label>Enter New Password</label>
+            <input type="password" required v-model="newPassword" />
           </div>
           <div v-show="wrongAnswer" class="alert alert-danger" role="alert">
             <h5>Wrong Answer!</h5>
           </div>
         </div>
         <div class="row">
-          <button @click="changeStateForget" class="butn">Continue</button>
+          <div class="col">
+            <label>Confirm New Password</label>
+            <input type="password" required v-model="confirmNewPassword" />
+          </div>
+          <div v-show="wrongAnswer" class="alert alert-danger" role="alert">
+            <h5>Wrong Answer!</h5>
+          </div>
+        </div>
+        <div class="row">
+          <button @click="changePass" class="butn">Submit</button>
         </div>
       </div>
     </section>
@@ -37,8 +40,8 @@ export default {
   props: ["email", "question", "answer"],
   data() {
     return {
-      Qanswer: "",
-      wrongAnswer: false,
+      newPassword: "",
+      confirmNewPassword: "",
     };
   },
   methods: {
@@ -48,13 +51,29 @@ export default {
     changeStateLogin() {
       this.$emit("changeState", "loginForm");
     },
-    changeStateForget() {
-      if (this.Qanswer == this.answer) {
-        this.$emit("changeStateForget", "newPassword", this.email);
-      } else {
-        this.wrongAnswer = true;
-      }
-    },
+    changePass(){
+      fetch(`http://localhost:8080/updatePassword/${this.email}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(this.newPassword),
+        })
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          } else if (res.status === 404) {
+            throw new Error("User not found");
+          } else {
+            throw new Error(`Error: ${res.status}`);
+          }
+        })
+        .then(updatedUser => {
+          console.log("Password updated:", updatedUser);
+        })
+        .catch(error => {
+          console.error("Error during password update:", error);
+        });
+        this.changeStateLogin();
+    }
   },
 };
 </script>

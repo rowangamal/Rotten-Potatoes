@@ -16,6 +16,7 @@ public class services {
 
     @GetMapping("/users")
     public ArrayList<UserData> getUsers() {
+
         return userDataService.getUsersData();
     }
 
@@ -29,24 +30,23 @@ public class services {
 
     @GetMapping("/users/{email}")
     public UserData getUsers(@PathVariable String email ) {
-        System.out.println("hi");
         return userDataService.getUserByEmail(email);
     }
     @PutMapping("/updatePassword/{email}")
-    public ResponseEntity<UserData> updatePassword(@PathVariable String email, @RequestBody String newPassword) {
+    public void updatePassword(@PathVariable String email, @RequestBody String newPassword) {
+        System.out.println("hi");
+        newPassword=newPassword.replaceAll("\"","");
         ArrayList<UserData> usersData = userDataService.getUsersData();
-        Optional<UserData> existingUserOptional = usersData.stream()
-                .filter(user -> email.equals(user.getEmail()))
-                .findFirst();
-
-        if (existingUserOptional.isPresent()) {
-            UserData existingUser = existingUserOptional.get();
-            existingUser.updatePassword(newPassword);
-            userDataService.writeUsersData(usersData);
-            return ResponseEntity.ok(existingUser);
-        } else {
-            return ResponseEntity.notFound().build();
+        System.out.println(usersData);
+        int x=0;
+        for(int i=0;i<usersData.size();i++){
+            if(usersData.get(i).getEmail().equals(email)){
+                x=i;
+                break;
+            }
         }
+        usersData.get(x).updatePassword(newPassword);
+        userDataService.writeUsersData(usersData);
     }
 }
 
