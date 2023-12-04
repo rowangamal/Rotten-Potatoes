@@ -9,57 +9,54 @@
           <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
         </h2>
         <h3>Hi Again!</h3>
-        <form>
-          <div class="row">
-            <div class="col">
-              <label>Email</label>
-              <input type="email" required v-model="email" />
-            </div>
+        <div class="row">
+          <div class="col">
+            <label>Email</label>
+            <input type="email" required v-model="email" />
           </div>
-          <div class="row">
-            <div class="col">
-              <label>Password</label>
-              <input type="password" required v-model="password" />
-            </div>
-            <h6 @click="changeStateForget"> Forget Your Password</h6>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label>Password</label>
+            <input type="password" required v-model="password" />
           </div>
-          <div class="row">
-            <button @click="logIn" class="butn">Login</button>
+          <h6 @click="changeStateForget">Forget Your Password</h6>
+        </div>
+        <div class="row">
+          <button @click="logIn" class="butn">Login</button>
+        </div>
+        <div class="row">
+          <h5>Or login with</h5>
+        </div>
+        <div class="row icons justify-content-center">
+          <div class="col-4">
+            <button class="shortcut">
+              <img src="..\assets\Google button.png" alt="" />
+            </button>
           </div>
-          <div class="row">
-            <h5>Or login with</h5>
+          <div class="col-4">
+            <button class="shortcut">
+              <img src="..\assets\Facebook button.png" alt="" />
+            </button>
           </div>
-          <div class="row icons justify-content-center">
-            <div class="col-4">
-              <button class="shortcut">
-                <img src="..\assets\Google button.png" alt="" />
-              </button>
-            </div>
-            <div class="col-4">
-              <button class="shortcut">
-                <img src="..\assets\Facebook button.png" alt="" />
-              </button>
-            </div>
-          </div>
-          <div class="row">
-            <h6 class="center" @click="changeStateSignup">
-              Don't have an account? Sign up
-            </h6>
-          </div>
-        </form>
+        </div>
+        <div class="row">
+          <h6 class="center" @click="changeStateSignup">
+            Don't have an account? Sign up
+          </h6>
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-
 export default {
-  data(){
-    return{
-      email:"",
-      password:"",  
-    }
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
   },
   created() {
     this.checkLoggedIn();
@@ -68,43 +65,43 @@ export default {
     changeStateSignup() {
       this.$emit("changeState", "signUpForm");
     },
-      changeStateBack() {
-        this.$emit("changeState", "");
-      },
-      changeStateForget() {
-        this.$emit("changeState", "forgetPassword");
-      },
-      logIn() {
+    changeStateBack() {
+      this.$emit("changeState", "");
+    },
+    changeStateForget() {
+      this.$emit("changeState", "forgetPassword");
+    },
+    logIn() {
       const email = this.email;
       const password = this.password;
 
-  fetch(`http://localhost:8080/users/${email}`)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else if (res.status === 404) {
-        throw new Error("User not found");
-      } else {
-        throw new Error(`Error: ${res.status}`);
-      }
-    })
-    .then((user) => {
-      console.log(user);
-      if (user.password === password) {
-        const fakeToken = "your-fake-token";
-        localStorage.setItem("token", fakeToken);
-        alert("User found");
-        this.$emit("changeState", "");
-        this.$emit("login", true);
-      } else {
-        alert("Incorrect password");
-      }
-    })
-    .catch((error) => {
-      console.error("Error during login:", error);
-      alert("An error occurred during login");
-    });
-},
+      fetch(`http://localhost:8080/users/${email}`)
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else if (res.status === 404) {
+            throw new Error("User not found");
+          } else {
+            throw new Error(`Error: ${res.status}`);
+          }
+        })
+        .then((user) => {
+          console.log(user);
+          if (user.password === password) {
+            const fakeToken = "your-fake-token";
+            localStorage.setItem("token", fakeToken);
+            alert("User found");
+            this.$emit("changeState", "");
+            this.$emit("login", true);
+          } else {
+            alert("Incorrect password");
+          }
+        })
+        .catch((error) => {
+          console.error("Error during login:", error);
+          alert("An error occurred during login");
+        });
+    },
     checkLoggedIn() {
       const token = localStorage.getItem("token");
       if (token) {

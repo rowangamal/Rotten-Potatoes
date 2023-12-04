@@ -8,24 +8,27 @@
         <h2 @click="changeStateLogin">
           <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
         </h2>
-        <h3>One More Step!</h3>
+        <h3>Here We Go!</h3>
         <div class="row">
           <div class="col">
-            <label>Question</label>
-            <p>{{ question }}</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label>Answer</label>
-            <input type="text" required v-model="Qanswer" />
+            <label>Enter New Password</label>
+            <input type="password" required v-model="newPassword" />
           </div>
           <div v-show="wrongAnswer" class="alert alert-danger" role="alert">
             <h5>Wrong Answer!</h5>
           </div>
         </div>
         <div class="row">
-          <button @click="changeStateForget" class="butn">Continue</button>
+          <div class="col">
+            <label>Confirm New Password</label>
+            <input type="password" required v-model="confirmNewPassword" />
+          </div>
+          <div v-show="wrongAnswer" class="alert alert-danger" role="alert">
+            <h5>Wrong Answer!</h5>
+          </div>
+        </div>
+        <div class="row">
+          <button @click="changeStateNewPassword" class="butn">Submit</button>
         </div>
       </div>
     </section>
@@ -37,8 +40,8 @@ export default {
   props: ["email", "question", "answer"],
   data() {
     return {
-      Qanswer: "",
-      wrongAnswer: false,
+      newPassword: "",
+      confirmNewPassword: "",
     };
   },
   methods: {
@@ -47,13 +50,6 @@ export default {
     },
     changeStateLogin() {
       this.$emit("changeState", "loginForm");
-    },
-    changeStateForget() {
-      if (this.Qanswer == this.answer) {
-        this.$emit("changeStateForget", "newPassword", this.email);
-      } else {
-        this.wrongAnswer = true;
-      }
     },
   },
 };

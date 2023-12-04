@@ -14,28 +14,48 @@
   <forgetPassword
     v-show="state == 'forgetPassword'"
     @changeStateSecurity="changeStateSecurity"
+    @changeState="changeState"
   />
   <securityForm
     v-show="state == 'securityForm'"
     @changeState="changeState"
+    @changeStateForget="changeStateForget"
     :email="this.email"
     :question="this.question"
     :answer="this.answer"
   />
-  <div class="carousel" v-show="state==''">
-    <h3 v-show="state == ''">Trending Now</h3>
-    <carousel :category="cat" v-show="state == ''" @changeStateMovie="changeStateMovie" />
-    <h3 v-show="state == ''">Now Playing</h3>
-    <carousel :category="cat2" v-show="state == ''" @changeStateMovie="changeStateMovie"/>
-    <h3 v-show="state == ''">Top Rated</h3>
-    <carousel :category="cat3" v-show="state == ''" @changeStateMovie="changeStateMovie"/>
-    <h3 v-show="state == ''">Upcoming</h3>
-    <carousel :category="cat4" v-show="state == ''" @changeStateMovie="changeStateMovie"/>
-  </div>
-  <moviepage
-  :id="id"
-  v-show="state == 'MoviePage'"
+  <newPassword
+    v-show="state == 'newPassword'"
+    @changeState="changeState"
+    :email="this.email"
   />
+  <div class="carousel" v-show="state == ''">
+    <h3 v-show="state == ''">Trending Now</h3>
+    <carousel
+      :category="cat"
+      v-show="state == ''"
+      @changeStateMovie="changeStateMovie"
+    />
+    <h3 v-show="state == ''">Now Playing</h3>
+    <carousel
+      :category="cat2"
+      v-show="state == ''"
+      @changeStateMovie="changeStateMovie"
+    />
+    <h3 v-show="state == ''">Top Rated</h3>
+    <carousel
+      :category="cat3"
+      v-show="state == ''"
+      @changeStateMovie="changeStateMovie"
+    />
+    <h3 v-show="state == ''">Upcoming</h3>
+    <carousel
+      :category="cat4"
+      v-show="state == ''"
+      @changeStateMovie="changeStateMovie"
+    />
+  </div>
+  <moviepage :id="id" v-show="state == 'MoviePage'" />
 </template>
 
 <script>
@@ -45,6 +65,7 @@ import loginForm from "./components/loginForm.vue";
 import carousel from "./components/carousel.vue";
 import forgetPassword from "./components/forgetPassword.vue";
 import securityForm from "./components/securityForm.vue";
+import newPassword from "./components/newPassword.vue";
 import moviepage from "./components/moviepage.vue";
 import movieCard from "./components/movieCard.vue";
 export default {
@@ -56,8 +77,9 @@ export default {
     carousel,
     forgetPassword,
     securityForm,
-    moviepage ,
-    movieCard ,
+    newPassword,
+    moviepage,
+    movieCard,
   },
   data() {
     return {
@@ -91,6 +113,10 @@ export default {
       this.id = Id;
       console.log(this.id);
     },
+    changeStateForget(newState,Email) {
+      this.state = newState;
+      this.email = Email;
+    },
   },
 };
 </script>
@@ -103,6 +129,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  background-color: black;
 }
 * {
   box-sizing: border-box;
@@ -122,8 +149,8 @@ h3 {
 .carousel {
   margin-top: 100px;
 }
-.moviepage{
-  margin: 0px ;
-  padding: 0px ;
+.moviepage {
+  margin: 0px;
+  padding: 0px;
 }
 </style>

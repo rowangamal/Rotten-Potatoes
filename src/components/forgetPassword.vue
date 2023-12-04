@@ -9,22 +9,25 @@
           <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
         </h2>
         <h3>Let's Get There!</h3>
-        <form>
-          <div class="row">
-            <div class="col">
-              <label>Email</label>
-              <input type="email" required v-model="email" />
-            </div>
+        <div class="row">
+          <div class="col">
+            <label>Email</label>
+            <input type="email" required v-model="email" />
           </div>
-          <div class="row">
-            <button @click="changeStateSecurity" class="butn">Continue</button>
+          <div v-show="err" class="alert alert-danger" role="alert">
+            <h5>User Not Found!</h5>
           </div>
-          <div class="row">
-            <h6 class="center" @click="changeStateSignup">
-              Don't have an account? Sign up
-            </h6>
-          </div>
-        </form>
+        </div>
+        <div class="row">
+          <button class="butn" @click="changeStateSecurity">
+            ForgetPassword
+          </button>
+        </div>
+        <div class="row">
+          <h6 class="center" @click="changeStateSignup">
+            Don't have an account? Sign up
+          </h6>
+        </div>
       </div>
     </section>
   </div>
@@ -32,13 +35,14 @@
 
 <script>
 export default {
-    data() {
-        return {
-        email: "",
-        question: "",
-        answer: "",
-        };
-    },
+  data() {
+    return {
+      email: "",
+      question: "",
+      answer: "",
+      err: false,
+    };
+  },
   methods: {
     changeStateSignup() {
       this.$emit("changeState", "signUpForm");
@@ -46,29 +50,41 @@ export default {
     changeStateLogin() {
       this.$emit("changeState", "loginForm");
     },
-    changeStateSecurity() {
-      const email=this.email
+    changeStateSecurity(event) {
+      const email = this.email;
       console.log(email);
       fetch(`http://localhost:8080/users/${email}`)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else if (res.status === 404) {
-        throw new Error("User not found");
-      } else {
-        throw new Error(`Error: ${res.status}`);
-      }
-    })
-    .then((user) => {
-      console.log(user);
-      this.question=user.securityQuestion;
-      this.answer=user.securityAnswer;
-    })
-    .catch((error) => {
-      console.error("Error", error);
-      alert("An error occurred");
-    });
-      this.$emit("changeStateSecurity", "securityForm", this.email , this.question , this.answer);
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else if (res.status === 404) {
+            throw new Error("User not found");
+          } else {
+            throw new Error(`Error: ${res.status}`);
+          }
+        })
+        .then((user) => {
+          if (user != null) {
+            this.question = user.securityQuestion;
+            this.answer = user.securityAnswer;
+            this.$emit(
+              "changeStateSecurity",
+              "securityForm",
+              this.email,
+              this.question,
+              this.answer
+            );
+          } else {
+            this.err = true;
+            event.preventDefault();
+            console.log("User not found");
+          }
+        })
+        .catch((error) => {
+          this.err = true;
+          event.preventDefault();
+          console.log(error);
+        });
     },
   },
 };
@@ -139,5 +155,16 @@ h6 {
   padding: 20px;
   text-decoration: underline;
 }
-
+.alert {
+  margin-top: 10px;
+  padding: 3px 5px;
+}
+h5 {
+  position: relative;
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  left: 10px;
+}
 </style>
