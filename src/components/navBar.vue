@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import {storeID} from "./id.js";
 export default {
   data() {
     return {
@@ -70,9 +71,10 @@ export default {
     changeStateSignup() {
       this.$emit("changeState", "signUpForm");
     },
-    login() {
+    login(){
       this.$emit("login", false);
       localStorage.removeItem("token");
+      storeID.currUser=null;
     }
   },
 };

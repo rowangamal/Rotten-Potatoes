@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import {storeID} from "./id.js";
 export default {
   data() {
     return {
@@ -90,6 +91,7 @@ export default {
           if (user.password === password) {
             const fakeToken = "your-fake-token";
             localStorage.setItem("token", fakeToken);
+            storeID.currUser=user;
             alert("User found");
             this.$emit("changeState", "");
             this.$emit("login", true);
