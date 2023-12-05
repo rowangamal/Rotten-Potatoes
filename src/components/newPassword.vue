@@ -12,19 +12,43 @@
         <div class="row">
           <div class="col">
             <label>Enter New Password</label>
-            <input type="password" required v-model="newPassword" />
-          </div>
-          <div v-show="wrongAnswer" class="alert alert-danger" role="alert">
-            <h5>Wrong Answer!</h5>
+            <input
+              type="password"
+              required
+              v-model="newPassword"
+              @input="checkPassword(this.newPassword)"
+            />
+            <div
+              v-show="!passwordValid && newPassword.length > 0"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <h5>
+                Password Should Contain Capital Letter,Small Letter and Number
+                and over 8 lentgh
+              </h5>
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <label>Confirm New Password</label>
-            <input type="password" required v-model="confirmNewPassword" />
-          </div>
-          <div v-show="wrongAnswer" class="alert alert-danger" role="alert">
-            <h5>Wrong Answer!</h5>
+            <input
+              type="password"
+              required
+              v-model="confirmNewPassword"
+              @blur="matchPassword(this.newPassword, this.confirmNewPassword)"
+            />
+            <div
+              v-show="
+                !matchPassword(this.newPassword, this.confirmNewPassword) &&
+                confirmNewPassword.length > 0
+              "
+              class="alert alert-danger"
+              role="alert"
+            >
+              <h5>Password Doesn't Match</h5>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -42,38 +66,91 @@ export default {
     return {
       newPassword: "",
       confirmNewPassword: "",
+      passwordLength: false,
+      passwordCapital: false,
+      passwordNumber: false,
+      passwordsmall: false,
+      passwordValid: false,
     };
   },
   methods: {
+    matchPassword(password, confirmPassword) {
+      if (this.newPassword !== this.confirmNewPassword) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    checkPassword(password) {
+      if (this.newPassword.length >= 8) {
+        this.passwordLength = true;
+      } else {
+        this.passwordLength = false;
+      }
+      if (this.newPassword.match(/[A-Z]/)) {
+        this.passwordCapital = true;
+      } else {
+        this.passwordCapital = false;
+      }
+      if (this.newPassword.match(/[0-9]/)) {
+        this.passwordNumber = true;
+      } else {
+        this.passwordNumber = false;
+      }
+      if (this.newPassword.match(/[a-z]/)) {
+        this.passwordsmall = true;
+      } else {
+        this.passwordsmall = false;
+      }
+      if (
+        this.passwordLength &&
+        this.passwordCapital &&
+        this.passwordNumber &&
+        this.passwordsmall
+      ) {
+        this.passwordValid = true;
+        return true;
+      } else {
+        this.passwordValid = false;
+        return false;
+      }
+    },
     changeStateSignup() {
       this.$emit("changeState", "signUpForm");
     },
     changeStateLogin() {
       this.$emit("changeState", "loginForm");
     },
-    changePass(){
-      fetch(`http://localhost:8080/updatePassword/${this.email}`, {
+    changePass(event) {
+      if (
+        !this.checkPassword(this.newPassword) ||
+        !this.matchPassword(this.newPassword, this.confirmNewPassword)
+      ) {
+        event.preventDefault();
+      } else {
+        fetch(`http://localhost:8080/updatePassword/${this.email}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(this.newPassword),
         })
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          } else if (res.status === 404) {
-            throw new Error("User not found");
-          } else {
-            throw new Error(`Error: ${res.status}`);
-          }
-        })
-        .then(updatedUser => {
-          console.log("Password updated:", updatedUser);
-        })
-        .catch(error => {
-          console.error("Error during password update:", error);
-        });
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else if (res.status === 404) {
+              throw new Error("User not found");
+            } else {
+              throw new Error(`Error: ${res.status}`);
+            }
+          })
+          .then((updatedUser) => {
+            console.log("Password updated:", updatedUser);
+          })
+          .catch((error) => {
+            console.error("Error during password update:", error);
+          });
         this.changeStateLogin();
-    }
+      }
+    },
   },
 };
 </script>
@@ -121,8 +198,12 @@ h2 {
   background-color: #bf7934;
   border-radius: 50px;
   margin-top: 30px;
-  padding: 8px;
+  padding: 7px;
   border: 0px solid transparent;
+}
+.butn:hover {
+  background-color: white;
+  color: #bf7934;
 }
 label {
   margin: 25px 0px 15px;
@@ -145,14 +226,11 @@ h6 {
 }
 .alert {
   margin-top: 10px;
-  padding: 3px 5px;
+  padding: 7px 10px;
 }
 h5 {
-  position: relative;
   color: red;
   font-size: 14px;
   margin-top: 5px;
-  margin-bottom: 5px;
-  left: 10px;
 }
 </style>

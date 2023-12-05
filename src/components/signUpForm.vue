@@ -15,6 +15,9 @@
           <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
         </h2>
         <h3>New member? Welcome!</h3>
+        <div v-show="this.userDuplicate" class="alert alert-danger" role="alert">
+          <h5>User Already Exist</h5>
+        </div>
         <div class="row justify-content-between">
           <div class="col-6">
             <label>First name</label>
@@ -291,6 +294,7 @@ export default {
       passwordValid: false,
       isChecked: false,
       termsDisplay: false,
+      userDuplicate: false,
     };
   },
   methods: {
@@ -403,14 +407,13 @@ export default {
                 user[i].email === this.email ||
                 user[i].userName === this.username
               ) {
-                alert("User already exists");
-                return;
+                this.userDuplicate = true;
+                event.preventDefault();
               }
             }
           })
           .catch((error) => {
             console.error("Error during Signup:", error);
-            alert("An error occurred during Signup");
           });
 
         fetch("http://localhost:8080/users/add", {

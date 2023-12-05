@@ -19,6 +19,15 @@
           <div class="col">
             <label>Password</label>
             <input type="password" required v-model="password" />
+            <div
+              v-show="this.userNotFound"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <h5>
+                Wrong Email Or Paassword
+              </h5>
+            </div>
           </div>
           <h6 @click="changeStateForget">Forget Your Password</h6>
         </div>
@@ -26,7 +35,7 @@
           <button @click="logIn" class="butn">Login</button>
         </div>
         <div class="row">
-          <h5>Or login with</h5>
+          <h4>Or login with</h4>
         </div>
         <div class="row icons justify-content-center">
           <div class="col-4">
@@ -51,12 +60,13 @@
 </template>
 
 <script>
-import {storeID} from "./id.js";
+import { storeID } from "./id.js";
 export default {
   data() {
     return {
       email: "",
       password: "",
+      userNotFound: false,
     };
   },
   created() {
@@ -72,7 +82,7 @@ export default {
     changeStateForget() {
       this.$emit("changeState", "forgetPassword");
     },
-    logIn() {
+    logIn(event) {
       const email = this.email;
       const password = this.password;
 
@@ -91,17 +101,16 @@ export default {
           if (user.password === password) {
             const fakeToken = "your-fake-token";
             localStorage.setItem("token", fakeToken);
-            storeID.currUser=user;
-            alert("User found");
+            storeID.currUser = user;
             this.$emit("changeState", "");
             this.$emit("login", true);
           } else {
-            alert("Incorrect password");
+            this.userNotFound = true;
+            event.preventDefault();
           }
         })
         .catch((error) => {
           console.error("Error during login:", error);
-          alert("An error occurred during login");
         });
     },
     checkLoggedIn() {
@@ -181,7 +190,7 @@ h6 {
   padding: 20px;
   text-decoration: underline;
 }
-h5 {
+h4 {
   text-align: center;
   margin-top: 20px;
   font-size: 14px;
@@ -189,8 +198,8 @@ h5 {
   position: relative;
   display: inline-block;
 }
-h5::before,
-h5::after {
+h4::before,
+h4::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -199,14 +208,14 @@ h5::after {
   background-color: black;
 }
 
-h5::before {
+h4::before {
   left: 0;
-  transform: translateX(-30%);
+  transform: translateX(-40%);
 }
 
-h5::after {
+h4::after {
   right: 0;
-  transform: translateX(30%);
+  transform: translateX(40%);
 }
 
 .icons {
@@ -223,5 +232,14 @@ h5::after {
   margin: 0 auto;
   cursor: pointer;
   text-align: center;
+}
+.alert {
+  margin-top: 10px;
+  padding: 7px 10px;
+}
+h5 {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 }
 </style>
