@@ -1,10 +1,12 @@
 package com.example.demo;
 
+import javax.crypto.SecretKey;
 import java.util.ArrayList;
 
 public class UserData {
     private String email;
     private String password;
+    private SecretKey passKey;
     private String securityQuestion;
     private String securityAnswer;
     private ArrayList<Integer> favourites;
@@ -37,6 +39,14 @@ public class UserData {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public SecretKey getPassKey() {
+        return passKey;
+    }
+
+    public void setPassKey(SecretKey passKey) {
+        this.passKey = passKey;
     }
 
     public String getSecurityQuestion() {

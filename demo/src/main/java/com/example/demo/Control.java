@@ -12,8 +12,7 @@ import java.util.List;
 @Service
 public class Control {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private static final String JSON_FILE_PATH = "D:\\vue\\Rotten-Potatoes\\demo\\usersData.json";
-
+    private static final String JSON_FILE_PATH = "D:\\Rowan's CSE\\Term 5\\HCI\\rottenPotatoes\\Rotten-Potatoes\\demo\\usersData.json";
     public ArrayList<UserData> usersData;
 
 
