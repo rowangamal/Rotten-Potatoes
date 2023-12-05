@@ -2,7 +2,7 @@
   <div class="card" >
     <div class="img">
         <div class="layer"></div>
-      <img :src="image" alt="" />
+      <img :src="imagee" alt="" />
     </div>
     <div class="info">
       <h2>{{ name }}</h2>
@@ -17,6 +17,7 @@ export default {
   props: ["name", "character", "image"],
   data() {
     return {
+      imagee:"https://image.tmdb.org/t/p/original"+this.image
     };
   },
   methods: {

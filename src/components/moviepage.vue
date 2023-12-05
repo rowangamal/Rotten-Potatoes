@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="artists flex-fill">
-            <h1 class="actors">Actors</h1>
+            <h1 class="actorss">Actors</h1>
             <div class="actors">
                 <carouselActors :actor="this.actors" />
             </div>
@@ -108,6 +108,7 @@
 <script>
 import carousel from "./carousel.vue";
 import carouselActors from "./carouselActors.vue";
+import { storeID } from './id.js';
 export default {
   props: ["index", "id"],
   components: {
@@ -137,7 +138,7 @@ export default {
   },
   updated() {
     this.loadData();
-    this.actors = this.actorFetch();
+     this.actorFetch();
   },
   methods: {
     inVid() {
@@ -174,7 +175,7 @@ export default {
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNjQ3YWZiMWU3ZjAwODk2M2M3MTU4MjM5N2VlNjVjMSIsInN1YiI6IjY1NTAxZDM3OTY1M2Y2MDExYmZkYzkzYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7PEbDmBQNqrY3JJ7bRgmJV8S8tPVS8ziZ4TkWSJ2IqU",
         },
       };
-      let z = [];
+      
 
       fetch(
         `https://api.themoviedb.org/3/movie/${this.id}/credits?language=en-US`,
@@ -182,17 +183,11 @@ export default {
       )
         .then((response) => response.json())
         .then((response) => {
-          for(let i=0;i<response.cast.length;i++){
-            let x={
-              name:response.cast[i].name,
-              character:response.cast[i].character,
-              image:response.cast[i].profile_path
-            }
-            this.actors.push(x);
-          }
+          storeID.currMov=response.cast;
+          this.actors=storeID.currMov
         })
         .catch((err) => console.error(err));
-        return z;
+        
     },
     mouseOver(index) {
       if (!this.clicked) {
@@ -313,6 +308,11 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  position: absolute;
+  
+}
+.actorss{
+  margin-bottom: 15px;
 }
 .comments {
   padding: 80px;

@@ -3,12 +3,11 @@
     <div class="row flex-nowrap">
       <actorCard
         class="col-4"
-        v-for="ac in actors"
+        v-for="ac in actorss"
         :key="ac"
         :name="ac.name"
         :character="ac.character"
-        :image="ac.image"
-        
+        :image="ac.profile_path"
       />
     </div>
   </div>
@@ -17,6 +16,7 @@
 <script>
 
 import actorCard from "./actorCard.vue";
+import { storeID } from './id';
 export default {
   props: ["actor"],
   components: {
@@ -27,8 +27,9 @@ export default {
       actorss :[],
     };
   },
-  mounted() {
-    this.actorss = this.actor;
+  updated(){
+    this.actorss=storeID.currMov;
+    console.log(this.actorss);
   },
   methods: {
     changeStateMovie() {
@@ -40,7 +41,7 @@ export default {
 
 <style scoped>
 .scrollable-row {
-  overflow-x: auto;
+  overflow-x:auto;
   white-space: nowrap;
 }
 

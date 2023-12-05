@@ -5,6 +5,7 @@ export const storeID = {
     cat2: "now_playing",
     cat3: "top_rated",
     cat4: "upcoming",
-    currUser:null
+    currUser:null,
+    currMov:null
   };
   
