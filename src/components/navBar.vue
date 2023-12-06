@@ -82,7 +82,7 @@ export default {
 
 <style scoped>
 *{
-  z-index: 2;
+  z-index: 4;
 }
 nav {
   background-color: #ef9e3f;

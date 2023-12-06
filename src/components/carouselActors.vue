@@ -12,14 +12,16 @@
         />
       </div>
     </div>
-    <button @click="scrollLeft" class="scroll-button left-button">left</button>
-    <button @click="scrollRight" class="scroll-button right-button">right</button>
+    <button @click="scrollLeft" class="scroll-button left-button"><i class="fa-solid fa-caret-left"></i></button>
+    <button @click="scrollRight" class="scroll-button right-button">
+      <i class="fa-solid fa-caret-right"></i>
+    </button>
   </div>
 </template>
 
 <script>
 import actorCard from "./actorCard.vue";
-import { storeID } from './id';
+import { storeID } from "./id";
 
 export default {
   props: ["actor"],
@@ -30,7 +32,7 @@ export default {
     return {
       actorss: [],
       done: false,
-      scrollStep: 250,
+      scrollStep: 260,
     };
   },
   computed: {
@@ -38,7 +40,11 @@ export default {
       return this.$refs.scrollContainer;
     },
     canScrollRight() {
-      return this.scrollContainer && (this.scrollContainer.scrollLeft < (this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth));
+      return (
+        this.scrollContainer &&
+        this.scrollContainer.scrollLeft <
+          this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth
+      );
     },
   },
   updated() {
@@ -69,17 +75,21 @@ export default {
   width: 100%;
   overflow: hidden;
   height: max-content;
+  position: relative;
 }
 
 .scrollable-row {
   white-space: nowrap;
   overflow-x: hidden;
+  transition: scroll-left 0.2s ease;
+  scroll-behavior: smooth;
 }
 
 .row {
   display: flex;
   margin-bottom: 20px;
   flex-flow: row nowrap;
+  padding-left: 30px;
 }
 
 .col-2 {
@@ -90,20 +100,23 @@ export default {
 
 .scroll-button {
   position: absolute;
-  top: 50%;
-  background-color: #ddd;
+  z-index: 3;
+  background-color: #ef9e3f;
   border: none;
   padding: 10px;
   cursor: pointer;
   font-size: 20px;
+  transition: 0.3s;
+  border-radius: 5px;
+  top: 30%;
 }
 
 .left-button {
-  left: 0;
+  left: 0px;
 }
 
 .right-button {
-  right: 0;
+  right: 0px;
 }
 
 .scroll-button:hover {
