@@ -1,6 +1,8 @@
 <template>
-  <div class="scrollable-row">
-    <div class="row flex-nowrap">
+  <button @click="scrollLeft" class="scroll-button left-button">left</button>
+  <button @click="scrollRight" class="scroll-button right-button">right</button>
+  <div class="scrollable-row" ref="scrollContainer">
+    <div class="row flex-nowrap" >
       <movieCard
         class="col-2"
         v-for="movie in movies"
@@ -24,18 +26,36 @@ export default {
   components: {
     movieCard,
   },
+  computed: {
+    scrollContainer() {
+      console.log(this.$refs.scrollContainer);
+      return this.$refs.scrollContainer;
+    },
+    canScrollRight() {
+      return this.scrollContainer && (this.scrollContainer.scrollLeft < (this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth));
+    },
+  },
   created() {
-    
     this.movies = this.trending();
-    
   },
   data() {
     return {
       movies: [],
       movie_id: "",
+      scrollStep: 50,
     };
   },
   methods: {
+    scrollLeft() {
+      if (true) {
+        this.scrollContainer.scrollLeft -= this.scrollStep;
+      }
+    },
+    scrollRight() {
+      if (this.canScrollRight) {
+        this.scrollContainer.scrollLeft += this.scrollStep;
+      }
+    },
     changeStateMovie() {
       this.$emit("changeStateMovie", "MoviePage", this.movie_id);
     },
@@ -106,7 +126,7 @@ export default {
 
 <style scoped>
 .scrollable-row {
-  overflow-x: auto;
+  overflow-x: hidden;
   white-space: nowrap;
 }
 
@@ -125,5 +145,22 @@ export default {
 
 .scrollable-row {
   margin-left: 20px;
+}
+.scroll-button {
+  position: absolute;
+  z-index: 1;
+  background-color: #ddd;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.left-button {
+  left: 0;
+}
+
+.right-button {
+  right: 0;
 }
 </style>
