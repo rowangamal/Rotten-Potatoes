@@ -2,7 +2,7 @@
   <div class="scrollable-row">
     <div class="row flex-nowrap">
       <actorCard
-        class="col-4"
+        class="col-2"
         v-for="ac in actorss"
         :key="ac"
         :name="ac.name"
@@ -22,14 +22,18 @@ export default {
   components: {
     actorCard,
   },
-  data() {
+data() {
     return {
       actorss :[],
+      done:false
     };
   },
   updated(){
+  if(storeID.currMov && !this.done){
     this.actorss=storeID.currMov;
     console.log(this.actorss);
+    this.done=true;
+  }
   },
   methods: {
     changeStateMovie() {
@@ -41,7 +45,7 @@ export default {
 
 <style scoped>
 .scrollable-row {
-  overflow-x:auto;
+  overflow-x: auto;
   white-space: nowrap;
 }
 
@@ -52,7 +56,6 @@ export default {
 .card {
   width: 200px;
   margin-right: 20px;
-  border-radius: 10px;
   position: relative;
   border: solid 2px transparent;
   box-shadow: 2px 2px 5px -5px #000000;

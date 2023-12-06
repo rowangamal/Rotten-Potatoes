@@ -4,14 +4,20 @@
       v-bind:style="{ 'background-image': 'url(' + backDrop + ')' }"
       class="cont"
     >
-      <div class="d-flex flex-column justify-content-end mov">
+      <div @click="closeVideo" v-show="video" class="vid">
+        <iframe v :src="video" frameborder="0"></iframe>
+      </div>
+      <div
+        @click="closeVideo"
+        class="d-flex flex-column justify-content-center"
+      >
         <div class="overlay"></div>
-        <div class="movieDetails d-flex justify-content-between">
-          <div class="description flex-fill">
+        <div class="movieDetails d-flex justify-content-start">
+          <div class="col-6 description flex-fill">
             <h1 class="title">
               {{ title }} <i class="fa-regular fa-bookmark"></i>
             </h1>
-            <div class="info d-flex justify-content-around">
+            <div class="info d-flex justify-content-start gap-4">
               <p class="rate">
                 <i class="fa-solid fa-star imark"></i>{{ rate }}
               </p>
@@ -28,14 +34,11 @@
             <button @click="inVid" type="button" class="btn trailer">
               Trailer
             </button>
-            <div v-show="video" class="vid">
-              <iframe v :src="video" frameborder="0"></iframe>
-            </div>
           </div>
-          <div class="artists flex-fill">
-            <h1 class="actorss">Actors</h1>
-            <div class="actors">
-                <carouselActors :actor="this.actors" />
+          <div class="col-6">
+            <div class="div">
+              <h1>Actors</h1>
+              <carouselActors :actor="this.actors" />
             </div>
           </div>
         </div>
@@ -108,7 +111,7 @@
 <script>
 import carousel from "./carousel.vue";
 import carouselActors from "./carouselActors.vue";
-import { storeID } from './id.js';
+import { storeID } from "./id.js";
 export default {
   props: ["index", "id"],
   components: {
@@ -127,7 +130,7 @@ export default {
       rate: null,
       usersRate: 0,
       clicked: false,
-      title: "Dune",
+      title: "",
       description: "",
       comments: [
         { comment: "this movie is cool", user: "pola" },
@@ -138,7 +141,7 @@ export default {
   },
   updated() {
     this.loadData();
-     this.actorFetch();
+    this.actorFetch();
   },
   methods: {
     inVid() {
@@ -175,7 +178,6 @@ export default {
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNjQ3YWZiMWU3ZjAwODk2M2M3MTU4MjM5N2VlNjVjMSIsInN1YiI6IjY1NTAxZDM3OTY1M2Y2MDExYmZkYzkzYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7PEbDmBQNqrY3JJ7bRgmJV8S8tPVS8ziZ4TkWSJ2IqU",
         },
       };
-      
 
       fetch(
         `https://api.themoviedb.org/3/movie/${this.id}/credits?language=en-US`,
@@ -183,11 +185,10 @@ export default {
       )
         .then((response) => response.json())
         .then((response) => {
-          storeID.currMov=response.cast;
-          this.actors=storeID.currMov
+          storeID.currMov = response.cast;
+          this.actors = storeID.currMov;
         })
         .catch((err) => console.error(err));
-        
     },
     mouseOver(index) {
       if (!this.clicked) {
@@ -202,6 +203,9 @@ export default {
     mousedown(index) {
       this.usersRate = index;
       this.clicked = true;
+    },
+    closeVideo() {
+      this.video = "";
     },
     loadData() {
       let movId = this.id;
@@ -239,7 +243,9 @@ export default {
   padding-top: 60px;
 }
 .movieDetails {
+  position: relative;
   padding: 50px;
+  top: 110px;
 }
 .description {
   max-width: 50%;
@@ -262,9 +268,8 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  min-height: 600px;
+  min-height: 800px;
   margin: 0;
-  bottom: 0px;
   z-index: 1;
 }
 .title {
@@ -308,10 +313,9 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  position: absolute;
-  
+  position: relative;
 }
-.actorss{
+.actorss {
   margin-bottom: 15px;
 }
 .comments {
@@ -356,10 +360,6 @@ input[type="text"]:focus {
 .imark {
   color: #ef9e3f;
 }
-.mov {
-  position: absolute;
-  bottom: 0px;
-}
 .all {
   margin-top: 70px;
 }
@@ -392,6 +392,27 @@ h1 {
   text-transform: capitalize;
 }
 .info {
-  margin-left: -140px;
+  text-align: left;
+  position: relative;
+  left: 20px;
+}
+.artists {
+  margin-top: 80px;
+  margin-left: 100px;
+}
+.vid {
+  position: absolute;
+  top: 40px;
+  left: 200px;
+  min-height: 60%;
+  min-width: 70%;
+  height: 90%;
+  z-index: 2;
+}
+.vid iframe {
+  outline: black solid 5px;
+  border-radius: 10px;
+  width: 70%;
+  height: 70%;
 }
 </style>
