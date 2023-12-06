@@ -100,7 +100,7 @@ export default {
 
 .scroll-button {
   position: absolute;
-  z-index: 3;
+  z-index: 1;
   background-color: #ef9e3f;
   border: none;
   padding: 10px;

@@ -407,7 +407,7 @@ h1 {
   min-height: 60%;
   min-width: 70%;
   height: 90%;
-  z-index: 2;
+  z-index: 3;
 }
 .vid iframe {
   outline: black solid 5px;
