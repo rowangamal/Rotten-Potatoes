@@ -41,13 +41,6 @@ public class UserData {
         this.password = password;
     }
 
-    public SecretKey getPassKey() {
-        return passKey;
-    }
-
-    public void setPassKey(SecretKey passKey) {
-        this.passKey = passKey;
-    }
 
     public String getSecurityQuestion() {
         return securityQuestion;
