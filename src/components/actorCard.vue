@@ -16,14 +16,15 @@ export default {
   props: ["name", "character", "image"],
   data() {
     return {
-      imagee: "https://image.tmdb.org/t/p/original" + this.image,
+      defaultImage: "https://tameer.com.eg/wp-content/uploads/2020/07/placeholder.png",
     };
   },
-  methods: {
-    // openmoviepage(){
-    //   storeID.ID=this.id;
-    //   this.$emit("openmoviepage",this.id);
-    // }
+  computed: {
+    imagee() {
+      return this.image
+        ? "https://image.tmdb.org/t/p/original" + this.image
+        : this.defaultImage;
+    }
   },
 };
 </script>
