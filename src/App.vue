@@ -122,6 +122,9 @@ export default {
 </script>
 
 <style>
+body{
+  overflow-x: hidden;
+}
 #app {
   font-family: "Monomaniac One", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -130,7 +133,6 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
   text-transform: capitalize;
-  
 }
 * {
   box-sizing: border-box;

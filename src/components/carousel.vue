@@ -176,6 +176,7 @@ export default {
 
 .right-button {
   right: 0px;
+  border-radius: 5px 0px 0px 5px;
 }
 
 .scroll-button:hover {
