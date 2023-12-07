@@ -68,8 +68,10 @@ export default {
     };
   },
   updated(){
-    if(storeID.currUser!==null){
-      this.user=storeID.currUser.userName;
+    if(true){
+            const userDataString = localStorage.getItem("userData");
+            this.user = JSON.parse(userDataString).userName;
+            console.log(this.user);
     }
     else{
       this.user="";

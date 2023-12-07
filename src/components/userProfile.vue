@@ -42,15 +42,17 @@
 
 <script>
 export default {
-    props : ["loginState","userr"],
+    // props : ["loginState","userr"],
     data(){
         return{
-            user:{}
+            user:"null"
         }
     },
     updated(){
-        if(this.loginState){
-            this.user=this.userr;
+        if(true){
+            const userDataString = localStorage.getItem("userData");
+            this.user = JSON.parse(userDataString);
+            console.log(this.user);
         }
     }
 }

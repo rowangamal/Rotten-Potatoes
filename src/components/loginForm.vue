@@ -107,6 +107,8 @@ export default {
       if (userData !== null) {
         console.log("Login successful");
         const fakeToken = "your-fake-token";
+        const userDataString = JSON.stringify(userData);
+        localStorage.setItem("userData", userDataString);
         localStorage.setItem("token", fakeToken);
         storeID.currUser = userData;
         console.log(storeID.currUser);
