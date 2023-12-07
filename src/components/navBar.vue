@@ -33,7 +33,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link links" @click="toggleAbout"><p>About</p></a>
+        <a class="nav-link links" @click="changeStateAbout"><p>About</p></a>
       </li>
       <li class="nav-item">
         <a class="nav-link links" href="#"><p>Watch list</p></a>
@@ -74,7 +74,6 @@ export default {
     return {
       search: "",
       user:"",
-      showAbout:false,
     };
   },
   updated(){
@@ -98,14 +97,14 @@ export default {
     changeStateProfile() {
       this.$emit("changeState", "userProfile");
     },
+    changeStateAbout(){
+      this.$emit("changeState", "about");
+    },
     login(){
       this.$emit("login", false);
       localStorage.removeItem("token");
       storeID.currUser=null;
       this.$emit("changeState", "");     
-    },
-    toggleAbout(){
-      this.showAbout = !this.showAbout;
     }
   },
 };

@@ -3,9 +3,8 @@
   <navBar
     :loginState="this.loginState"
     @login="login"
-    v-show="state == '' || state == 'MoviePage' || state =='userProfile'"
+    v-show="state == '' || state == 'MoviePage' || state =='userProfile' || state == 'about'"
     @changeState="changeState"
-    :showAbout="showAbout"
   />
   <signUpForm v-show="state == 'signUpForm'" @changeState="changeState" />
   <loginForm
