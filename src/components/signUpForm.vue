@@ -413,7 +413,6 @@ export default {
           userName: this.username,
           gender: this.gender,
         };
-        console.log(userObj);
         fetch(`http://localhost:8080/users`)
           .then((res) => {
             if (res.ok) {
@@ -425,7 +424,7 @@ export default {
             }
           })
           .then((user) => {
-            console.log(user)
+            
             for (let i = 0; i < user.length; i++) {
               if (
                 user[i].email === this.email ||
@@ -434,7 +433,7 @@ export default {
                 this.userDuplicate = true;
                 break;
               }
-              console.log(user[i].email,user[i].userName);
+              
             }
           })
         .then(() => {

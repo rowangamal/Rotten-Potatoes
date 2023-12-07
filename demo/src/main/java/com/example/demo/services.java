@@ -44,18 +44,17 @@ public class services {
         return userDataService.getUserByEmail(email);
     }
     @PostMapping("/checkPass/{email}")
-    public UserData checkLogin(@PathVariable String email,@RequestBody String password) throws NoSuchAlgorithmException {
-        UserData sentUser=userDataService.getUserByEmail(email);
-        password=password.replaceAll("\"","");
-        if(sentUser!=null) {
+    public ResponseEntity<UserData> checkLogin(@PathVariable String email, @RequestBody String password) throws NoSuchAlgorithmException {
+        UserData sentUser = userDataService.getUserByEmail(email);
+        password = password.replaceAll("\"", "");
+
+        if (sentUser != null) {
             try {
                 String hashedInputPassword = Hashing.getHashedHex(Hashing.getHashedBytes(password));
-//            System.out.println(password);
-//            System.out.println(sentUser.getPassword());
-                if (hashedInputPassword.equals(sentUser.getPassword())) {
 
+                if (hashedInputPassword.equals(sentUser.getPassword())) {
                     System.out.println("Login successful");
-                    return sentUser;
+                    return ResponseEntity.ok(sentUser);
                 } else {
                     System.out.println("Incorrect password");
                 }
@@ -65,7 +64,8 @@ public class services {
             }
         }
 
-        return null;
+        
+        return ResponseEntity.notFound().build();
     }
     @PutMapping("/updatePassword/{email}")
     public void updatePassword(@PathVariable String email, @RequestBody String newPassword) {

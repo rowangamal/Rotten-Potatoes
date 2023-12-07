@@ -85,29 +85,40 @@ export default {
     logIn(event) {
       const email = this.email;
       const password = this.password;
-      fetch(`http://localhost:8080/checkPass/${email}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(password),
-        })
-          .then(res => {
-            return res.json();
-          }).then(response=>{
-            if(response===null){
-            console.log("xxx");
-              this.userNotFound = true;
-              event.preventDefault();
-            }else{
-              const fakeToken = "your-fake-token";
-              localStorage.setItem("token", fakeToken);
-              storeID.currUser = response;
-              this.$emit("changeState", "");
-              this.$emit("login", true);
-            }
-          })
-          .catch((error) => {
-            console.error("Error during login:", error);
-          });
+      const apiUrl = `http://localhost:8080/checkPass/${email}`;
+
+  fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(password),
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else if (response.status === 404) {
+        return null;
+      } else {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+    })
+    .then((userData) => {
+      if (userData !== null) {
+        console.log("Login successful");
+        const fakeToken = "your-fake-token";
+        localStorage.setItem("token", fakeToken);
+        storeID.currUser = userData;
+        this.$emit("changeState", "");
+        this.$emit("login", true);
+      } else {
+        this.userNotFound = true;
+        event.preventDefault();
+      }
+    })
+    .catch((error) => {
+      console.error("Error during login:", error);
+    });
 
 
       // fetch(`http://localhost:8080/users/${email}`)
