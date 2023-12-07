@@ -1,9 +1,11 @@
 <template>
+  <!-- <about /> -->
   <navBar
     :loginState="this.loginState"
     @login="login"
     v-show="state == '' || state == 'MoviePage' || state =='userProfile'"
     @changeState="changeState"
+    :showAbout="showAbout"
   />
   <signUpForm v-show="state == 'signUpForm'" @changeState="changeState" />
   <loginForm
@@ -61,6 +63,7 @@
     />
   </div>
   <moviepage :id="id" v-show="state == 'MoviePage'" />
+  <about v-show="state == 'about'" />
 </template>
 
 <script>
@@ -75,6 +78,7 @@ import moviepage from "./components/moviepage.vue";
 import movieCard from "./components/movieCard.vue";
 import userProfile from "./components/userProfile.vue";
 import { storeID } from "./components/id.js";
+import about from "./components/about.vue";
 export default {
   name: "App",
   components: {
@@ -88,6 +92,7 @@ export default {
     moviepage,
     movieCard,
     userProfile,
+    about,
   },
   data() {
     return {

@@ -11,6 +11,7 @@
         <div class="input-group">
           <input
             v-model="search"
+            placeholder="Search for a movie"
             type="text"
             style="width: 500px"
             class="form-control"
@@ -30,6 +31,9 @@
           </div>
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link links" @click="toggleAbout"><p>About</p></a>
       </li>
       <li class="nav-item">
         <a class="nav-link links" href="#"><p>Watch list</p></a>
@@ -60,11 +64,17 @@
 
 <script>
 import {storeID} from "./id.js";
+import about from "./about.vue";
 export default {
+  name: "navBar",
+  components: {
+    about,
+  },
   data() {
     return {
       search: "",
-      user:""
+      user:"",
+      showAbout:false,
     };
   },
   updated(){
@@ -93,6 +103,9 @@ export default {
       localStorage.removeItem("token");
       storeID.currUser=null;
       this.$emit("changeState", "");     
+    },
+    toggleAbout(){
+      this.showAbout = !this.showAbout;
     }
   },
 };
