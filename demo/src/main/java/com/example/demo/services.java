@@ -25,7 +25,7 @@ public class services {
     }
 
     @PostMapping("/users/add")
-    public ArrayList<UserData> addUser(@RequestBody UserData userData){
+    public void addUser(@RequestBody UserData userData){
         ArrayList<UserData> usersData = userDataService.getUsersData();
         try {
             String hashedPassword = Hashing.getHashedHex(Hashing.getHashedBytes(userData.getPassword()));
@@ -33,7 +33,6 @@ public class services {
             usersData.add(userData);
             userDataService.writeUsersData(usersData);
             System.out.println(usersData);
-            return usersData;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -64,7 +63,7 @@ public class services {
             }
         }
 
-        
+
         return ResponseEntity.notFound().build();
     }
     @PutMapping("/updatePassword/{email}")
