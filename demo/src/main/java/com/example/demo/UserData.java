@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class UserData {
     private String email;
     private String password;
-    private SecretKey passKey;
     private String securityQuestion;
     private String securityAnswer;
     private ArrayList<Integer> favourites;

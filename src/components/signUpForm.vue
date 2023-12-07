@@ -21,23 +21,23 @@
         <div class="row justify-content-between">
           <div class="col-6">
             <label>First name</label>
-            <input type="text" required v-model="firstName" />
+            <input type="text" placeholder="First name" v-model="firstName" />
           </div>
           <div class="col-6">
             <label>Last name</label>
-            <input type="text" required v-model="lastName" />
+            <input type="text" placeholder="Last name" v-model="lastName" />
           </div>
         </div>
         <div class="row">
           <div class="col">
             <label>Username</label>
-            <input type="text" required v-model="username" />
+            <input type="text" placeholder="Enter your username" v-model="username" />
           </div>
         </div>
         <div class="row">
           <div class="col">
             <label>Email</label>
-            <input type="email" required v-model="email" />
+            <input type="email" placeholder="Enter your email" v-model="email" />
           </div>
         </div>
         <div class="row">
@@ -45,6 +45,7 @@
             <label>Create password</label>
             <input
               type="password"
+              placeholder="Enter your password"
               required
               v-model="password"
               @input="checkPassword(this.password)"
@@ -66,6 +67,7 @@
             <label>Confirm password</label>
             <input
               type="password"
+              placeholder="Confirm your password"
               required
               v-model="confirmPassword"
               @blur="matchPassword(this.password, this.confirmPassword)"
@@ -256,9 +258,16 @@
               </div>
             </div>
           </div>
+          <div
+              v-show="!isChecked &&submitState"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <h5>Accepting terms and conditions is fundamental</h5>
+            </div>
         </div>
         <div class="row">
-          <button @click="signUp" class="btn butn">Submit</button>
+          <button @click="signUp,submitState=!submitState" class="btn butn">Submit</button>
         </div>
         <div class="row">
           <h6 class="center" @click="changeStateLogin">
@@ -294,6 +303,7 @@ export default {
       passwordValid: false,
       isChecked: false,
       termsDisplay: false,
+      submitState: false,
       userDuplicate: false,
     };
   },
@@ -529,20 +539,19 @@ h6 {
   height: auto;
 }
 .popup {
-  /* display: none; */
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 700px;
   height: 600px;
-  font: 14px/1.5 Helvetica, Verdana, sans-serif;
+  font: 13.5px/1.5 Helvetica, Verdana, sans-serif;
   padding: 20px;
   padding-left: 30px;
   background-color: #fff;
   /* background-image: url("../assets/potatoterms.png"); */
   background-size: cover;
-  backdrop-filter: blur(5px);
+  /* filter: blur(20px); */
   border: 1px solid #ccc;
   border-radius: 30px;
   z-index: 2;
@@ -555,5 +564,8 @@ h6 {
   height: 100%;
   background: rgba(0, 0, 0, 0.7); /* Semi-transparent grayish background */
   z-index: 1;
+}
+.alert {
+  margin: 0;
 }
 </style>
