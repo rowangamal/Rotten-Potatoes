@@ -46,9 +46,10 @@ public class services {
     @PostMapping("/checkPass/{email}")
     public UserData checkLogin(@PathVariable String email,@RequestBody String password) throws NoSuchAlgorithmException {
         UserData sentUser=userDataService.getUserByEmail(email);
+        password=password.replaceAll("\"","");
         try {
-            String hashedInputPassword = Hashing.getHashedHex(Hashing.getHashedBytes("Abdullah1234"));
-//            System.out.println(hashedInputPassword);
+            String hashedInputPassword = Hashing.getHashedHex(Hashing.getHashedBytes(password));
+//            System.out.println(password);
 //            System.out.println(sentUser.getPassword());
             if (hashedInputPassword.equals(sentUser.getPassword())) {
 
