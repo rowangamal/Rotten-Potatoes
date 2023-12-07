@@ -109,6 +109,7 @@ export default {
         const fakeToken = "your-fake-token";
         localStorage.setItem("token", fakeToken);
         storeID.currUser = userData;
+        console.log(storeID.currUser);
         this.$emit("changeState", "");
         this.$emit("login", true);
       } else {

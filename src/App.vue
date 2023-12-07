@@ -31,7 +31,8 @@
   />
   <userProfile
     v-show="state == 'userProfile'"
-    @changeState="changeState"
+    :loginState="this.loginState"
+    :userr="this.userr"
   />
   <div class="carousel" v-show="state == ''">
     <h3 v-show="state == ''">Trending Now</h3>
@@ -73,6 +74,7 @@ import newPassword from "./components/newPassword.vue";
 import moviepage from "./components/moviepage.vue";
 import movieCard from "./components/movieCard.vue";
 import userProfile from "./components/userProfile.vue";
+import { storeID } from "./components/id.js";
 export default {
   name: "App",
   components: {
@@ -90,7 +92,7 @@ export default {
   data() {
     return {
       loginState: false, // state that control showing and hiding things depends on login state
-      state: "userProfile", // state that control the components that will be shown
+      state: "", // state that control the components that will be shown
       cat: "popular",
       cat2: "now_playing",
       cat3: "top_rated",
@@ -99,6 +101,7 @@ export default {
       question: "",
       answer: "",
       id: "",
+      userr: {},
     };
   },
   methods: {
@@ -113,6 +116,7 @@ export default {
     },
     login(newLogin) {
       this.loginState = newLogin;
+      this.userr = storeID.currUser;
     },
     changeStateMovie(newState, Id) {
       this.state = newState;

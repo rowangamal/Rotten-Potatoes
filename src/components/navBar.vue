@@ -2,7 +2,7 @@
   <nav>
     <ul class="nav nav-pills">
       <li class="nav-item">
-        <a class="nav-link" href="index.html"
+        <a class="nav-link" @click="changeStateBack"
           ><img src="..\assets\Group 5.png" alt=""
         /></a>
       </li>
@@ -38,7 +38,7 @@
         <a @click="changeStateSignup" v-if="!loginState" class="nav-link links"
           ><p>Signup/Login</p></a
         >
-        <a v-else class="nav-link links" href="#"
+        <a @click="changeStateProfile" v-else class="nav-link links"
           ><i class="fa-solid fa-user"></i
         ></a>
         <a
@@ -49,7 +49,7 @@
           aria-expanded="false"
         ></a>
         <ul class="dropdown-menu">
-          <li><h2>{{user}}</h2></li>
+          <li><h5>{{user}}</h5></li>
           <li><a class="dropdown-item" href="#">msh 3arf lesa</a></li>
           <li><button v-if="loginState" class="dropdown-item" @click="login">Sign Out</button></li>
         </ul>
@@ -80,10 +80,17 @@ export default {
     changeStateSignup() {
       this.$emit("changeState", "signUpForm");
     },
+    changeStateBack() {
+      this.$emit("changeState", "");
+    },
+    changeStateProfile() {
+      this.$emit("changeState", "userProfile");
+    },
     login(){
       this.$emit("login", false);
       localStorage.removeItem("token");
       storeID.currUser=null;
+      this.$emit("changeState", "");     
     }
   },
 };
@@ -176,5 +183,11 @@ a:hover {
   background-color: #fff;
   color: #ee9e3f;
   z-index: 1;
+}
+h5{
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #ee9e3f
 }
 </style>

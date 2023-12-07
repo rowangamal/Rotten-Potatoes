@@ -15,7 +15,7 @@
             <div class="user-data">
                 <div class="email">
                     <label style="align-content: start;">Email</label>
-                    <div style="min-width:100%;" class="data">hhhh</div>
+                    <div style="min-width:100%;" class="data">{{this.user.email}}</div>
                 </div>
                 <div class="names">
                     <div>
@@ -41,11 +41,16 @@
 </template>
 
 <script>
-import { storeID } from './id'
 export default {
+    props : ["loginState","userr"],
     data(){
         return{
-            user:storeID.currUser,
+            user:{}
+        }
+    },
+    updated(){
+        if(this.loginState){
+            this.user=this.userr;
         }
     }
 }
