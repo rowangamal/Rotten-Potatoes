@@ -15,7 +15,11 @@
           <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
         </h2>
         <h3>New member? Welcome!</h3>
-        <div v-show="this.userDuplicate" class="alert alert-danger" role="alert">
+        <div
+          v-show="this.userDuplicate"
+          class="alert alert-danger"
+          role="alert"
+        >
           <h5>User Already Exist</h5>
         </div>
         <div class="row justify-content-between">
@@ -31,13 +35,21 @@
         <div class="row">
           <div class="col">
             <label>Username</label>
-            <input type="text" placeholder="Enter your username" v-model="username" />
+            <input
+              type="text"
+              placeholder="Enter your username"
+              v-model="username"
+            />
           </div>
         </div>
         <div class="row">
           <div class="col">
             <label>Email</label>
-            <input type="email" placeholder="Enter your email" v-model="email" />
+            <input
+              type="email"
+              placeholder="Enter your email"
+              v-model="email"
+            />
           </div>
         </div>
         <div class="row">
@@ -259,12 +271,12 @@
             </div>
           </div>
           <div
-              v-show="!isChecked &&submitState"
-              class="alert alert-danger"
-              role="alert"
-            >
-              <h5>Accepting terms and conditions is fundamental</h5>
-            </div>
+            v-show="!isChecked && submitState"
+            class="alert alert-danger"
+            role="alert"
+          >
+            <h5>Accepting terms and conditions is fundamental</h5>
+          </div>
         </div>
         <div class="row">
           <button @click="signUp" class="btn butn">Submit</button>
@@ -413,21 +425,20 @@ export default {
             }
           })
           .then((user) => {
+            console.log(user)
             for (let i = 0; i < user.length; i++) {
               if (
                 user[i].email === this.email ||
                 user[i].userName === this.username
               ) {
                 this.userDuplicate = true;
-                event.preventDefault();
+                break;
               }
               console.log(user[i].email,user[i].userName);
             }
           })
-          .catch((error) => {
-            console.error("Error during Signup:", error);
-          });
-
+        .then(() => {
+        if(!this.userDuplicate){
         fetch("http://localhost:8080/users/add", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -439,6 +450,10 @@ export default {
           })
           .catch((error) => {
             console.error("Error during signup:", error);
+          });
+        }
+      }).catch((error) => {
+            console.error("Error during Signup:", error);
           });
       }
     },

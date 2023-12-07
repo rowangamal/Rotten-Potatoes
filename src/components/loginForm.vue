@@ -94,6 +94,7 @@ export default {
             return res.json();
           }).then(response=>{
             if(response===null){
+            console.log("xxx");
               this.userNotFound = true;
               event.preventDefault();
             }else{
