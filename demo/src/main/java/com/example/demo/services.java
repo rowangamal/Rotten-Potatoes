@@ -1,9 +1,12 @@
 package com.example.demo;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -29,6 +32,7 @@ public class services {
             userData.setPassword(hashedPassword);
             usersData.add(userData);
             userDataService.writeUsersData(usersData);
+            System.out.println(usersData);
             return usersData;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
@@ -38,6 +42,27 @@ public class services {
     @GetMapping("/users/{email}")
     public UserData getUsers(@PathVariable String email ) {
         return userDataService.getUserByEmail(email);
+    }
+    @PostMapping("/checkPass/{email}")
+    public UserData checkLogin(@PathVariable String email,@RequestBody String password) throws NoSuchAlgorithmException {
+        UserData sentUser=userDataService.getUserByEmail(email);
+        try {
+            String hashedInputPassword = Hashing.getHashedHex(Hashing.getHashedBytes("Abdullah1234"));
+//            System.out.println(hashedInputPassword);
+//            System.out.println(sentUser.getPassword());
+            if (hashedInputPassword.equals(sentUser.getPassword())) {
+
+                System.out.println("Login successful");
+                return sentUser;
+            } else {
+                System.out.println("Incorrect password");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Error hashing password");
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
     @PutMapping("/updatePassword/{email}")
     public void updatePassword(@PathVariable String email, @RequestBody String newPassword) {
@@ -60,20 +85,20 @@ public class services {
             throw new RuntimeException(e);
         }
     }
-    @PostMapping("/users/login")
-    public Boolean checkPassword(@RequestBody String userPassword){
-        ArrayList<UserData> usersData = userDataService.getUsersData();
-        try {
-            userPassword = Hashing.getHashedHex(Hashing.getHashedBytes(userPassword));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        int x=0;
-        for (int i=0;i<usersData.size();i++){
-            if(usersData.get(i).getPassword().equals(userPassword))
-                return true;
-        }
-        return false;
-    }
+//    @PostMapping("/users/login")
+//    public Boolean checkPassword(@RequestBody String userPassword){
+//        ArrayList<UserData> usersData = userDataService.getUsersData();
+//        try {
+//            userPassword = Hashing.getHashedHex(Hashing.getHashedBytes(userPassword));
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
+//        int x=0;
+//        for (int i=0;i<usersData.size();i++){
+//            if(usersData.get(i).getPassword().equals(userPassword))
+//                return true;
+//        }
+//        return false;
+//    }
 }
 

@@ -267,7 +267,7 @@
             </div>
         </div>
         <div class="row">
-          <button @click="signUp,submitState=!submitState" class="btn butn">Submit</button>
+          <button @click="signUp" class="btn butn">Submit</button>
         </div>
         <div class="row">
           <h6 class="center" @click="changeStateLogin">
@@ -381,6 +381,7 @@ export default {
       this.$emit("changeState", "");
     },
     signUp(event) {
+    this.submitState=!this.submitState
       if (
         !this.checkPassword(this.password) ||
         !this.matchPassword(this.password, this.confirmPassword) ||

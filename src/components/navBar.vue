@@ -49,6 +49,7 @@
           aria-expanded="false"
         ></a>
         <ul class="dropdown-menu">
+          <li><h2>{{user}}</h2></li>
           <li><a class="dropdown-item" href="#">msh 3arf lesa</a></li>
           <li><button v-if="loginState" class="dropdown-item" @click="login">Sign Out</button></li>
         </ul>
@@ -63,8 +64,16 @@ export default {
   data() {
     return {
       search: "",
-      
+      user:""
     };
+  },
+  updated(){
+    if(storeID.currUser!==null){
+      this.user=storeID.currUser.userName;
+    }
+    else{
+      this.user="";
+    }
   },
   props: ["loginState"],
   methods: {

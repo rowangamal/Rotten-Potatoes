@@ -85,33 +85,59 @@ export default {
     logIn(event) {
       const email = this.email;
       const password = this.password;
-
-      fetch(`http://localhost:8080/users/${email}`)
-        .then((res) => {
-          if (res.ok) {
+      fetch(`http://localhost:8080/checkPass/${email}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(password),
+        })
+          .then(res => {
             return res.json();
-          } else if (res.status === 404) {
-            throw new Error("User not found");
-          } else {
-            throw new Error(`Error: ${res.status}`);
-          }
-        })
-        .then((user) => {
-          console.log(user);
-          if (user.password === password) {
-            const fakeToken = "your-fake-token";
-            localStorage.setItem("token", fakeToken);
-            storeID.currUser = user;
-            this.$emit("changeState", "");
-            this.$emit("login", true);
-          } else {
-            this.userNotFound = true;
-            event.preventDefault();
-          }
-        })
-        .catch((error) => {
-          console.error("Error during login:", error);
-        });
+          }).then(response=>{
+            if(response===null){
+              this.userNotFound = true;
+              event.preventDefault();
+            }else{
+              const fakeToken = "your-fake-token";
+              localStorage.setItem("token", fakeToken);
+              storeID.currUser = response;
+              this.$emit("changeState", "");
+              this.$emit("login", true);
+            }
+          })
+          .catch((error) => {
+            console.error("Error during login:", error);
+          });
+
+
+      // fetch(`http://localhost:8080/users/${email}`)
+      //   .then((res) => {
+      //     if (res.ok) {
+      //       return res.json();
+      //     } else if (res.status === 404) {
+      //       throw new Error("User not found");
+      //     } else {
+      //       throw new Error(`Error: ${res.status}`);
+      //     }
+      //   })
+      //   .then((user) => {
+      //     console.log(user);
+      //     if (user.password === password) {
+      //       const fakeToken = "your-fake-token";
+      //       localStorage.setItem("token", fakeToken);
+      //       storeID.currUser = user;
+      //       this.$emit("changeState", "");
+      //       this.$emit("login", true);
+      //     } else {
+      //       this.userNotFound = true;
+      //       event.preventDefault();
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error during login:", error);
+      //   });
+
+
+
     },
     checkLoggedIn() {
       const token = localStorage.getItem("token");
