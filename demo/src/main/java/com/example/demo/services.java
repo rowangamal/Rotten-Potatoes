@@ -47,20 +47,22 @@ public class services {
     public UserData checkLogin(@PathVariable String email,@RequestBody String password) throws NoSuchAlgorithmException {
         UserData sentUser=userDataService.getUserByEmail(email);
         password=password.replaceAll("\"","");
-        try {
-            String hashedInputPassword = Hashing.getHashedHex(Hashing.getHashedBytes(password));
+        if(sentUser!=null) {
+            try {
+                String hashedInputPassword = Hashing.getHashedHex(Hashing.getHashedBytes(password));
 //            System.out.println(password);
 //            System.out.println(sentUser.getPassword());
-            if (hashedInputPassword.equals(sentUser.getPassword())) {
+                if (hashedInputPassword.equals(sentUser.getPassword())) {
 
-                System.out.println("Login successful");
-                return sentUser;
-            } else {
-                System.out.println("Incorrect password");
+                    System.out.println("Login successful");
+                    return sentUser;
+                } else {
+                    System.out.println("Incorrect password");
+                }
+            } catch (NoSuchAlgorithmException e) {
+                System.out.println("Error hashing password");
+                throw new RuntimeException(e);
             }
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Error hashing password");
-            throw new RuntimeException(e);
         }
 
         return null;
@@ -78,13 +80,16 @@ public class services {
                 break;
             }
         }
-        try {
-            newPassword = Hashing.getHashedHex(Hashing.getHashedBytes(newPassword));
-            usersData.get(x).updatePassword(newPassword);
-            userDataService.writeUsersData(usersData);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        
+            System.out.println("yo");
+            try {
+                newPassword = Hashing.getHashedHex(Hashing.getHashedBytes(newPassword));
+                usersData.get(x).updatePassword(newPassword);
+                userDataService.writeUsersData(usersData);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+
     }
 //    @PostMapping("/users/login")
 //    public Boolean checkPassword(@RequestBody String userPassword){

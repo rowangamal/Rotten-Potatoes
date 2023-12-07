@@ -421,6 +421,7 @@ export default {
                 this.userDuplicate = true;
                 event.preventDefault();
               }
+              console.log(user[i].email,user[i].userName);
             }
           })
           .catch((error) => {

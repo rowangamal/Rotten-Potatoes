@@ -64,6 +64,7 @@ export default {
           }
         })
         .then((user) => {
+          console.log(user);
           if (user != null) {
             this.question = user.securityQuestion;
             this.answer = user.securityAnswer;
