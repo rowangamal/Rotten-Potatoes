@@ -2,7 +2,7 @@
   <navBar
     :loginState="this.loginState"
     @login="login"
-    v-show="state == '' || state == 'MoviePage'"
+    v-show="state == '' || state == 'MoviePage' || state =='userProfile'"
     @changeState="changeState"
   />
   <signUpForm v-show="state == 'signUpForm'" @changeState="changeState" />
@@ -28,6 +28,10 @@
     v-show="state == 'newPassword'"
     @changeState="changeState"
     :email="this.email"
+  />
+  <userProfile
+    v-show="state == 'userProfile'"
+    @changeState="changeState"
   />
   <div class="carousel" v-show="state == ''">
     <h3 v-show="state == ''">Trending Now</h3>
@@ -68,6 +72,7 @@ import securityForm from "./components/securityForm.vue";
 import newPassword from "./components/newPassword.vue";
 import moviepage from "./components/moviepage.vue";
 import movieCard from "./components/movieCard.vue";
+import userProfile from "./components/userProfile.vue";
 export default {
   name: "App",
   components: {
@@ -80,11 +85,12 @@ export default {
     newPassword,
     moviepage,
     movieCard,
+    userProfile,
   },
   data() {
     return {
       loginState: false, // state that control showing and hiding things depends on login state
-      state: "", // state that control the components that will be shown
+      state: "userProfile", // state that control the components that will be shown
       cat: "popular",
       cat2: "now_playing",
       cat3: "top_rated",
