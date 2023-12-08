@@ -181,7 +181,7 @@ h3 {
   margin: 0px;
   padding: 0px;
 }
-@keyframes mainAnimate {
+/* @keyframes mainAnimate {
   0% {
     transform: translateY(50px);
     opacity: 0, 5;
@@ -194,5 +194,5 @@ h3 {
     transform: translateY(0px);
     opacity: 1;
   }
-}
+} */
 </style>
