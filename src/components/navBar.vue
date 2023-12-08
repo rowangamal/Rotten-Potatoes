@@ -31,7 +31,7 @@
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" @click="track">
         <a class="nav-link links" href="#"><p>Watch list</p></a>
       </li>
       <li class="nav-item">
@@ -97,7 +97,14 @@ export default {
     },
     changeStateAbout(){
       this.$emit("changeState", "about");
-    }
+    },
+    track (){
+      this.$gtag.event("click navbar", {
+        'event_category': "click",
+        'event_label': "<label>",
+        'value': "1"
+      })
+    },
   },
 };
 </script>
