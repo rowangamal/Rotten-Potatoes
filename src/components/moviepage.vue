@@ -28,7 +28,7 @@
             <p class="moviedescription">
               {{ description }}
             </p>
-            <button type="button" class="btn trailer">
+            <button @click="playNow" type="button" class="btn trailer">
               Play Now <i class="fa-solid fa-play"></i>
             </button>
             <button @click="inVid" type="button" class="btn trailer">
@@ -137,6 +137,7 @@ export default {
         { comment: "what the hell have I just watched", user: "hany" },
       ],
       genres: [],
+      urlll:""
     };
   },
   updated() {
@@ -144,6 +145,27 @@ export default {
     this.actorFetch();
   },
   methods: {
+    async playNow() {
+      const url = `https://movie-tv-music-search-and-download.p.rapidapi.com/search?keywords=${this.title}&quantity=40&page=1`;
+      const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': '4bf275c431msh483d0796ec7b2adp136f1bjsn3c5407509517',
+        'X-RapidAPI-Host': 'movie-tv-music-search-and-download.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const result = await response.json();
+      this.urlll=result.result[0].torrent;
+    } catch (error) {
+      console.error(error);
+    }
+
+
+      window.open(this.urlll, '_blank');
+    },
     inVid() {
       const options = {
         method: "GET",
