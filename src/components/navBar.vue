@@ -114,7 +114,10 @@ export default {
   z-index: 4;
 }
 nav {
-  background-color: #ef9e3f;
+  background-image: url("../assets/potatoterms.png");
+  background-repeat: repeat;
+  background-size: 30%;
+  background-position: center;
   position: fixed;
   top: 0;
   width: 100%;

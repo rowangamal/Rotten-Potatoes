@@ -154,12 +154,15 @@ body {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+
   text-transform: capitalize;
 }
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  animation-name: mainAnimate;
+  animation-duration: 1s;
 }
 img {
   width: 100%;
@@ -177,5 +180,19 @@ h3 {
 .moviepage {
   margin: 0px;
   padding: 0px;
+}
+@keyframes mainAnimate {
+  0% {
+    transform: translateY(50px);
+    opacity: 0, 5;
+  }
+  50% {
+    transform: translateY(25px);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
 }
 </style>
