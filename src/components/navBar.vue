@@ -2,7 +2,7 @@
   <nav>
     <ul class="nav nav-pills">
       <li class="nav-item">
-        <a class="nav-link" @click="changeStateBack"
+        <a class="nav-link" href="index.html"
           ><img src="..\assets\Group 5.png" alt=""
         /></a>
       </li>
@@ -11,7 +11,6 @@
         <div class="input-group">
           <input
             v-model="search"
-            placeholder="Search for a movie"
             type="text"
             style="width: 500px"
             class="form-control"
@@ -33,16 +32,16 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link links" @click="changeStateAbout"><p>About</p></a>
+        <a class="nav-link links" href="#"><p>Watch list</p></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link links" href="#"><p>Watch list</p></a>
+        <a class="nav-link links" @click="changeStateAbout"><p>About</p></a>
       </li>
       <li class="nav-item">
         <a @click="changeStateSignup" v-if="!loginState" class="nav-link links"
           ><p>Signup/Login</p></a
         >
-        <a @click="changeStateProfile" v-else class="nav-link links"
+        <a v-else class="nav-link links" @click="changeStateProfile"
           ><i class="fa-solid fa-user"></i
         ></a>
         <a
@@ -53,7 +52,7 @@
           aria-expanded="false"
         ></a>
         <ul class="dropdown-menu">
-          <li><h5>{{user}}</h5></li>
+          <li><h4>{{userNAME}}</h4></li>
           <li><a class="dropdown-item" href="#">msh 3arf lesa</a></li>
           <li><button v-if="loginState" class="dropdown-item" @click="login">Sign Out</button></li>
         </ul>
@@ -64,47 +63,40 @@
 
 <script>
 import {storeID} from "./id.js";
-import about from "./about.vue";
 export default {
-  name: "navBar",
-  components: {
-    about,
-  },
   data() {
     return {
       search: "",
-      user:"",
+      userNAME:""
     };
   },
   updated(){
-    if(true){
             const userDataString = localStorage.getItem("userData");
-            this.user = JSON.parse(userDataString).userName;
+            if (!userDataString) {
+              this.userNAME = "";
+            }
+            else{
+            this.userNAME = JSON.parse(userDataString).userName;
             console.log(this.user);
-    }
-    else{
-      this.user="";
-    }
+            }
   },
   props: ["loginState"],
   methods: {
     changeStateSignup() {
       this.$emit("changeState", "signUpForm");
     },
-    changeStateBack() {
+    login(){
+      this.$emit("login", false);
+      localStorage.removeItem("token");
+      localStorage.removeItem("userData");  
+      storeID.currUser=null;
       this.$emit("changeState", "");
     },
-    changeStateProfile() {
+    changeStateProfile(){
       this.$emit("changeState", "userProfile");
     },
     changeStateAbout(){
       this.$emit("changeState", "about");
-    },
-    login(){
-      this.$emit("login", false);
-      localStorage.removeItem("token");
-      storeID.currUser=null;
-      this.$emit("changeState", "");     
     }
   },
 };
@@ -198,10 +190,11 @@ a:hover {
   color: #ee9e3f;
   z-index: 1;
 }
-h5{
+h4{
+  padding: auto;
   text-align: center;
-  margin: 0;
-  padding: 0;
-  background-color: #ee9e3f
+  font-size: 20px;
+  color: #000;
+  background-color: #ef9e3f;
 }
 </style>

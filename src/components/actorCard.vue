@@ -56,8 +56,7 @@ p {
   justify-content: space-between;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.295);
-  width: 70%;
-  left: 17%;
+  min-width: max-content;
 }
 .card:hover img {
   transform: scale(1.1);

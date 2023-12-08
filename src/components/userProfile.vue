@@ -42,23 +42,15 @@
 
 <script>
 export default {
-    // props : ["loginState","userr"],
+    props: ["user"],
     data(){
         return{
-            user:"null"
         }
     },
-    updated(){
-        if(true){
-            const userDataString = localStorage.getItem("userData");
-            this.user = JSON.parse(userDataString);
-            console.log(this.user);
-        }
-    }
 }
 </script>
 
-<style>
+<style scoped>
 .content {
     display: flex;
     height: 100%;

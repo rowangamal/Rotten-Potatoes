@@ -24,9 +24,7 @@
               class="alert alert-danger"
               role="alert"
             >
-              <h5>
-                Wrong Email Or Paassword
-              </h5>
+              <h5>Wrong Email Or Paassword</h5>
             </div>
           </div>
           <h6 @click="changeStateForget">Forget Your Password</h6>
@@ -67,6 +65,7 @@ export default {
       email: "",
       password: "",
       userNotFound: false,
+      USER: {},
     };
   },
   created() {
@@ -87,42 +86,40 @@ export default {
       const password = this.password;
       const apiUrl = `http://localhost:8080/checkPass/${email}`;
 
-  fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(password),
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else if (response.status === 404) {
-        return null;
-      } else {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-    })
-    .then((userData) => {
-      if (userData !== null) {
-        console.log("Login successful");
-        const fakeToken = "your-fake-token";
-        const userDataString = JSON.stringify(userData);
-        localStorage.setItem("userData", userDataString);
-        localStorage.setItem("token", fakeToken);
-        storeID.currUser = userData;
-        console.log(storeID.currUser);
-        this.$emit("changeState", "");
-        this.$emit("login", true);
-      } else {
-        this.userNotFound = true;
-        event.preventDefault();
-      }
-    })
-    .catch((error) => {
-      console.error("Error during login:", error);
-    });
-
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(password),
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else if (response.status === 404) {
+            return null;
+          } else {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+        })
+        .then((userData) => {
+          if (userData !== null) {
+            console.log("Login successful");
+            const fakeToken = "your-fake-token";
+            const userDataString = JSON.stringify(userData);
+            localStorage.setItem("userData", userDataString);
+            localStorage.setItem("token", fakeToken);
+            storeID.currUser = userData;
+            this.$emit("changeStateLogin", "", userData);
+            this.$emit("login", true);
+          } else {
+            this.userNotFound = true;
+            event.preventDefault();
+          }
+        })
+        .catch((error) => {
+          console.error("Error during login:", error);
+        });
 
       // fetch(`http://localhost:8080/users/${email}`)
       //   .then((res) => {
@@ -150,14 +147,13 @@ export default {
       //   .catch((error) => {
       //     console.error("Error during login:", error);
       //   });
-
-
-
     },
     checkLoggedIn() {
       const token = localStorage.getItem("token");
       if (token) {
-        this.$emit("changeState", "");
+        const userDataString = localStorage.getItem("userData");
+        const userData = JSON.parse(userDataString);
+        this.$emit("changeStateLogin", "", userData);
         this.$emit("login", true);
       }
     },

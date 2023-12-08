@@ -1,15 +1,21 @@
 <template>
-  <!-- <about /> -->
   <navBar
     :loginState="this.loginState"
     @login="login"
-    v-show="state == '' || state == 'MoviePage' || state =='userProfile' || state == 'about'"
+    v-show="
+      state == '' ||
+      state == 'MoviePage' ||
+      state == 'userProfile' ||
+      state == 'about'
+    "
     @changeState="changeState"
+    @changeStateLogin="changeStateLogin"
   />
   <signUpForm v-show="state == 'signUpForm'" @changeState="changeState" />
   <loginForm
     v-show="state == 'loginForm'"
     @changeState="changeState"
+    @changeStateLogin="changeStateLogin"
     @login="login"
   />
   <forgetPassword
@@ -31,9 +37,9 @@
     :email="this.email"
   />
   <userProfile
+    @changeState="changeState"
     v-show="state == 'userProfile'"
-    :loginState="this.loginState"
-    :userr="this.userr"
+    :user="this.user"
   />
   <div class="carousel" v-show="state == ''">
     <h3 v-show="state == ''">Trending Now</h3>
@@ -76,7 +82,6 @@ import newPassword from "./components/newPassword.vue";
 import moviepage from "./components/moviepage.vue";
 import movieCard from "./components/movieCard.vue";
 import userProfile from "./components/userProfile.vue";
-import { storeID } from "./components/id.js";
 import about from "./components/about.vue";
 export default {
   name: "App",
@@ -105,7 +110,7 @@ export default {
       question: "",
       answer: "",
       id: "",
-      userr: {},
+      user: {},
     };
   },
   methods: {
@@ -120,23 +125,26 @@ export default {
     },
     login(newLogin) {
       this.loginState = newLogin;
-      this.userr = storeID.currUser;
     },
     changeStateMovie(newState, Id) {
       this.state = newState;
       this.id = Id;
       console.log(this.id);
     },
-    changeStateForget(newState,Email) {
+    changeStateForget(newState, Email) {
       this.state = newState;
       this.email = Email;
+    },
+    changeStateLogin(newState, USEr) {
+      this.state = newState;
+      this.user = USEr;
     },
   },
 };
 </script>
 
 <style>
-body{
+body {
   overflow-x: hidden;
 }
 #app {
