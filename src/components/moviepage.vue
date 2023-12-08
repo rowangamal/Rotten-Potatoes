@@ -137,12 +137,15 @@ export default {
         { comment: "what the hell have I just watched", user: "hany" },
       ],
       genres: [],
-      urlll:""
+      urlll:"",
+      updated:false
     };
   },
   updated() {
-    this.loadData();
-    this.actorFetch();
+    if(!this.updated){
+      this.loadData();
+      this.actorFetch();
+    }
   },
   methods: {
     async playNow() {
@@ -159,6 +162,7 @@ export default {
       const response = await fetch(url, options);
       const result = await response.json();
       this.urlll=result.result[0].torrent;
+      console.log(result.result);
     } catch (error) {
       console.error(error);
     }
@@ -211,6 +215,7 @@ export default {
           this.actors = storeID.currMov;
         })
         .catch((err) => console.error(err));
+        this.updated=false;
     },
     mouseOver(index) {
       if (!this.clicked) {
