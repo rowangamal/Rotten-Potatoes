@@ -29,7 +29,7 @@
               {{ description }}
             </p>
             <button @click="playNow" type="button" class="btn trailer">
-              Play Now <i class="fa-solid fa-play"></i>
+              Download Now <i class="fa-solid fa-play"></i>
             </button>
             <button @click="inVid" type="button" class="btn trailer">
               Trailer
