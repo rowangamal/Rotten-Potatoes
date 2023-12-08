@@ -149,11 +149,12 @@ export default {
   },
   methods: {
     async playNow() {
-      const url = `https://movie-tv-music-search-and-download.p.rapidapi.com/search?keywords=${this.title}&quantity=40&page=1`;
+      let newtit=this.title.replaceAll(" ","%20");
+      const url = `https://movie-tv-music-search-and-download.p.rapidapi.com/search?keywords=${newtit}%3CREQUIRED%3E&quantity=40&page=1`;
       const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': '4bf275c431msh483d0796ec7b2adp136f1bjsn3c5407509517',
+        'X-RapidAPI-Key': '72b0a49e61msh60849d7630f09f4p1f7053jsn06c00cf2eaaf',
         'X-RapidAPI-Host': 'movie-tv-music-search-and-download.p.rapidapi.com'
       }
     };
