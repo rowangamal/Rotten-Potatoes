@@ -23,6 +23,13 @@
             We're here to help you decide what to watch and to help you discover new movies and TV shows you'll love.
             We provide several ways to interact with our reviews, including a rating system and comments.
         </div>
+        <h4>
+            Contact Us/Support
+        </h4>
+        <div class="points">
+            If you have any questions or concerns, 
+            <a href="mailto:rottenpotatoes@gmail.com">contact us through this link</a>
+        </div>
     </div>
 </template>
 
