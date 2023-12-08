@@ -35,7 +35,7 @@
         <a class="nav-link links" href="#"><p>Watch list</p></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link links" @click="changeStateAbout"><p>About</p></a>
+        <a class="nav-link links" @click="changeStateAbout"><p>About/Contact us</p></a>
       </li>
       <li class="nav-item">
         <a @click="changeStateSignup" v-if="!loginState" class="nav-link links"
@@ -53,7 +53,7 @@
         ></a>
         <ul class="dropdown-menu">
           <li><h4>{{userNAME}}</h4></li>
-          <li><a class="dropdown-item" href="#">msh 3arf lesa</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
           <li><button v-if="loginState" class="dropdown-item" @click="login">Sign Out</button></li>
         </ul>
       </li>

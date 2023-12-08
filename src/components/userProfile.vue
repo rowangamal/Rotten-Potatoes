@@ -3,8 +3,9 @@
         <div class="left-content">
             <ul class="info">
                 <li>User info</li>
-                <li>Favourits</li>
+                <li>Favorites</li>
                 <li>Watch list</li>
+                <li>Settings</li>
             </ul>
         </div>
         <div class="right-content">
