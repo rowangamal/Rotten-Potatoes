@@ -5,46 +5,48 @@
         <img src="..\assets\image 2.png" alt="" />
       </div>
       <div class="form">
-        <h2 @click="changeStateBack">
-          <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
-        </h2>
-        <h3>Hi Again!</h3>
-        <div
-        v-show="this.missingData"
-        class="alert alert-danger"
-        role="alert"
-      >
-        <h5>Some Data Is Missing</h5>
-      </div>
-        <div class="row">
-          <div class="col">
-            <label>Email</label>
-            <input type="email" required v-model="email" />
+        <form @submit="logIn">
+          <h2 @click="changeStateBack">
+            <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
+          </h2>
+          <h3>Hi Again!</h3>
+          <div
+            v-show="this.missingData"
+            class="alert alert-danger"
+            role="alert"
+          >
+            <h5>Some Data Is Missing</h5>
           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label>Password</label>
-            <input type="password" required v-model="password" />
-            <div
-              v-show="this.userNotFound"
-              class="alert alert-danger"
-              role="alert"
-            >
-              <h5>Wrong Email Or Paassword</h5>
+          <div class="row">
+            <div class="col">
+              <label>Email</label>
+              <input type="email" required v-model="email" />
             </div>
           </div>
-          <h6 @click="changeStateForget">Forget Your Password</h6>
-        </div>
-        <div class="row">
-          <button @click="logIn" class="butn">Login</button>
-        </div>
-        
-        <div class="row">
-          <h6 class="center" @click="changeStateSignup">
-            Don't have an account? Sign up
-          </h6>
-        </div>
+          <div class="row">
+            <div class="col">
+              <label>Password</label>
+              <input type="password" required v-model="password" />
+              <div
+                v-show="this.userNotFound"
+                class="alert alert-danger"
+                role="alert"
+              >
+                <h5>Wrong Email Or Paassword</h5>
+              </div>
+            </div>
+            <h6 @click="changeStateForget">Forget Your Password</h6>
+          </div>
+          <div class="row">
+            <button class="butn">Login</button>
+          </div>
+
+          <div class="row">
+            <h6 class="center" @click="changeStateSignup">
+              Don't have an account? Sign up
+            </h6>
+          </div>
+        </form>
       </div>
     </section>
   </div>
@@ -153,14 +155,13 @@ export default {
         this.$emit("login", true);
       }
     },
-    checkMissingData(){
-      if(this.email.length==0||this.password.length==0){
+    checkMissingData() {
+      if (this.email.length == 0 || this.password.length == 0) {
         this.missingData = true;
+      } else {
+        this.missingData = false;
       }
-      else{
-        this.missingData=false;
-      }
-    }
+    },
   },
 };
 </script>
