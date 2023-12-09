@@ -145,7 +145,8 @@ export default {
     if(!this.updated){
       this.loadData();
       this.actorFetch();
-      console.clear();
+      //console.clear();
+      this.updated=true;
     }
   },
   methods: {
@@ -156,8 +157,9 @@ export default {
       const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': '72b0a49e61msh60849d7630f09f4p1f7053jsn06c00cf2eaaf',
+        'X-RapidAPI-Key': 'fe9219690cmshc641c468ac1874dp156f63jsna03d6a220172',
         //backUP:fe9219690cmshc641c468ac1874dp156f63jsna03d6a220172
+        //72b0a49e61msh60849d7630f09f4p1f7053jsn06c00cf2eaaf
         'X-RapidAPI-Host': 'movie-tv-music-search-and-download.p.rapidapi.com'
       }
     };
