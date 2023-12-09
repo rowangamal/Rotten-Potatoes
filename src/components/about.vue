@@ -28,7 +28,7 @@
         </h4>
         <div class="points">
             If you have any questions or concerns, 
-            <a href="mailto:rottenpotatoes@gmail.com">contact us through this link</a>
+            <a href="mailto:rottenpotatoes@gmail.com" >contact us through this link</a>
         </div>
     </div>
 </template>

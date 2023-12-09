@@ -14,6 +14,7 @@
             type="text"
             style="width: 500px"
             class="form-control"
+            placeholder="Search"
           />
           <div class="input-group-append searchbtn">
             <a
