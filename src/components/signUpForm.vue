@@ -22,6 +22,13 @@
         >
           <h5>User Already Exist</h5>
         </div>
+        <div
+          v-show="this.missingData"
+          class="alert alert-danger"
+          role="alert"
+        >
+          <h5>Some Data Is Missing</h5>
+        </div>
         <div class="row justify-content-between">
           <div class="col-6">
             <label>First name</label>
@@ -317,6 +324,7 @@ export default {
       termsDisplay: false,
       submitState: false,
       userDuplicate: false,
+      missingData : false,
     };
   },
   methods: {
@@ -392,7 +400,16 @@ export default {
     changeStateBack() {
       this.$emit("changeState", "");
     },
+    checkMissing() {
+      if(this.firstName.length==0||this.lastName.length==0||this.email.length==0||this.username.length==0||this.password.length==0||this.confirmPassword.length==0||this.securityQuestion.length==0||this.securityAnswer.length==0||this.gender.length==0) {
+        this.missingData=true
+      }
+      else{
+        this.missingData=false;
+      }
+    },
     signUp(event) {
+      this.checkMissing();
     this.submitState=!this.submitState
     this.userDuplicate=false;
       if (

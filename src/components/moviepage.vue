@@ -145,6 +145,7 @@ export default {
     if(!this.updated){
       this.loadData();
       this.actorFetch();
+      console.clear();
     }
   },
   methods: {

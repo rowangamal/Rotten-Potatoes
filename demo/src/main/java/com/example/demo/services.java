@@ -80,7 +80,7 @@ public class services {
             }
         }
         
-            System.out.println("yo");
+
             try {
                 newPassword = Hashing.getHashedHex(Hashing.getHashedBytes(newPassword));
                 usersData.get(x).updatePassword(newPassword);

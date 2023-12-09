@@ -54,7 +54,7 @@
         ></a>
         <ul class="dropdown-menu">
           <li><h4>{{userNAME}}</h4></li>
-          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">TBC</a></li>
           <li><button v-if="loginState" class="dropdown-item" @click="login">Sign Out</button></li>
         </ul>
       </li>

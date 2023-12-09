@@ -9,6 +9,13 @@
           <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
         </h2>
         <h3>Hi Again!</h3>
+        <div
+        v-show="this.missingData"
+        class="alert alert-danger"
+        role="alert"
+      >
+        <h5>Some Data Is Missing</h5>
+      </div>
         <div class="row">
           <div class="col">
             <label>Email</label>
@@ -32,21 +39,7 @@
         <div class="row">
           <button @click="logIn" class="butn">Login</button>
         </div>
-        <div class="row">
-          <h4>Or login with</h4>
-        </div>
-        <div class="row icons justify-content-center">
-          <div class="col-4">
-            <button class="shortcut">
-              <img src="..\assets\Google button.png" alt="" />
-            </button>
-          </div>
-          <div class="col-4">
-            <button class="shortcut">
-              <img src="..\assets\Facebook button.png" alt="" />
-            </button>
-          </div>
-        </div>
+        
         <div class="row">
           <h6 class="center" @click="changeStateSignup">
             Don't have an account? Sign up
@@ -66,6 +59,7 @@ export default {
       password: "",
       userNotFound: false,
       USER: {},
+      missingData: false,
     };
   },
   created() {
@@ -82,6 +76,7 @@ export default {
       this.$emit("changeState", "forgetPassword");
     },
     logIn(event) {
+      this.checkMissingData();
       this.userNotFound = false;
       const email = this.email;
       const password = this.password;
@@ -158,6 +153,14 @@ export default {
         this.$emit("login", true);
       }
     },
+    checkMissingData(){
+      if(this.email.length==0||this.password.length==0){
+        this.missingData = true;
+      }
+      else{
+        this.missingData=false;
+      }
+    }
   },
 };
 </script>
