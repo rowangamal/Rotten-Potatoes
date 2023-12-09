@@ -394,6 +394,7 @@ export default {
     },
     signUp(event) {
     this.submitState=!this.submitState
+    this.userDuplicate=false;
       if (
         !this.checkPassword(this.password) ||
         !this.matchPassword(this.password, this.confirmPassword) ||
