@@ -82,6 +82,7 @@ export default {
       this.$emit("changeState", "forgetPassword");
     },
     logIn(event) {
+      this.userNotFound = false;
       const email = this.email;
       const password = this.password;
       const apiUrl = `http://localhost:8080/checkPass/${email}`;

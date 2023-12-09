@@ -51,6 +51,7 @@ export default {
       this.$emit("changeState", "loginForm");
     },
     changeStateSecurity(event) {
+    this.err = false;
       const email = this.email;
       console.log(email);
       fetch(`http://localhost:8080/users/${email}`)

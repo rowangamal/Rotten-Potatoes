@@ -49,6 +49,7 @@ export default {
       this.$emit("changeState", "loginForm");
     },
     changeStateForget() {
+      this.wrongAnswer = false;
       if (this.Qanswer == this.answer) {
         this.$emit("changeStateForget", "newPassword", this.email);
       } else {
