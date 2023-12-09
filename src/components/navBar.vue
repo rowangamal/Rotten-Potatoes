@@ -99,7 +99,8 @@ export default {
     changeStateAbout(){
       this.$emit("changeState", "about");
     },
-    track (){
+    track(){
+      console.log("Here")
       this.$gtag.event("click navbar", {
         'event_category': "click",
         'event_label': "<label>",

@@ -6,16 +6,19 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const app = createApp(App);
 app.use(VueGtag, {
-  config: { id: "419282769" } 
+  config: { id: "G-4LV8JPWB1G" } 
 });
-window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-  gtag('config', '419282769');
+app.mount('#app')
+// app.use(VueGtag, {
+//   config: { id: "419282769" } 
+// });
+// window.dataLayer = window.dataLayer || [];
+//   function gtag() {
+//     dataLayer.push(arguments);
+//   }
+//   gtag('js', new Date());
+//   gtag('config', '419282769');
 //   ga('create', '419282769', {
 //     'cookieDomain': 'none'
 //   });
-app.mount('#app')
 // "419282769"
