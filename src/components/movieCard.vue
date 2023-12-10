@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import { storeID } from './id';
+import $store from "../store/index.js";
+
 export default {
   props: ["img", "title", "date", "rate","id"],
   data() {
@@ -25,8 +26,7 @@ export default {
   },
   methods: {
     openmoviepage(){
-      storeID.ID=this.id;
-      this.$emit("openmoviepage",this.id);
+      this.$router.push({ name: "movie", params: { id: this.id } });
     }
   }
 };

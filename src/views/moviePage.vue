@@ -1,4 +1,5 @@
 <template>
+  <navBar/>
   <div class="all">
     <section
       v-bind:style="{ 'background-image': 'url(' + backDrop + ')' }"
@@ -109,14 +110,16 @@
 </template>
 
 <script>
-import carousel from "./carousel.vue";
-import carouselActors from "./carouselActors.vue";
-import { storeID } from "./id.js";
+// import carousel from "./carousel.vue";
+import carouselActors from "@/components/carouselActors.vue";
+import navBar from "@/components/navBar.vue";
+import $store from "../store/index.js";
+
 export default {
-  props: ["index", "id"],
+  props: ["id"],
   components: {
-    carousel,
     carouselActors,
+    navBar,
   },
   data() {
     return {
@@ -137,44 +140,42 @@ export default {
         { comment: "what the hell have I just watched", user: "hany" },
       ],
       genres: [],
-      urlll:"",
-      updated:false
+      urlll: "",
+      updated: false,
     };
   },
-  updated() {
-    if(!this.updated){
-      this.loadData();
-      this.actorFetch();
-      //console.clear();
-      this.updated=true;
-    }
+  mounted() {
+    console.log(this.id);
+    this.loadData();
+    this.actorFetch();
   },
   methods: {
     async playNow() {
-      let newtit=this.title.replaceAll(" ","%20");
+      let newtit = this.title.replaceAll(" ", "%20");
       console.log(newtit);
       const url = `https://movie-tv-music-search-and-download.p.rapidapi.com/search?keywords=${newtit}&quantity=40&page=1`;
       const options = {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': 'fe9219690cmshc641c468ac1874dp156f63jsna03d6a220172',
-        //backUP:fe9219690cmshc641c468ac1874dp156f63jsna03d6a220172
-        //72b0a49e61msh60849d7630f09f4p1f7053jsn06c00cf2eaaf
-        'X-RapidAPI-Host': 'movie-tv-music-search-and-download.p.rapidapi.com'
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key":
+            "fe9219690cmshc641c468ac1874dp156f63jsna03d6a220172",
+          //backUP:fe9219690cmshc641c468ac1874dp156f63jsna03d6a220172
+          //72b0a49e61msh60849d7630f09f4p1f7053jsn06c00cf2eaaf
+          "X-RapidAPI-Host":
+            "movie-tv-music-search-and-download.p.rapidapi.com",
+        },
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        this.urlll = result.result[0].torrent;
+        console.log(result.result);
+      } catch (error) {
+        console.error(error);
       }
-    };
 
-    try {
-      const response = await fetch(url, options);
-      const result = await response.json();
-      this.urlll=result.result[0].torrent;
-      console.log(result.result);
-    } catch (error) {
-      console.error(error);
-    }
-
-
-      window.open(this.urlll, '_blank');
+      window.open(this.urlll, "_blank");
     },
     inVid() {
       const options = {
@@ -217,11 +218,11 @@ export default {
       )
         .then((response) => response.json())
         .then((response) => {
-          storeID.currMov = response.cast;
-          this.actors = storeID.currMov;
+          $store.commit("setCurrMov",response.cast);
+          this.actors = $store.state.currMov;
         })
         .catch((err) => console.error(err));
-        this.updated=false;
+      this.updated = false;
     },
     mouseOver(index) {
       if (!this.clicked) {

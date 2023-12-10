@@ -1,4 +1,4 @@
-# rotenpotato
+# rotten-p
 
 ## Project setup
 ```

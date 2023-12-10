@@ -1,57 +1,63 @@
 <template>
+<div class="all">
   <div class="container">
     <section>
       <div class="img">
         <img src="..\assets\image 2.png" alt="" />
       </div>
       <div class="form">
-        <h2 @click="changeStateLogin">
-          <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
-        </h2>
-        <h3>One More Step!</h3>
-        <div class="row">
-          <div class="col">
-            <label>Question</label>
-            <p>{{ question }}</p>
+        <router-link to="/login">
+          <h2>
+            <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
+          </h2>
+        </router-link>
+        <form @submit.prevent="changePass">
+          <h3>One More Step!</h3>
+          <div class="row">
+            <div class="col">
+              <label>Question</label>
+              <p>{{ question }}</p>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label>Answer</label>
-            <input type="text" required v-model="Qanswer" />
+          <div class="row">
+            <div class="col">
+              <label>Answer</label>
+              <input type="text" required v-model="Qanswer" />
+            </div>
+            <div v-show="wrongAnswer" class="alert alert-danger" role="alert">
+              <h5>Wrong Answer!</h5>
+            </div>
           </div>
-          <div v-show="wrongAnswer" class="alert alert-danger" role="alert">
-            <h5>Wrong Answer!</h5>
+          <div class="row">
+            <button class="butn">Continue</button>
           </div>
-        </div>
-        <div class="row">
-          <button @click="changeStateForget" class="butn">Continue</button>
-        </div>
+        </form>
       </div>
     </section>
+  </div>
   </div>
 </template>
 
 <script>
+import $store from "../store/index.js";
+
 export default {
-  props: ["email", "question", "answer"],
   data() {
     return {
+      email: $store.state.forgetUser.email,
+      question: $store.state.forgetUser.securityQuestion,
+      answer: $store.state.forgetUser.securityAnswer,
       Qanswer: "",
       wrongAnswer: false,
     };
   },
   methods: {
-    changeStateSignup() {
-      this.$emit("changeState", "signUpForm");
-    },
-    changeStateLogin() {
-      this.$emit("changeState", "loginForm");
-    },
-    changeStateForget() {
+    changePass() {
       this.wrongAnswer = false;
       if (this.Qanswer == this.answer) {
-        this.$emit("changeStateForget", "newPassword", this.email);
+        this.$router.push({
+          name: "newPassword",
+        });
       } else {
         this.wrongAnswer = true;
       }

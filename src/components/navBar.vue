@@ -2,9 +2,9 @@
   <nav>
     <ul class="nav nav-pills">
       <li class="nav-item">
-        <a class="nav-link" href="index.html"
-          ><img src="..\assets\Group 5.png" alt=""
-        /></a>
+        <router-link to="/" class="nav-link"
+          ><img src="../assets/Group 5.png"
+        /></router-link>
       </li>
 
       <li class="nav-item">
@@ -36,15 +36,17 @@
         <a class="nav-link links" href="#"><p>Watch list</p></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link links" @click="changeStateAbout"><p>About/Contact us</p></a>
+        <router-link to="/about" class="nav-link links"
+          ><p>About/Contact us</p></router-link
+        >
       </li>
       <li class="nav-item">
-        <a @click="changeStateSignup" v-if="!loginState" class="nav-link links"
-          ><p>Signup/Login</p></a
+        <router-link v-if="!loginState" to="/signup" class="nav-link links"
+          ><p>SignUp/Login</p></router-link
         >
-        <a v-else class="nav-link links" @click="changeStateProfile"
+        <router-link v-else to="/profile" class="nav-link links"
           ><i class="fa-solid fa-user"></i
-        ></a>
+        ></router-link>
         <a
           class="nav-link dropdown-toggle"
           data-bs-toggle="dropdown"
@@ -53,9 +55,15 @@
           aria-expanded="false"
         ></a>
         <ul class="dropdown-menu">
-          <li><h4>{{userNAME}}</h4></li>
+          <li>
+            <h4>{{ userNAME }}</h4>
+          </li>
           <li><a class="dropdown-item" href="#">TBC</a></li>
-          <li><button v-if="loginState" class="dropdown-item" @click="login">Sign Out</button></li>
+          <li>
+            <button v-if="loginState" class="dropdown-item" @click="signOut">
+              Sign Out
+            </button>
+          </li>
         </ul>
       </li>
     </ul>
@@ -63,56 +71,52 @@
 </template>
 
 <script>
-import {storeID} from "./id.js";
+import $store from "../store/index.js";
+
 export default {
   data() {
     return {
       search: "",
-      userNAME:""
+      userNAME: "",
+      loginState: false,
     };
   },
-  updated(){
-            const userDataString = localStorage.getItem("userData");
-            if (!userDataString) {
-              this.userNAME = "";
-            }
-            else{
-            this.userNAME = JSON.parse(userDataString).userName;
-            console.log(this.user);
-            }
+  created() {
+    const userDataString = localStorage.getItem("userData");
+    if (!userDataString) {
+      this.userNAME = "";
+      $store.commit("setLoginStatus", false);
+      $store.commit("setCurrUser", null);
+    } else {
+      $store.commit("setLoginStatus", true);
+      $store.commit("setCurrUser", JSON.parse(userDataString));
+      this.userNAME = JSON.parse(userDataString).userName;
+    }
+    this.loginState = $store.state.loginStatus;
   },
-  props: ["loginState"],
   methods: {
-    changeStateSignup() {
-      this.$emit("changeState", "signUpForm");
-    },
-    login(){
-      this.$emit("login", false);
+    signOut() {
+      this.$router.push({ name: "home" });
       localStorage.removeItem("token");
-      localStorage.removeItem("userData");  
-      storeID.currUser=null;
-      this.$emit("changeState", "");
+      localStorage.removeItem("userData");
+      this.$store.commit("setLoginStatus", false);
+      this.$store.commit("setCurrUser", null);
+      this.loginState = $store.state.loginStatus;
     },
-    changeStateProfile(){
-      this.$emit("changeState", "userProfile");
-    },
-    changeStateAbout(){
-      this.$emit("changeState", "about");
-    },
-    track(){
-      console.log("Here")
+    track() {
+      console.log("Here");
       this.$gtag.event("click navbar", {
-        'event_category': "click",
-        'event_label': "<label>",
-        'value': "1"
-      })
+        event_category: "click",
+        event_label: "<label>",
+        value: "1",
+      });
     },
   },
 };
 </script>
 
 <style scoped>
-*{
+* {
   z-index: 4;
 }
 nav {
@@ -202,7 +206,7 @@ a:hover {
   color: #ee9e3f;
   z-index: 1;
 }
-h4{
+h4 {
   padding: auto;
   text-align: center;
   font-size: 20px;

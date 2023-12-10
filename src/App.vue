@@ -1,198 +1,40 @@
 <template>
-  <navBar
-    :loginState="this.loginState"
-    @login="login"
-    v-show="
-      state == '' ||
-      state == 'MoviePage' ||
-      state == 'userProfile' ||
-      state == 'about'
-    "
-    @changeState="changeState"
-    @changeStateLogin="changeStateLogin"
-  />
-  <signUpForm v-show="state == 'signUpForm'" @changeState="changeState" />
-  <loginForm
-    v-show="state == 'loginForm'"
-    @changeState="changeState"
-    @changeStateLogin="changeStateLogin"
-    @login="login"
-  />
-  <forgetPassword
-    v-show="state == 'forgetPassword'"
-    @changeStateSecurity="changeStateSecurity"
-    @changeState="changeState"
-  />
-  <securityForm
-    v-show="state == 'securityForm'"
-    @changeState="changeState"
-    @changeStateForget="changeStateForget"
-    :email="this.email"
-    :question="this.question"
-    :answer="this.answer"
-  />
-  <newPassword
-    v-show="state == 'newPassword'"
-    @changeState="changeState"
-    :email="this.email"
-  />
-  <userProfile
-    @changeState="changeState"
-    v-show="state == 'userProfile'"
-    :user="this.user"
-  />
-  <div class="carousel" v-show="state == ''">
-    <h3 v-show="state == ''">Trending Now</h3>
-    <carousel
-      :category="cat"
-      v-show="state == ''"
-      @changeStateMovie="changeStateMovie"
-    />
-    <h3 v-show="state == ''">Now Playing</h3>
-    <carousel
-      :category="cat2"
-      v-show="state == ''"
-      @changeStateMovie="changeStateMovie"
-    />
-    <h3 v-show="state == ''">Top Rated</h3>
-    <carousel
-      :category="cat3"
-      v-show="state == ''"
-      @changeStateMovie="changeStateMovie"
-    />
-    <h3 v-show="state == ''">Upcoming</h3>
-    <carousel
-      :category="cat4"
-      v-show="state == ''"
-      @changeStateMovie="changeStateMovie"
-    />
-  </div>
-  <moviepage :id="id" v-show="state == 'MoviePage'" />
-  <about v-show="state == 'about'" />
+  <router-view/>
 </template>
 
-<script>
-import navBar from "./components/navBar.vue";
-import signUpForm from "./components/signUpForm.vue";
-import loginForm from "./components/loginForm.vue";
-import carousel from "./components/carousel.vue";
-import forgetPassword from "./components/forgetPassword.vue";
-import securityForm from "./components/securityForm.vue";
-import newPassword from "./components/newPassword.vue";
-import moviepage from "./components/moviepage.vue";
-import movieCard from "./components/movieCard.vue";
-import userProfile from "./components/userProfile.vue";
-import about from "./components/about.vue";
-export default {
-  name: "App",
-  components: {
-    navBar,
-    signUpForm,
-    loginForm,
-    carousel,
-    forgetPassword,
-    securityForm,
-    newPassword,
-    moviepage,
-    movieCard,
-    userProfile,
-    about,
-  },
-  data() {
-    return {
-      loginState: false, // state that control showing and hiding things depends on login state
-      state: "", // state that control the components that will be shown
-      cat: "popular",
-      cat2: "now_playing",
-      cat3: "top_rated",
-      cat4: "upcoming",
-      email: "",
-      question: "",
-      answer: "",
-      id: "",
-      user: {},
-    };
-  },
-  methods: {
-    changeState(newState) {
-      this.state = newState;
-    },
-    changeStateSecurity(newState, Email, Question, Answer) {
-      this.state = newState;
-      this.email = Email;
-      this.question = Question;
-      this.answer = Answer;
-    },
-    login(newLogin) {
-      this.loginState = newLogin;
-    },
-    changeStateMovie(newState, Id) {
-      this.state = newState;
-      this.id = Id;
-      console.log(this.id);
-    },
-    changeStateForget(newState, Email) {
-      this.state = newState;
-      this.email = Email;
-    },
-    changeStateLogin(newState, USEr) {
-      this.state = newState;
-      this.user = USEr;
-    },
-  },
-};
-</script>
-
 <style>
-body {
-  overflow-x: hidden;
-}
 #app {
   font-family: "Monomaniac One", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
 
-  text-transform: capitalize;
+
+a {
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
 }
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+
+.all{
   animation-name: mainAnimate;
-  animation-duration: 1s;
+  animation-duration: 0.8s;
 }
-img {
-  width: 100%;
-  height: 100%;
-}
-h3 {
-  text-align: left;
-  margin-left: 5%;
-  margin-bottom: 20px;
-  margin-top: 100px;
-}
-.carousel {
-  margin-top: 100px;
-}
-.moviepage {
-  margin: 0px;
-  padding: 0px;
-}
-/* @keyframes mainAnimate {
+@keyframes mainAnimate {
   0% {
-    transform: translateY(50px);
-    opacity: 0, 5;
+    transform: translateY(150px);
+    opacity: 0;
   }
-  50% {
-    transform: translateY(25px);
-    opacity: 0.75;
-  }
+
   100% {
     transform: translateY(0px);
     opacity: 1;
   }
-} */
+}
+a.router-link-exact-active {
+  color: white;
+  text-decoration: none;
+}
 </style>

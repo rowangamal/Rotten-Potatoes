@@ -1,57 +1,54 @@
 <template>
+<div class="all">
   <div class="container">
     <section>
       <div class="img">
         <img src="..\assets\image 2.png" alt="" />
       </div>
       <div class="form">
-        <h2 @click="changeStateLogin">
-          <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
-        </h2>
-        <h3>Let's Get There!</h3>
-        <div class="row">
-          <div class="col">
-            <label>Email</label>
-            <input type="email" required v-model="email" />
+        <router-link to="/login">
+          <h2>
+            <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
+          </h2>
+        </router-link>
+        <form @submit.prevent="forget">
+          <h3>Let's Get There!</h3>
+          <div class="row">
+            <div class="col">
+              <label>Email</label>
+              <input type="email" required v-model="email" />
+            </div>
+            <div v-show="err" class="alert alert-danger" role="alert">
+              <h5>User Not Found!</h5>
+            </div>
           </div>
-          <div v-show="err" class="alert alert-danger" role="alert">
-            <h5>User Not Found!</h5>
+          <div class="row">
+            <button class="butn">ForgetPassword</button>
           </div>
-        </div>
-        <div class="row">
-          <button class="butn" @click="changeStateSecurity">
-            ForgetPassword
-          </button>
-        </div>
-        <div class="row">
-          <h6 class="center" @click="changeStateSignup">
-            Don't have an account? Sign up
-          </h6>
-        </div>
+          <div class="row">
+            <router-link to="/signup" class="nav-link links">
+              <h6 class="center">Don't have an account? Sign up</h6>
+            </router-link>
+          </div>
+        </form>
       </div>
     </section>
+  </div>
   </div>
 </template>
 
 <script>
+import $store from "../store/index.js";
 export default {
   data() {
     return {
       email: "",
-      question: "",
-      answer: "",
       err: false,
     };
   },
   methods: {
-    changeStateSignup() {
-      this.$emit("changeState", "signUpForm");
-    },
-    changeStateLogin() {
-      this.$emit("changeState", "loginForm");
-    },
-    changeStateSecurity(event) {
-    this.err = false;
+    forget(event) {
+      this.err = false;
       const email = this.email;
       console.log(email);
       fetch(`http://localhost:8080/users/${email}`)
@@ -67,15 +64,10 @@ export default {
         .then((user) => {
           console.log(user);
           if (user != null) {
-            this.question = user.securityQuestion;
-            this.answer = user.securityAnswer;
-            this.$emit(
-              "changeStateSecurity",
-              "securityForm",
-              this.email,
-              this.question,
-              this.answer
-            );
+            $store.commit("setForgetUser", user);
+            this.$router.push({
+              name: "securityForm",
+            });
           } else {
             this.err = true;
             event.preventDefault();

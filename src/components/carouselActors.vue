@@ -20,8 +20,9 @@
 </template>
 
 <script>
+import $store from "../store/index.js";
+
 import actorCard from "./actorCard.vue";
-import { storeID } from "./id";
 
 export default {
   props: ["actor"],
@@ -48,8 +49,8 @@ export default {
     },
   },
   updated() {
-    if (storeID.currMov && !this.done) {
-      this.actorss = storeID.currMov;
+    if ($store.state.currMov && !this.done) {
+      this.actorss = $store.state.currMov;
       console.log(this.actorss);
       this.done = true;
     }

@@ -1,66 +1,74 @@
 <template>
-  <div class="container">
-    <section>
-      <div class="img">
-        <img src="..\assets\image 2.png" alt="" />
-      </div>
-      <div class="form">
-        <form @submit="logIn">
-          <h2 @click="changeStateBack">
-            <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
-          </h2>
-          <h3>Hi Again!</h3>
-          <div
-            v-show="this.missingData"
-            class="alert alert-danger"
-            role="alert"
-          >
-            <h5>Some Data Is Missing</h5>
-          </div>
-          <div class="row">
-            <div class="col">
-              <label>Email</label>
-              <input type="email" required v-model="email" />
+  <div class="all">
+    <div class="container">
+      <section>
+        <div class="img">
+          <img src="..\assets\image 2.png" alt="" />
+        </div>
+        <div class="form">
+          <form @submit.prevent="logIn">
+            <router-link to="/">
+              <h2>
+                <i
+                  class="fa-solid fa-arrow-left"
+                  style="color: #000000"
+                ></i></h2
+            ></router-link>
+            <h3>Hi Again!</h3>
+            <div
+              v-show="this.missingData"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <h5>Some Data Is Missing</h5>
             </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <label>Password</label>
-              <input type="password" required v-model="password" />
-              <div
-                v-show="this.userNotFound"
-                class="alert alert-danger"
-                role="alert"
-              >
-                <h5>Wrong Email Or Paassword</h5>
+            <div class="row">
+              <div class="col">
+                <label>Email</label>
+                <input type="email" required v-model="email" />
               </div>
             </div>
-            <h6 @click="changeStateForget">Forget Your Password</h6>
-          </div>
-          <div class="row">
-            <button class="butn">Login</button>
-          </div>
+            <div class="row">
+              <div class="col">
+                <label>Password</label>
+                <input type="password" required v-model="password" />
+                <div
+                  v-show="this.userNotFound"
+                  class="alert alert-danger"
+                  role="alert"
+                >
+                  <h5>Wrong Email Or Paassword</h5>
+                </div>
+              </div>
+              <router-link to="/forgetPassword" class="nav-link links">
+                <h6>Forget Your Password</h6>
+              </router-link>
+            </div>
+            <div class="row">
+              <button @click="checkMissingData" class="butn">Login</button>
+            </div>
 
-          <div class="row">
-            <h6 class="center" @click="changeStateSignup">
-              Don't have an account? Sign up
-            </h6>
-          </div>
-        </form>
-      </div>
-    </section>
+            <div class="row">
+              <router-link to="/signup" class="nav-link links">
+                <h6 class="center">Don't have an account? Sign up</h6>
+              </router-link>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
-import { storeID } from "./id.js";
+import $store from "../store/index.js";
+
 export default {
   data() {
     return {
       email: "",
       password: "",
       userNotFound: false,
-      USER: {},
       missingData: false,
     };
   },
@@ -68,15 +76,6 @@ export default {
     this.checkLoggedIn();
   },
   methods: {
-    changeStateSignup() {
-      this.$emit("changeState", "signUpForm");
-    },
-    changeStateBack() {
-      this.$emit("changeState", "");
-    },
-    changeStateForget() {
-      this.$emit("changeState", "forgetPassword");
-    },
     logIn(event) {
       this.checkMissingData();
       this.userNotFound = false;
@@ -107,12 +106,11 @@ export default {
             const userDataString = JSON.stringify(userData);
             localStorage.setItem("userData", userDataString);
             localStorage.setItem("token", fakeToken);
-            storeID.currUser = userData;
-            this.$emit("changeStateLogin", "", userData);
-            this.$emit("login", true);
+            $store.commit("setLoginStatus", true);
+            $store.commit("setCurrUser", userData);
+            this.$router.push({ name: "home" });
           } else {
             this.userNotFound = true;
-            event.preventDefault();
           }
         })
         .catch((error) => {
@@ -151,8 +149,6 @@ export default {
       if (token) {
         const userDataString = localStorage.getItem("userData");
         const userData = JSON.parse(userDataString);
-        this.$emit("changeStateLogin", "", userData);
-        this.$emit("login", true);
       }
     },
     checkMissingData() {
@@ -283,5 +279,15 @@ h5 {
   color: red;
   font-size: 14px;
   margin-top: 5px;
+}
+a {
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+a.router-link-exact-active {
+  color: black;
+  text-decoration: none;
 }
 </style>

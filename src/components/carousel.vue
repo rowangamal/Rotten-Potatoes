@@ -15,7 +15,6 @@
           :title="movie.title"
           :date="movie.date"
           :id="movie.id"
-          @openmoviepage="openmoviepage"
         />
       </div>
     </div>
@@ -23,6 +22,8 @@
 </template>
 
 <script>
+import $store from "../store/index.js";
+
 import movieCard from "./movieCard.vue";
 export default {
   props: ["category"],
@@ -62,13 +63,6 @@ export default {
       if (this.canScrollRight) {
         this.scrollContainer.scrollLeft += this.scrollStep;
       }
-    },
-    changeStateMovie() {
-      this.$emit("changeStateMovie", "MoviePage", this.movie_id);
-    },
-    openmoviepage(movieId) {
-      this.movie_id = movieId;
-      this.changeStateMovie();
     },
     trending() {
       if (this.category) {
