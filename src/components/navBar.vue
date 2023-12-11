@@ -107,7 +107,7 @@ export default {
       console.log("Here");
       this.$gtag.event("click navbar", {
         event_category: "click",
-        event_label: "<label>",
+        event_label: "watchlist",
         value: "1",
       });
     },
