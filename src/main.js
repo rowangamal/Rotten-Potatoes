@@ -6,6 +6,7 @@ import VueGtag from 'vue-gtag';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 const app=createApp(App);
+//bug because i should add view gtag after create app, before mount
 app.use(VueGtag, {
   config: { id: "G-4LV8JPWB1G" }
 });
