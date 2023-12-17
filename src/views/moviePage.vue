@@ -17,7 +17,8 @@
           <div class="col-6 description flex-fill">
             <h1 class="title">
               {{ title }}
-              <i @click="addToList" class="fa-regular fa-bookmark"></i>
+              <i v-if="notAtList()" @click="addToList" class="fa-regular fa-bookmark"></i>
+              <i v-else @click="removeFromList" class="fa-solid fa-bookmark"></i>
             </h1>
             <div class="info d-flex justify-content-start gap-4">
               <p class="rate">
@@ -137,6 +138,7 @@ export default {
       title: "",
       description: "",
       date: "",
+      img: "",
       comments: [
         { comment: "this movie is cool", user: "pola" },
         { comment: "what the hell have I just watched", user: "hany" },
@@ -243,6 +245,28 @@ export default {
     closeVideo() {
       this.video = "";
     },
+    notAtList(){
+      if($store.state.currUser===null){
+        return true;
+      }
+      else{
+        let user = $store.state.currUser;
+        let movie = {
+          id: this.id,
+          title: this.title,
+          rate: this.rate,
+          date: this.date,
+          img: this.img,
+        };
+        let x = user.watchlist.filter((m) => m.id === movie.id);
+        if(x.length===0){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+    },
     addToList() {
       if ($store.state.currUser === null) {
         this.$router.push({ name: "loginForm" });
@@ -253,6 +277,7 @@ export default {
           title: this.title,
           rate: this.rate,
           date: this.date,
+          img: this.img,
         };
         user.watchlist = user.watchlist.filter((m) => m.id !== movie.id);
         user.watchlist.push(movie);
@@ -261,6 +286,21 @@ export default {
         console.log($store.state.currUser);
         //fetch hena to update the user in backend
       }
+    },
+    removeFromList() {
+      let user = $store.state.currUser;
+      let movie = {
+        id: this.id,
+        title: this.title,
+        rate: this.rate,
+        date: this.date,
+        img: this.img,
+      };
+      user.watchlist = user.watchlist.filter((m) => m.id !== movie.id);
+      $store.commit("setCurrUser", user);
+      localStorage.setItem("userData", JSON.stringify(user));
+      console.log($store.state.currUser);
+      //fetch hena to update the user in backend
     },
     loadData() {
       let movId = this.id;
@@ -287,6 +327,7 @@ export default {
           this.rate = response.vote_average;
           this.genres = response.genres;
           this.date = response.release_date;
+          this.img=`https://image.tmdb.org/t/p/original`+response.poster_path;
         })
         .catch((err) => console.error(err));
     },
@@ -442,6 +483,9 @@ input[type="text"]:focus {
 .fa-bookmark:hover {
   color: #ef9e3f;
   cursor: pointer;
+}
+.fa-solid{
+    color: #ef9e3f;
 }
 h1 {
   margin-left: 18px;

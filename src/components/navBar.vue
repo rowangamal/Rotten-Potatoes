@@ -32,8 +32,8 @@
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
       </li>
-      <li class="nav-item" @click="track">
-        <a class="nav-link links" href="#"><p>Watch list</p></a>
+      <li class="nav-item" >
+        <router-link class="nav-link links" :to="this.loginState?'/watchList':'/login'" ><p>Watch list</p></router-link>
       </li>
       <li class="nav-item">
         <router-link to="/about" class="nav-link links"

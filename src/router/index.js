@@ -8,6 +8,7 @@ import moviePage from '../views/moviePage.vue'
 import securityForm from '../views/securityForm.vue'
 import newPassword from '../views/newPassword.vue'
 import userProfile from '../views/userProfile.vue'
+import watchList from '../views/watchList.vue'
 const routes = [
   {
     path: '/',
@@ -54,6 +55,11 @@ const routes = [
     path: '/profile',
     name : 'profile',
     component : userProfile,
+  },
+  {
+    path: '/watchList',
+    name : 'watchList',
+    component : watchList,
   }
 ]
 
