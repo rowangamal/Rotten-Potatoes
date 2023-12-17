@@ -1,5 +1,5 @@
 <template>
-  <navBar/>
+  <navBar />
   <div class="all">
     <section
       v-bind:style="{ 'background-image': 'url(' + backDrop + ')' }"
@@ -16,7 +16,8 @@
         <div class="movieDetails d-flex justify-content-start">
           <div class="col-6 description flex-fill">
             <h1 class="title">
-              {{ title }} <i class="fa-regular fa-bookmark"></i>
+              {{ title }}
+              <i @click="addToList" class="fa-regular fa-bookmark"></i>
             </h1>
             <div class="info d-flex justify-content-start gap-4">
               <p class="rate">
@@ -135,6 +136,7 @@ export default {
       clicked: false,
       title: "",
       description: "",
+      date: "",
       comments: [
         { comment: "this movie is cool", user: "pola" },
         { comment: "what the hell have I just watched", user: "hany" },
@@ -218,7 +220,7 @@ export default {
       )
         .then((response) => response.json())
         .then((response) => {
-          $store.commit("setCurrMov",response.cast);
+          $store.commit("setCurrMov", response.cast);
           this.actors = $store.state.currMov;
         })
         .catch((err) => console.error(err));
@@ -240,6 +242,25 @@ export default {
     },
     closeVideo() {
       this.video = "";
+    },
+    addToList() {
+      if ($store.state.currUser === null) {
+        this.$router.push({ name: "loginForm" });
+      } else {
+        let user = $store.state.currUser;
+        let movie = {
+          id: this.id,
+          title: this.title,
+          rate: this.rate,
+          date: this.date,
+        };
+        user.watchlist = user.watchlist.filter((m) => m.id !== movie.id);
+        user.watchlist.push(movie);
+        $store.commit("setCurrUser", user);
+        localStorage.setItem("userData", JSON.stringify(user));
+        console.log($store.state.currUser);
+        //fetch hena to update the user in backend
+      }
     },
     loadData() {
       let movId = this.id;
@@ -265,6 +286,7 @@ export default {
             "https://image.tmdb.org/t/p/original" + response.backdrop_path;
           this.rate = response.vote_average;
           this.genres = response.genres;
+          this.date = response.release_date;
         })
         .catch((err) => console.error(err));
     },

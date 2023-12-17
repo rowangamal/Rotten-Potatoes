@@ -85,7 +85,7 @@ export default {
             for (let i = 0; i < 17; i++) {
               let x = {
                 title: response.results[i].title,
-                rate: response.results[i].vote_average,
+                rate: Math.round(response.results[i].vote_average*10)/10,
                 img:
                   "https://image.tmdb.org/t/p/original" +
                   response.results[i].poster_path,
@@ -106,7 +106,7 @@ export default {
             for (let i = 0; i < 17; i++) {
               let x = {
                 title: response.results[i].title,
-                rate: response.results[i].vote_average,
+                rate: Math.round(response.results[i].vote_average*10)/10,
                 img:
                   "https://image.tmdb.org/t/p/original" +
                   response.results[i].poster_path,
