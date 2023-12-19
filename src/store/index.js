@@ -5,8 +5,12 @@ export default createStore({
         currMov: null,
         loginStatus: false,
         forgetUser: null,
+        searchMovs:[],
     },
     mutations:{
+        setsearchMovs(state,status){
+            state.searchMovs=status;
+        },
         setCurrUser(state, user){
             state.currUser = user;
         },

@@ -104,6 +104,7 @@
             type="text"
             class="form-control thecomment"
             placeholder="comment"
+            @keyup.enter="addComment"
           />
         </div>
       </div>
@@ -146,14 +147,73 @@ export default {
       genres: [],
       urlll: "",
       updated: false,
+      commentUpdate:true
     };
   },
   mounted() {
     console.log(this.id);
     this.loadData();
     this.actorFetch();
+    this.loadComments();
   },
+  
   methods: {
+    addComment(){
+      if(!$store.state.currUser!==null){
+        console.log($store.state.currMov.id);
+        console.log(this.id);
+      let comment={
+        id:this.id,
+        rate:this.rate,//nb3t el rate hena 3la asas el star
+        comment:this.text,
+        username:$store.state.currUser.userName,
+      }
+      fetch(`http://localhost:8080/addComment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(comment),
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+        })
+        .then((userData) => {
+          console.log(userData);
+        })
+        .catch((error) => {
+          console.error("Error during Change:", error);
+        });
+        this.text=""
+        setTimeout(() => {
+          this.loadComments();
+        },500)
+        
+      }
+    },
+    loadComments(){
+      fetch(`http://localhost:8080/Comments/${this.id}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+      })
+      .then((comments) => {
+        // Handle the comments data
+        console.log('User comments:', comments);
+      })
+      .catch((error) => {
+        console.error('Error fetching user comments:', error);
+      });
+    },
     async playNow() {
       let newtit = this.title.replaceAll(" ", "%20");
       console.log(newtit);
@@ -285,6 +345,28 @@ export default {
         localStorage.setItem("userData", JSON.stringify(user));
         console.log($store.state.currUser);
         //fetch hena to update the user in backend
+        fetch(`http://localhost:8080/updateUser/${$store.state.currUser.email}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify($store.state.currUser),
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+        })
+        .then((userData) => {
+          
+        })
+        .catch((error) => {
+          console.error("Error during Change:", error);
+        });
       }
     },
     removeFromList() {
@@ -301,6 +383,28 @@ export default {
       localStorage.setItem("userData", JSON.stringify(user));
       console.log($store.state.currUser);
       //fetch hena to update the user in backend
+      fetch(`http://localhost:8080/updateUser/${$store.state.currUser.email}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify($store.state.currUser),
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+        })
+        .then((userData) => {
+          
+        })
+        .catch((error) => {
+          console.error("Error during Change:", error);
+        });
     },
     loadData() {
       let movId = this.id;

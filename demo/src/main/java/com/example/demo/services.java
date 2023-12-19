@@ -23,6 +23,28 @@ public class services {
 
         return userDataService.getUsersData();
     }
+    @GetMapping("/Comments/{id}")
+    public ArrayList<Comment> getUsers(@PathVariable int id) {
+        ArrayList<Comment>res=userDataService.getComments();
+        for(int i=res.size()-1;i>=0;i--){
+            if(res.get(i).getId()!=id){
+                res.remove(i);
+
+            }
+        }
+        return res;
+    }
+    @PostMapping("/addComment")
+    public void addComment(@RequestBody Comment cmnt) {
+        ArrayList<Comment> cmnts = userDataService.getComments();
+
+        try {
+            cmnts.add(cmnt);
+            userDataService.writeComment(cmnts);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @PostMapping("/users/add")
     public void addUser(@RequestBody UserData userData){
@@ -66,6 +88,17 @@ public class services {
 
         return ResponseEntity.notFound().build();
     }
+    @PostMapping("/updateUser/{email}")
+    public void updateUser(@PathVariable String email, @RequestBody UserData user) {
+        ArrayList<UserData> usersData = userDataService.getUsersData();
+        try {
+            int ind =userDataService.getUserIndex(user.getEmail());
+            usersData.set(ind,user);
+            userDataService.writeUsersData(usersData);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     @PutMapping("/updatePassword/{email}")
     public void updatePassword(@PathVariable String email, @RequestBody String newPassword) {
         System.out.println("hi");
@@ -79,6 +112,7 @@ public class services {
                 break;
             }
         }
+
         
 
             try {
