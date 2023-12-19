@@ -17,8 +17,18 @@
           <div class="col-6 description flex-fill">
             <h1 class="title">
               {{ title }}
-              <i v-if="notAtList()" @click="addToList" class="fa-regular fa-bookmark"></i>
-              <i v-else @click="removeFromList" class="fa-solid fa-bookmark"></i>
+              <i
+                v-if="notAtList()"
+                @click="addToList"
+                class="fa-regular fa-bookmark"
+              ></i>
+              <i
+                v-else
+                @click="removeFromList"
+                class="fa-solid fa-bookmark"
+              ></i>
+              <i v-if="notAtFav()" @click="addToFav" class="fa-regular fa-heart"></i>
+              <i v-else @click="removeFromFav" class="fa-solid fa-heart"></i>
             </h1>
             <div class="info d-flex justify-content-start gap-4">
               <p class="rate">
@@ -106,6 +116,9 @@
             placeholder="comment"
             @keyup.enter="addComment"
           />
+          <div class="cmnts">
+            <comments :comments="comments" />
+          </div>
         </div>
       </div>
     </section>
@@ -117,12 +130,13 @@
 import carouselActors from "@/components/carouselActors.vue";
 import navBar from "@/components/navBar.vue";
 import $store from "../store/index.js";
-
+import comments from "@/components/comments.vue";
 export default {
   props: ["id"],
   components: {
     carouselActors,
     navBar,
+    comments,
   },
   data() {
     return {
@@ -140,14 +154,11 @@ export default {
       description: "",
       date: "",
       img: "",
-      comments: [
-        { comment: "this movie is cool", user: "pola" },
-        { comment: "what the hell have I just watched", user: "hany" },
-      ],
+      comments: [],
       genres: [],
       urlll: "",
       updated: false,
-      commentUpdate:true
+      commentUpdate: true,
     };
   },
   mounted() {
@@ -156,27 +167,48 @@ export default {
     this.actorFetch();
     this.loadComments();
   },
-  
+
   methods: {
-    addComment(){
-      if(!$store.state.currUser!==null){
+    addComment() {
+      if ($store.state.currUser !== null) {
         console.log($store.state.currMov.id);
         console.log(this.id);
-      let comment={
-        id:this.id,
-        rate:this.rate,//nb3t el rate hena 3la asas el star
-        comment:this.text,
-        username:$store.state.currUser.userName,
-      }
-      fetch(`http://localhost:8080/addComment`,
-        {
+        let comment = {
+          id: this.id,
+          rate: this.usersRate * 2,
+          comment: this.text,
+          username: $store.state.currUser.userName,
+        };
+        fetch(`http://localhost:8080/addComment`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(comment),
-        }
-      )
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+          })
+          .then((userData) => {
+            console.log(userData);
+          })
+          .catch((error) => {
+            console.error("Error during Change:", error);
+          });
+        this.text = "";
+        setTimeout(() => {
+          this.loadComments();
+        }, 500);
+      } else {
+        this.$router.push({ name: "loginForm" });
+      }
+    },
+    loadComments() {
+      fetch(`http://localhost:8080/Comments/${this.id}`)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -184,35 +216,13 @@ export default {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
         })
-        .then((userData) => {
-          console.log(userData);
+        .then((res) => {
+          this.comments = res;
+          console.log("User comments:", res);
         })
         .catch((error) => {
-          console.error("Error during Change:", error);
+          console.error("Error fetching user comments:", error);
         });
-        this.text=""
-        setTimeout(() => {
-          this.loadComments();
-        },500)
-        
-      }
-    },
-    loadComments(){
-      fetch(`http://localhost:8080/Comments/${this.id}`)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-      })
-      .then((comments) => {
-        // Handle the comments data
-        console.log('User comments:', comments);
-      })
-      .catch((error) => {
-        console.error('Error fetching user comments:', error);
-      });
     },
     async playNow() {
       let newtit = this.title.replaceAll(" ", "%20");
@@ -305,11 +315,10 @@ export default {
     closeVideo() {
       this.video = "";
     },
-    notAtList(){
-      if($store.state.currUser===null){
+    notAtList() {
+      if ($store.state.currUser === null) {
         return true;
-      }
-      else{
+      } else {
         let user = $store.state.currUser;
         let movie = {
           id: this.id,
@@ -319,10 +328,29 @@ export default {
           img: this.img,
         };
         let x = user.watchlist.filter((m) => m.id === movie.id);
-        if(x.length===0){
+        if (x.length === 0) {
           return true;
+        } else {
+          return false;
         }
-        else{
+      }
+    },
+    notAtFav() {
+      if ($store.state.currUser === null) {
+        return true;
+      } else {
+        let user = $store.state.currUser;
+        let movie = {
+          id: this.id,
+          title: this.title,
+          rate: this.rate,
+          date: this.date,
+          img: this.img,
+        };
+        let x = user.favourites.filter((m) => m.id === movie.id);
+        if (x.length === 0) {
+          return true;
+        } else {
           return false;
         }
       }
@@ -344,29 +372,67 @@ export default {
         $store.commit("setCurrUser", user);
         localStorage.setItem("userData", JSON.stringify(user));
         console.log($store.state.currUser);
-        //fetch hena to update the user in backend
-        fetch(`http://localhost:8080/updateUser/${$store.state.currUser.email}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify($store.state.currUser),
-        }
-      )
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+        fetch(
+          `http://localhost:8080/updateUser/${$store.state.currUser.email}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify($store.state.currUser),
           }
-        })
-        .then((userData) => {
-          
-        })
-        .catch((error) => {
-          console.error("Error during Change:", error);
-        });
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+          })
+          .then((userData) => {})
+          .catch((error) => {
+            console.error("Error during Change:", error);
+          });
+      }
+    },
+    addToFav() {
+      if ($store.state.currUser === null) {
+        this.$router.push({ name: "loginForm" });
+      } else {
+        let user = $store.state.currUser;
+        let movie = {
+          id: this.id,
+          title: this.title,
+          rate: this.rate,
+          date: this.date,
+          img: this.img,
+        };
+        user.favourites = user.favourites.filter((m) => m.id !== movie.id);
+        user.favourites.push(movie);
+        $store.commit("setCurrUser", user);
+        localStorage.setItem("userData", JSON.stringify(user));
+        console.log($store.state.currUser);
+        fetch(
+          `http://localhost:8080/updateUser/${$store.state.currUser.email}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify($store.state.currUser),
+          }
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+          })
+          .then((userData) => {})
+          .catch((error) => {
+            console.error("Error during Change:", error);
+          });
       }
     },
     removeFromList() {
@@ -382,16 +448,13 @@ export default {
       $store.commit("setCurrUser", user);
       localStorage.setItem("userData", JSON.stringify(user));
       console.log($store.state.currUser);
-      //fetch hena to update the user in backend
-      fetch(`http://localhost:8080/updateUser/${$store.state.currUser.email}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify($store.state.currUser),
-        }
-      )
+      fetch(`http://localhost:8080/updateUser/${$store.state.currUser.email}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify($store.state.currUser),
+      })
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -399,9 +462,39 @@ export default {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
         })
-        .then((userData) => {
-          
+        .then((userData) => {})
+        .catch((error) => {
+          console.error("Error during Change:", error);
+        });
+    },
+    removeFromFav() {
+      let user = $store.state.currUser;
+      let movie = {
+        id: this.id,
+        title: this.title,
+        rate: this.rate,
+        date: this.date,
+        img: this.img,
+      };
+      user.favourites = user.favourites.filter((m) => m.id !== movie.id);
+      $store.commit("setCurrUser", user);
+      localStorage.setItem("userData", JSON.stringify(user));
+      console.log($store.state.currUser);
+      fetch(`http://localhost:8080/updateUser/${$store.state.currUser.email}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify($store.state.currUser),
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
         })
+        .then((userData) => {})
         .catch((error) => {
           console.error("Error during Change:", error);
         });
@@ -431,7 +524,8 @@ export default {
           this.rate = response.vote_average;
           this.genres = response.genres;
           this.date = response.release_date;
-          this.img=`https://image.tmdb.org/t/p/original`+response.poster_path;
+          this.img =
+            `https://image.tmdb.org/t/p/original` + response.poster_path;
         })
         .catch((err) => console.error(err));
     },
@@ -581,15 +675,21 @@ input[type="text"]:focus {
   opacity: 0.8;
   background: #000000;
 }
-.fa-bookmark {
+.fa-bookmark,
+.fa-heart {
   font-size: 36px;
+  margin-left: 20px;
 }
 .fa-bookmark:hover {
   color: #ef9e3f;
   cursor: pointer;
 }
-.fa-solid{
-    color: #ef9e3f;
+.fa-heart:hover {
+  color: #ef9e3f;
+  cursor: pointer;
+}
+.fa-solid {
+  color: #ef9e3f;
 }
 h1 {
   margin-left: 18px;
@@ -618,5 +718,21 @@ h1 {
   border-radius: 10px;
   width: 70%;
   height: 70%;
+}
+
+.cmnts {
+  margin-top: 100px;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 100px;
+  max-height: 400px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.cmnts::-webkit-scrollbar {
+  display: none;
 }
 </style>

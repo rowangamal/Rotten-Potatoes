@@ -11,8 +11,8 @@
       <h3>Upcoming</h3>
       <carousel :category="cat4" />
     </div>
-    <div class="xx" v-else>
-      <div class="row  justify-content-center">
+    <div class="body" v-else>
+      <div class="row justify-content-center">
         <movieCard
           class="col-2"
           v-for="movie in movs"
@@ -78,11 +78,27 @@ h3 {
   flex-flow: row wrap;
   width: 100vw;
 }
-.xx{
-  margin-top: 75px;
+.body{
+  margin-top: 85px;
   
 }
 .all{
   overflow-x: hidden;
+}
+section{
+  margin-top: 100px;
+}
+.row {
+  margin-top: 20px;
+}
+
+.card {
+  width: 200px;
+  margin-right: 20px;
+  border-radius: 10px;
+  margin-bottom: 70px;
+  position: relative;
+  border: solid 2px transparent;
+  box-shadow: 2px 2px 5px -5px #000000;
 }
 </style>

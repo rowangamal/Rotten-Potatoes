@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     openmoviepage(){
+      $store.commit("setsearchMovs", []);
       this.$router.push({ name: "movie", params: { id: this.id } });
     }
   }

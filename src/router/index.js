@@ -9,6 +9,7 @@ import securityForm from '../views/securityForm.vue'
 import newPassword from '../views/newPassword.vue'
 import userProfile from '../views/userProfile.vue'
 import watchList from '../views/watchList.vue'
+import favourites from '../views/favourites.vue'
 const routes = [
   {
     path: '/',
@@ -60,6 +61,11 @@ const routes = [
     path: '/watchList',
     name : 'watchList',
     component : watchList,
+  },
+  {
+    path: '/favourites',
+    name : 'favourites',
+    component : favourites,
   }
 ]
 

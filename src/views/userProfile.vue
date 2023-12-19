@@ -5,8 +5,8 @@
       <div class="left-content">
         <ul class="info">
           <li>User info</li>
-          <li>Favorites</li>
-          <li>Watch list</li>
+          <li><router-link to="/favourites"> Favourites </router-link> </li>
+          <li><router-link to="/watchList"> Watch list </router-link> </li>
           <li>Settings</li>
         </ul>
       </div>
@@ -149,5 +149,18 @@ export default {
   background-color: rgb(202, 202, 194);
   min-width: 200px;
   max-width: max-content;
+}
+a.router-link-exact-active {
+  color: white;
+  text-decoration: none;
+}
+
+a.router-link-exact-active:hover {
+  color: #ef9e3f;
+}
+
+a {
+  color: white;
+  text-decoration: none;
 }
 </style>
