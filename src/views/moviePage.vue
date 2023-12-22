@@ -166,7 +166,7 @@ export default {
     this.loadData();
     this.actorFetch();
     this.loadComments();
-    window.scrollTo(0, 0);
+    window.scrollTo(0,0);
   },
   unmounted(){
     $store.commit("setsearchMovs", []);
@@ -622,6 +622,7 @@ export default {
 }
 .commenthead {
   text-align: start;
+  font-size: 40px;
 }
 
 input[type="text"] {
@@ -641,9 +642,10 @@ input[type="text"]:focus {
   text-decoration: none;
   cursor: text;
   color: black;
+  border: none;
 }
 .yourrate {
-  font-size: 40px;
+  font-size: 30px;
   padding-left: 40px;
 }
 .ibtn:hover {
@@ -726,17 +728,27 @@ h1 {
 
 .cmnts {
   margin-top: 100px;
-  background-color: white;
-  color: black;
+  color: white;
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 100px;
-  max-height: 400px;
+  max-height: 600px;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 .cmnts::-webkit-scrollbar {
   display: none;
+}
+.thecomment {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  background: #ef9e3f;
+  color: white;
+  font-size: 20px;
+  margin-left: 20px;
+  border: none;
 }
 </style>

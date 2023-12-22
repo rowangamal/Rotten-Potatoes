@@ -1,7 +1,7 @@
 <template>
   <navBar />
   <div class="all">
-    <div v-if="movs.length===0" class="carousel">
+    <div v-if="movs.length === 0" class="carousel">
       <h3>Trending Now</h3>
       <carousel :category="cat" />
       <h3>Now Playing</h3>
@@ -33,21 +33,22 @@
 import navBar from "@/components/navBar.vue";
 import carousel from "@/components/carousel.vue";
 import $store from "../store/index.js";
-import movieCard from '@/components/movieCard.vue';
+import movieCard from "@/components/movieCard.vue";
 
 export default {
   components: {
     navBar,
     carousel,
-    movieCard
+    movieCard,
   },
   watch: {
-    '$store.state.searchMovs': function (newMovs) {
+    "$store.state.searchMovs": function (newMovs) {
       this.movs = newMovs;
     },
   },
   mounted() {
-    this.movs=$store.state.searchMovs;
+    window.scrollTo(0, 0);
+    this.movs = $store.state.searchMovs;
     console.log($store.state.currUser);
     console.log($store.state.loginStatus);
   },
@@ -57,7 +58,7 @@ export default {
       cat2: "top_rated",
       cat3: "upcoming",
       cat4: "popular",
-      movs:[]
+      movs: [],
     };
   },
 };
@@ -73,19 +74,18 @@ h3 {
 .carousel {
   margin-top: 100px;
 }
-.row{
+.row {
   display: flex;
   flex-flow: row wrap;
   width: 100vw;
 }
-.body{
+.body {
   margin-top: 85px;
-  
 }
-.all{
+.all {
   overflow-x: hidden;
 }
-section{
+section {
   margin-top: 100px;
 }
 .row {
@@ -101,4 +101,5 @@ section{
   border: solid 2px transparent;
   box-shadow: 2px 2px 5px -5px #000000;
 }
+
 </style>

@@ -148,12 +148,18 @@ export default {
 </script>
 
 <style scoped>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .scrollable-row {
   overflow-x: hidden;
   white-space: nowrap;
   width: 100%;
   transition: scroll-left 0.2s ease;
   scroll-behavior: smooth;
+  padding-bottom: 20px;
 }
 
 .row {
@@ -165,8 +171,8 @@ export default {
   margin-right: 20px;
   border-radius: 10px;
   position: relative;
-  border: solid 2px transparent;
-  box-shadow: 2px 2px 5px -5px #000000;
+  padding: 0px;
+  box-shadow: 1px 1px 8px 0px #000000;
 }
 
 .scrollable-row {
