@@ -166,6 +166,10 @@ export default {
     this.loadData();
     this.actorFetch();
     this.loadComments();
+    window.scrollTo(0, 0);
+  },
+  unmounted(){
+    $store.commit("setsearchMovs", []);
   },
 
   methods: {

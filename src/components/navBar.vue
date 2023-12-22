@@ -6,7 +6,6 @@
           ><img src="../assets/Group 5.png"
         /></router-link>
       </li>
-
       <li class="nav-item">
         <div class="input-group">
           <input
@@ -59,7 +58,6 @@
           <li>
             <h4>{{ userNAME }}</h4>
           </li>
-          <li><a class="dropdown-item" href="#">TBC</a></li>
           <li>
             <button v-if="loginState" class="dropdown-item" @click="signOut">
               Sign Out

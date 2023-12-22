@@ -2,7 +2,7 @@
   <navBar />
   <section>
     <div class="container">
-      <h2>Your WacthList</h2>
+      <h2>Your Watchlist</h2>
       <div class="row flex-wrap justify-content-center">
         <movieCard
           class="col-2"
