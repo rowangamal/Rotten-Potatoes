@@ -6,7 +6,6 @@
           ><img src="../assets/Group 5.png"
         /></router-link>
       </li>
-
       <li class="nav-item">
         <div class="input-group">
           <input
@@ -15,6 +14,7 @@
             style="width: 500px"
             class="form-control"
             placeholder="Search"
+            @input="searchMov"
           />
           <div class="input-group-append searchbtn">
             <a
@@ -32,8 +32,8 @@
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
       </li>
-      <li class="nav-item" @click="track">
-        <a class="nav-link links" href="#"><p>Watch list</p></a>
+      <li class="nav-item" >
+        <router-link class="nav-link links" :to="this.loginState?'/watchList':'/login'" ><p>Watch list</p></router-link>
       </li>
       <li class="nav-item">
         <router-link to="/about" class="nav-link links"
@@ -58,7 +58,6 @@
           <li>
             <h4>{{ userNAME }}</h4>
           </li>
-          <li><a class="dropdown-item" href="#">TBC</a></li>
           <li>
             <button v-if="loginState" class="dropdown-item" @click="signOut">
               Sign Out
@@ -95,6 +94,40 @@ export default {
     this.loginState = $store.state.loginStatus;
   },
   methods: {
+    searchMov(){
+      const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNjQ3YWZiMWU3ZjAwODk2M2M3MTU4MjM5N2VlNjVjMSIsInN1YiI6IjY1NTAxZDM3OTY1M2Y2MDExYmZkYzkzYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7PEbDmBQNqrY3JJ7bRgmJV8S8tPVS8ziZ4TkWSJ2IqU'
+        }
+};
+
+      fetch(`https://api.themoviedb.org/3/search/movie?query=${this.search}&include_adult=false&language=en-US&page=1`, options)
+        .then(response => response.json())
+        .then(response => {
+          console.log("bahaa el fa7l");
+          let movies=[];
+          console.log(response.results);
+          for (let i = 0; i < response.results.length; i++) {
+            
+              let x = {
+                title: response.results[i].title,
+                rate: Math.round(response.results[i].vote_average*10)/10,
+                img:
+                  "https://image.tmdb.org/t/p/original" +
+                  response.results[i].poster_path,
+                date: response.results[i].release_date,
+                id: response.results[i].id,
+              };
+              movies.push(x);
+            }
+            
+            $store.commit("setsearchMovs",movies);
+            console.log($store.state.searchMovs);
+        })
+        .catch(err => console.error(err));
+    },
     signOut() {
       this.$router.push({ name: "home" });
       localStorage.removeItem("token");

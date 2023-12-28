@@ -2,14 +2,15 @@ package com.example.demo;
 
 import javax.crypto.SecretKey;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UserData {
     private String email;
     private String password;
     private String securityQuestion;
     private String securityAnswer;
-    private ArrayList<Integer> favourites;
-    private ArrayList<Integer> watchlist;
+    private ArrayList<Object> favourites;
+    private ArrayList<Object> watchlist;
     private String firstName;
     private String lastName;
     private String gender;
@@ -57,19 +58,19 @@ public class UserData {
         this.securityAnswer = securityAnswer;
     }
 
-    public ArrayList<Integer> getFavourites() {
+    public ArrayList<Object> getFavourites() {
         return favourites;
     }
 
-    public void setFavourites(ArrayList<Integer> favourites) {
+    public void setFavourites(ArrayList<Object> favourites) {
         this.favourites = favourites;
     }
 
-    public ArrayList<Integer> getWatchlist() {
+    public ArrayList<Object> getWatchlist() {
         return watchlist;
     }
 
-    public void setWatchlist(ArrayList<Integer> watchlist) {
+    public void setWatchlist(ArrayList<Object> watchlist) {
         this.watchlist = watchlist;
     }
 

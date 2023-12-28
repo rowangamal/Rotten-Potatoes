@@ -1,7 +1,9 @@
 <template>
   <div class="carouselll">
-    <button @click="scrollLeft" class="scroll-button left-button"><i class="fa-solid fa-caret-left"></i></button>
-    <button @click="scrollRight" class="scroll-button right-button">
+    <button @click="scrollLeft" class="scroll-button left-button" :style="{ backgroundColor: scrollLeftStatus ? '#ef9e3f' : '#bbb' }">
+      <i class="fa-solid fa-caret-left"></i>
+    </button>
+    <button @click="scrollRight" class="scroll-button right-button" :style="{ backgroundColor: scrollRightStatus ? '#ef9e3f' : '#bbb' }">
       <i class="fa-solid fa-caret-right"></i>
     </button>
     <div class="scrollable-row" ref="scrollContainer">
@@ -51,17 +53,38 @@ export default {
       movies: [],
       movie_id: "",
       scrollStep: 225,
+      scrollLeftStatus:false,
+      scrollRightStatus:true,
     };
   },
   methods: {
+    changeColor() {
+      if(this.scrollContainer.scrollLeft===0){
+        this.scrollLeftStatus=false;
+        this.scrollRightStatus=true;
+      }
+      else if(Math.ceil(this.scrollContainer.scrollLeft)-this.scrollContainer.scrollWidth-this.scrollContainer.clientWidth>-3580 ){
+        this.scrollLeftStatus=true;
+        this.scrollRightStatus=false;
+      }
+      else{
+        this.scrollLeftStatus=true;
+        this.scrollRightStatus=true;
+      }
+
+  console.log(this.scrollLeftStatus,this.scrollRightStatus,Math.ceil(this.scrollContainer.scrollLeft)-this.scrollContainer.scrollWidth-this.scrollContainer.clientWidth);
+},
+
     scrollLeft() {
       if (true) {
         this.scrollContainer.scrollLeft -= this.scrollStep;
+        this.changeColor();
       }
     },
     scrollRight() {
       if (this.canScrollRight) {
         this.scrollContainer.scrollLeft += this.scrollStep;
+        this.changeColor();
       }
     },
     trending() {
@@ -85,7 +108,7 @@ export default {
             for (let i = 0; i < 17; i++) {
               let x = {
                 title: response.results[i].title,
-                rate: response.results[i].vote_average,
+                rate: Math.round(response.results[i].vote_average*10)/10,
                 img:
                   "https://image.tmdb.org/t/p/original" +
                   response.results[i].poster_path,
@@ -106,7 +129,7 @@ export default {
             for (let i = 0; i < 17; i++) {
               let x = {
                 title: response.results[i].title,
-                rate: response.results[i].vote_average,
+                rate: Math.round(response.results[i].vote_average*10)/10,
                 img:
                   "https://image.tmdb.org/t/p/original" +
                   response.results[i].poster_path,
@@ -125,12 +148,18 @@ export default {
 </script>
 
 <style scoped>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .scrollable-row {
   overflow-x: hidden;
   white-space: nowrap;
   width: 100%;
   transition: scroll-left 0.2s ease;
   scroll-behavior: smooth;
+  padding-bottom: 20px;
 }
 
 .row {
@@ -142,8 +171,8 @@ export default {
   margin-right: 20px;
   border-radius: 10px;
   position: relative;
-  border: solid 2px transparent;
-  box-shadow: 2px 2px 5px -5px #000000;
+  padding: 0px;
+  box-shadow: 1px 1px 8px 0px #000000;
 }
 
 .scrollable-row {

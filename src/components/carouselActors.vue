@@ -12,8 +12,10 @@
         />
       </div>
     </div>
-    <button @click="scrollLeft" class="scroll-button left-button"><i class="fa-solid fa-caret-left"></i></button>
-    <button @click="scrollRight" class="scroll-button right-button">
+    <button @click="scrollLeft" class="scroll-button left-button" :style="{ backgroundColor: scrollLeftStatus ? '#ef9e3f' : '#bbb' }">
+      <i class="fa-solid fa-caret-left"></i>
+    </button>
+    <button @click="scrollRight" class="scroll-button right-button" :style="{ backgroundColor: scrollRightStatus ? '#ef9e3f' : '#bbb' }">
       <i class="fa-solid fa-caret-right"></i>
     </button>
   </div>
@@ -34,6 +36,8 @@ export default {
       actorss: [],
       done: false,
       scrollStep: 260,
+      scrollLeftStatus:false,
+      scrollRightStatus:true,
     };
   },
   computed: {
@@ -56,14 +60,32 @@ export default {
     }
   },
   methods: {
+    changeColor() {
+      if(this.scrollContainer.scrollLeft===0){
+        this.scrollLeftStatus=false;
+        this.scrollRightStatus=true;
+      }
+      else if(Math.ceil(this.scrollContainer.scrollLeft)-this.scrollContainer.scrollWidth-this.scrollContainer.clientWidth>-1900 ){
+        this.scrollLeftStatus=true;
+        this.scrollRightStatus=false;
+      }
+      else{
+        this.scrollLeftStatus=true;
+        this.scrollRightStatus=true;
+      }
+
+  console.log(this.scrollLeftStatus,this.scrollRightStatus,Math.ceil(this.scrollContainer.scrollLeft)-this.scrollContainer.scrollWidth-this.scrollContainer.clientWidth);
+},
     scrollLeft() {
       if (true) {
         this.scrollContainer.scrollLeft -= this.scrollStep;
+        this.changeColor();
       }
     },
     scrollRight() {
       if (this.canScrollRight) {
         this.scrollContainer.scrollLeft += this.scrollStep;
+        this.changeColor();
       }
     },
   },

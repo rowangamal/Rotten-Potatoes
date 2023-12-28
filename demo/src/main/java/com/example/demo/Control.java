@@ -15,7 +15,13 @@ public class Control {
     //file abdullah path: "D:\\vue\\Rotten-Potatoes\\demo\\usersData.json"
     //rowan file path: "D:\\Rowan's CSE\\Term 5\\HCI\\rottenPotatoes\\Rotten-Potatoes\\demo\\usersData.json"
     //bahaa file path: "E:\\programming\\Project\\Rotten-Potatoes\\demo\\usersData.json"
+<<<<<<< HEAD
     private static final String JSON_FILE_PATH = "D:\\Rowan's CSE\\Term 5\\HCI\\rottenPotatoes\\Rotten-Potatoes\\demo\\usersData.json";
+=======
+    private static final String JSON_FILE_PATH = "E:\\programming\\Project\\Rotten-Potatoes\\demo\\usersData.json";
+    private static final String cmnts = "E:\\programming\\Project\\Rotten-Potatoes\\demo\\comments.json";
+
+>>>>>>> b254016e9ad2ead78d2c38ca7bd63e0455ea04ec
     public ArrayList<UserData> usersData;
 
 
@@ -36,6 +42,21 @@ public class Control {
             e.printStackTrace();
         }
     }
+    public void writeComment(ArrayList<Comment> comments) {
+        try {
+            objectMapper.writeValue(new File(cmnts), comments);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public ArrayList<Comment> getComments() {
+        try {
+            return objectMapper.readValue(new File(cmnts), new TypeReference<ArrayList<Comment>>() {});
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public UserData getUserByEmail(String email) {
         ArrayList<UserData> usersData = getUsersData();
@@ -45,5 +66,14 @@ public class Control {
             }
         }
         return null;
+    }
+    public int getUserIndex(String email) {
+        ArrayList<UserData> usersData = getUsersData();
+        for(int i=0;i<usersData.size();i++){
+            if(usersData.get(i).getEmail().equals(email)){
+                return i;
+            }
+        }
+        return -1;
     }
 }
