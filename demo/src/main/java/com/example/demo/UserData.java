@@ -9,8 +9,8 @@ public class UserData {
     private String password;
     private String securityQuestion;
     private String securityAnswer;
-    private ArrayList<Object> favourites;
-    private ArrayList<Object> watchlist;
+    private ArrayList<MovieMetadata> favourites;
+    private ArrayList<MovieMetadata> watchlist;
     private String firstName;
     private String lastName;
     private String gender;
@@ -58,19 +58,19 @@ public class UserData {
         this.securityAnswer = securityAnswer;
     }
 
-    public ArrayList<Object> getFavourites() {
+    public ArrayList<MovieMetadata> getFavourites() {
         return favourites;
     }
 
-    public void setFavourites(ArrayList<Object> favourites) {
+    public void setFavourites(ArrayList<MovieMetadata> favourites) {
         this.favourites = favourites;
     }
 
-    public ArrayList<Object> getWatchlist() {
+    public ArrayList<MovieMetadata> getWatchlist() {
         return watchlist;
     }
 
-    public void setWatchlist(ArrayList<Object> watchlist) {
+    public void setWatchlist(ArrayList<MovieMetadata> watchlist) {
         this.watchlist = watchlist;
     }
 

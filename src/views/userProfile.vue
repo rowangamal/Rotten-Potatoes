@@ -7,7 +7,7 @@
           <li>User info</li>
           <li><router-link to="/favourites"> Favourites </router-link> </li>
           <li><router-link to="/watchList"> Watch list </router-link> </li>
-          <li @click="this.wrapped=!this.wrapped, console.log(this.analysisResults), this.getAnalysisData">Potato Wrapped 2023</li>
+          <li @click="wrap">Potato Wrapped 2023</li>
         </ul>
       </div>
       <div class="right-content" v-show="!this.wrapped">
@@ -88,6 +88,8 @@ export default {
   methods: {
     wrap() {
       this.wrapped = !this.wrapped;
+      console.log(this.email);
+      console.log("here");
       if (this.wrapped == true) {
         this.getAnalysisData();
       }

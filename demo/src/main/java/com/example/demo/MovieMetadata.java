@@ -6,7 +6,7 @@ public class MovieMetadata {
     private int id;
     private String title;
     private Double rate;
-    private LocalDate date;
+    private String date;
     private String img;
     private String genres;
 
@@ -37,13 +37,18 @@ public class MovieMetadata {
         this.rate = rate;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
+    }
+
 
     public String getImg() {
         return img;

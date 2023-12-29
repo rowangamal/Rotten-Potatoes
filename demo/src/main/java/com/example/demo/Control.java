@@ -80,21 +80,19 @@ public class Control {
         AnalysisResultsDTO analysisResultsDTO = new AnalysisResultsDTO();
         Double totalRating= (double) 0;
         int movieCount = 0;
-        for (Object metadata : userData.getFavourites()){
-            MovieMetadata movieMetadata = (MovieMetadata) metadata;
+        for (MovieMetadata movieMetadata : userData.getFavourites()){
             String genre = movieMetadata.getGenre();
-            int year = movieMetadata.getDate().getYear();
+//            int year = movieMetadata.getDate().getYear();
             analysisResultsDTO.genrePreferences.put(genre, analysisResultsDTO.genrePreferences.getOrDefault(genre, 0) + 1);
-            analysisResultsDTO.yearFrequency.put(year, analysisResultsDTO.genrePreferences.getOrDefault(year, 0) + 1);
+//            analysisResultsDTO.yearFrequency.put(year, analysisResultsDTO.genrePreferences.getOrDefault(year, 0) + 1);
             totalRating += movieMetadata.getRate();
             movieCount++;
         }
-        for (Object metadata : userData.getWatchlist()){
-            MovieMetadata movieMetadata = (MovieMetadata) metadata;
+        for (MovieMetadata movieMetadata : userData.getWatchlist()){
             String genre = movieMetadata.getGenre();
-            int year = movieMetadata.getDate().getYear();
+//            int year = movieMetadata.getDate().getYear();
             analysisResultsDTO.genrePreferences.put(genre, analysisResultsDTO.genrePreferences.getOrDefault(genre, 0) + 1);
-            analysisResultsDTO.yearFrequency.put(year, analysisResultsDTO.genrePreferences.getOrDefault(year, 0) + 1);
+//            analysisResultsDTO.yearFrequency.put(year, analysisResultsDTO.genrePreferences.getOrDefault(year, 0) + 1);
             totalRating += movieMetadata.getRate();
             movieCount++;
         }
