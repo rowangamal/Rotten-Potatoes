@@ -24,11 +24,12 @@
               href="#"
               role="button"
               aria-expanded="false"
-              ><button class="btn btn-dark" type="button">all</button></a
-            >
-            <ul class="dropdown-menu">
+              >
+              <!-- <button class="btn btn-dark" type="button">all</button> -->
+              </a>
+            <!-- <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">TBC</a></li>
-            </ul>
+            </ul> -->
           </div>
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
