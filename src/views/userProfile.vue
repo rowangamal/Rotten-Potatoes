@@ -7,10 +7,10 @@
           <li>User info</li>
           <li><router-link to="/favourites"> Favourites </router-link> </li>
           <li><router-link to="/watchList"> Watch list </router-link> </li>
-          <li>Settings</li>
+          <li @click="this.wrapped=!this.wrapped, console.log(this.analysisResults), this.getAnalysisData">Potato Wrapped 2023</li>
         </ul>
       </div>
-      <div class="right-content">
+      <div class="right-content" v-show="!this.wrapped">
         <div class="image-container">
           <img
             v-if="this.user.gender === 'male'"
@@ -52,6 +52,19 @@
           </div>
         </div>
       </div>
+      <div class="potato-wrap" v-show="this.wrapped">
+        <h2>Genre Preferences</h2>
+        <pre>{{ analysisResults.genrePreferences }}</pre>
+        
+        <h2>Year Frequency</h2>
+        <pre>{{ analysisResults.yearFrequency }}</pre>
+        
+        <h2>Average Rating</h2>
+        <pre>{{ analysisResults.averageRating }}</pre>
+        
+        <h2>Movie Count</h2>
+        <pre>{{ analysisResults.movieCount }}</pre>
+      </div>
     </section>
   </div>
 </template>
@@ -67,10 +80,40 @@ export default {
   data() {
     return {
       user: {},
+      wrapped: false,
+      analysisResults: {},
+      email: "",
     };
+  },
+  methods: {
+    wrap() {
+      this.wrapped = !this.wrapped;
+      if (this.wrapped == true) {
+        this.getAnalysisData();
+      }
+    },
+    getAnalysisData(){
+      console.log(this.email);
+      console.log("hi from fetch potato wrap")
+      fetch(`http://localhost:8080/potatoWrap/${this.user.email}`,{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
+        return res.json();
+      }).then((data) => {
+        this.analysisResults = data;
+        console.log(this.analysisResults);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
   },
   mounted() {
     this.user = $store.state.currUser;
+    this.email = $store.state.currUser.email;
+    console.log(this.user);
   },
 };
 </script>

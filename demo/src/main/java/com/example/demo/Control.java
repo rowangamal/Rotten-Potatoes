@@ -16,10 +16,10 @@ public class Control {
     //rowan file path: "D:\\Rowan's CSE\\Term 5\\HCI\\rottenPotatoes\\Rotten-Potatoes\\demo\\usersData.json"
     //bahaa file path: "E:\\programming\\Project\\Rotten-Potatoes\\demo\\usersData.json"
 
-    //    private static final String JSON_FILE_PATH = "D:\\vue\\Rotten-Potatoes\\demo\\usersData.json";
+        private static final String JSON_FILE_PATH = "D:\\Rowan's CSE\\Term 5\\HCI\\rottenPotatoes\\Rotten-Potatoes\\demo\\usersData.json";
+    private static final String cmnts = "D:\\Rowan's CSE\\Term 5\\HCI\\rottenPotatoes\\Rotten-Potatoes\\demo\\comments.json";
+//    private static final String JSON_FILE_PATH = "D:\\vue\\Rotten-Potatoes\\demo\\usersData.json";
 //    private static final String cmnts = "D:\\vue\\Rotten-Potatoes\\demo\\comments.json";
-    private static final String JSON_FILE_PATH = "D:\\vue\\Rotten-Potatoes\\demo\\usersData.json";
-    private static final String cmnts = "D:\\vue\\Rotten-Potatoes\\demo\\comments.json";
 
 
     public ArrayList<UserData> usersData;
@@ -75,5 +75,31 @@ public class Control {
             }
         }
         return -1;
+    }
+    public AnalysisResultsDTO dataAnalysis(UserData userData){
+        AnalysisResultsDTO analysisResultsDTO = new AnalysisResultsDTO();
+        Double totalRating= (double) 0;
+        int movieCount = 0;
+        for (Object metadata : userData.getFavourites()){
+            MovieMetadata movieMetadata = (MovieMetadata) metadata;
+            String genre = movieMetadata.getGenre();
+            int year = movieMetadata.getDate().getYear();
+            analysisResultsDTO.genrePreferences.put(genre, analysisResultsDTO.genrePreferences.getOrDefault(genre, 0) + 1);
+            analysisResultsDTO.yearFrequency.put(year, analysisResultsDTO.genrePreferences.getOrDefault(year, 0) + 1);
+            totalRating += movieMetadata.getRate();
+            movieCount++;
+        }
+        for (Object metadata : userData.getWatchlist()){
+            MovieMetadata movieMetadata = (MovieMetadata) metadata;
+            String genre = movieMetadata.getGenre();
+            int year = movieMetadata.getDate().getYear();
+            analysisResultsDTO.genrePreferences.put(genre, analysisResultsDTO.genrePreferences.getOrDefault(genre, 0) + 1);
+            analysisResultsDTO.yearFrequency.put(year, analysisResultsDTO.genrePreferences.getOrDefault(year, 0) + 1);
+            totalRating += movieMetadata.getRate();
+            movieCount++;
+        }
+        analysisResultsDTO.averageRating = totalRating/movieCount;
+        analysisResultsDTO.movieCount = movieCount;
+        return analysisResultsDTO;
     }
 }

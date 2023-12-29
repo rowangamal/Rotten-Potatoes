@@ -112,9 +112,6 @@ public class services {
                 break;
             }
         }
-
-        
-
             try {
                 newPassword = Hashing.getHashedHex(Hashing.getHashedBytes(newPassword));
                 usersData.get(x).updatePassword(newPassword);
@@ -122,7 +119,20 @@ public class services {
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
-
+    }
+    @GetMapping("/potatoWrap/{email}")
+    public AnalysisResultsDTO getAnalysis(@PathVariable String email) {
+        ArrayList<UserData> usersData = userDataService.getUsersData();
+        System.out.println(usersData);
+        for(int i=0;i<usersData.size();i++){
+            if(usersData.get(i).getEmail().equals(email)){
+                AnalysisResultsDTO analysisResultsDTO = userDataService.dataAnalysis(usersData.get(i));
+//                return userDataService.dataAnalysis(usersData.get(i));
+                System.out.println(analysisResultsDTO);
+                return analysisResultsDTO;
+            }
+        }
+        return new AnalysisResultsDTO();
     }
 //    @PostMapping("/users/login")
 //    public Boolean checkPassword(@RequestBody String userPassword){
