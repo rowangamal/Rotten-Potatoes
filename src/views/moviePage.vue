@@ -63,7 +63,7 @@
     >
       <div class="overlay"></div>
       <div class="overlay1"></div>
-
+      <carousel :category="smililarId" />
       <div class="container d-flex flex-column justify-content-end">
         <div
           v-if="isloggedin"
@@ -131,12 +131,14 @@ import carouselActors from "@/components/carouselActors.vue";
 import navBar from "@/components/navBar.vue";
 import $store from "../store/index.js";
 import comments from "@/components/comments.vue";
+import carousel from "@/components/carousel.vue";
 export default {
   props: ["id"],
   components: {
     carouselActors,
     navBar,
     comments,
+    carousel
   },
   data() {
     return {
@@ -159,14 +161,20 @@ export default {
       urlll: "",
       updated: false,
       commentUpdate: true,
+      smililarId:`${this.id}/similar`,
+      apiVotes:0
     };
   },
   mounted() {
+    window.scrollTo(0,0);
     console.log(this.id);
     this.loadData();
     this.actorFetch();
-    this.loadComments();
-    window.scrollTo(0,0);
+    
+    setTimeout(()=>{
+      this.loadComments();
+    },100)
+    
   },
   unmounted(){
     $store.commit("setsearchMovs", []);
@@ -175,7 +183,7 @@ export default {
   methods: {
     addComment() {
       if ($store.state.currUser !== null) {
-        console.log($store.state.currMov.id);
+        
         console.log(this.id);
         let comment = {
           id: this.id,
@@ -222,7 +230,17 @@ export default {
         })
         .then((res) => {
           this.comments = res;
+          let x=0;
+          for(let i=0;i<this.comments.length;i++){
+            x+=this.comments[i].rate;
+            console.log(x);
+          }
+          console.log(this.rate);
+          console.log(this.apiVotes);
+          this.rate=((this.rate*this.apiVotes)+x)/(this.comments.length+this.apiVotes);
+          console.log(this.rate);
           console.log("User comments:", res);
+          this.rate=Math.round(this.rate*100)/100
         })
         .catch((error) => {
           console.error("Error fetching user comments:", error);
@@ -530,6 +548,8 @@ export default {
           this.date = response.release_date;
           this.img =
             `https://image.tmdb.org/t/p/original` + response.poster_path;
+            this.apiVotes=response.vote_count;
+
         })
         .catch((err) => console.error(err));
     },

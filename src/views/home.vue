@@ -96,10 +96,10 @@ section {
   width: 200px;
   margin-right: 20px;
   border-radius: 10px;
-  margin-bottom: 70px;
   position: relative;
-  border: solid 2px transparent;
-  box-shadow: 2px 2px 5px -5px #000000;
+  padding: 0px;
+  box-shadow: 1px 1px 8px 0px #000000;
+  margin-bottom: 25px;
 }
 
 </style>

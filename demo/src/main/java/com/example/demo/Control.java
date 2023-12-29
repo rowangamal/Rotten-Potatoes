@@ -15,13 +15,11 @@ public class Control {
     //file abdullah path: "D:\\vue\\Rotten-Potatoes\\demo\\usersData.json"
     //rowan file path: "D:\\Rowan's CSE\\Term 5\\HCI\\rottenPotatoes\\Rotten-Potatoes\\demo\\usersData.json"
     //bahaa file path: "E:\\programming\\Project\\Rotten-Potatoes\\demo\\usersData.json"
-<<<<<<< HEAD
-    private static final String JSON_FILE_PATH = "D:\\Rowan's CSE\\Term 5\\HCI\\rottenPotatoes\\Rotten-Potatoes\\demo\\usersData.json";
-=======
-    private static final String JSON_FILE_PATH = "E:\\programming\\Project\\Rotten-Potatoes\\demo\\usersData.json";
-    private static final String cmnts = "E:\\programming\\Project\\Rotten-Potatoes\\demo\\comments.json";
 
->>>>>>> b254016e9ad2ead78d2c38ca7bd63e0455ea04ec
+    private static final String JSON_FILE_PATH = "D:\\vue\\Rotten-Potatoes\\demo\\usersData.json";
+    private static final String cmnts = "D:\\vue\\Rotten-Potatoes\\demo\\comments.json";
+
+
     public ArrayList<UserData> usersData;
 
 
