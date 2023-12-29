@@ -201,7 +201,7 @@
                 />
                 <label for="myCheckbox">Check terms and conditions</label>
                 <div class="popup" v-show="isChecked & termsDisplay">
-                  <button @click="this.termsDisplay = false">X</button>
+                  <h4 @click="termsDisplay=false">X</h4>
                   <div id="terms-and-conditions">
                     <h1>Potatoes and Conditions</h1>
                     <br />
@@ -614,6 +614,10 @@ h6 {
   cursor: pointer;
   padding: 20px;
   text-decoration: underline;
+}
+h4{
+  cursor: pointer;
+  direction: rtl;
 }
 .center {
   margin: 0 auto;

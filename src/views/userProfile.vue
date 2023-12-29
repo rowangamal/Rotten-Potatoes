@@ -53,17 +53,23 @@
         </div>
       </div>
       <div class="potato-wrap" v-show="this.wrapped">
-        <h2>Genre Preferences</h2>
-        <pre>{{ analysisResults.genrePreferences }}</pre>
+        <!-- <h2>Genre Preferences</h2>
+        <pre>{{ analysisResults.genrePreferences }}</pre> -->
+        <ul class="display">
+          <h1>{{ this.user.firstName }}'s Potato Wrapped</h1>
+          <h2>THIS YEAR YOUR TOP GENRE WERE:</h2>
+          <ul>
+            <li v-for="(count, genre) in analysisResults.genrePreferences" :key="genre">
+              {{ genre }}: {{ count }}
+            </li>
+          </ul>
+          <h2>YOUR AVERAGE RATING IN 2023 WAS:</h2>
+          <li>{{ analysisResults.averageRating }}</li>
+          
+          <h2>MOVIES WERE POTATO FAVORED/WATCHLISTED</h2>
+          <li>{{ analysisResults.movieCount }}</li>
+        </ul>
         
-        <h2>Year Frequency</h2>
-        <pre>{{ analysisResults.yearFrequency }}</pre>
-        
-        <h2>Average Rating</h2>
-        <pre>{{ analysisResults.averageRating }}</pre>
-        
-        <h2>Movie Count</h2>
-        <pre>{{ analysisResults.movieCount }}</pre>
       </div>
     </section>
   </div>
@@ -106,6 +112,7 @@ export default {
         return res.json();
       }).then((data) => {
         this.analysisResults = data;
+        this.analysisResults.averageRating = this.analysisResults.averageRating.toFixed(2);
         console.log(this.analysisResults);
       }).catch((err) => {
         console.log(err);
@@ -207,5 +214,78 @@ a.router-link-exact-active:hover {
 a {
   color: white;
   text-decoration: none;
+}
+.potato-wrap h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* List styling */
+.potato-wrap ul {
+  list-style-type: none;
+  padding: 0;
+
+}
+.potato-wrap{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.potato-wrap li {
+  margin-bottom: 5px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+  width: 500px;
+  transition: background-color 0.3s ease; 
+}
+.potato-wrap li:hover {
+  background-color: #e0e0e0;
+}
+.potato-wrap pre {
+  margin-bottom: 5px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+  /* overflow: auto; */
+  width: 500px;
+}
+
+/* Button styling */
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Button hover effect */
+button:hover {
+  background-color: #45a049;
+}
+
+/* Transition effect */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.display {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  margin-top: 50px;
+  padding: 15px;
+  align-items: center;
+  width: 600px;
+  font-size: 30px;
 }
 </style>
