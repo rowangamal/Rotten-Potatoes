@@ -15,6 +15,7 @@
             class="form-control"
             placeholder="Search"
             @input="searchMov"
+            @click="trackSearch"
           />
           <div class="input-group-append searchbtn">
             <a
@@ -33,7 +34,7 @@
         </div>
       </li>
       <li class="nav-item" >
-        <router-link class="nav-link links" :to="this.loginState?'/watchList':'/login'" ><p>Watch list</p></router-link>
+        <router-link class="nav-link links" :to="this.loginState?'/watchList':'/login'" @click="track" ><p>Watch list</p></router-link>
       </li>
       <li class="nav-item">
         <router-link to="/about" class="nav-link links"
@@ -144,6 +145,14 @@ export default {
         value: "1",
       });
     },
+    trackSearch() {
+      console.log("Here");
+      this.$gtag.event("click search", {
+        event_category: "click",
+        event_label: "search_clicks",
+        value: "1",
+      });
+    }
   },
 };
 </script>
