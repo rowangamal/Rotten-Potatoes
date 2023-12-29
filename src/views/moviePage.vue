@@ -162,7 +162,8 @@ export default {
       updated: false,
       commentUpdate: true,
       smililarId:`${this.id}/similar`,
-      apiVotes:0
+      apiVotes:0,
+      genres:""
     };
   },
   mounted() {
@@ -388,6 +389,7 @@ export default {
           rate: this.rate,
           date: this.date,
           img: this.img,
+          genres:this.genres
         };
         user.watchlist = user.watchlist.filter((m) => m.id !== movie.id);
         user.watchlist.push(movie);
@@ -428,6 +430,7 @@ export default {
           rate: this.rate,
           date: this.date,
           img: this.img,
+          genres:this.genres
         };
         user.favourites = user.favourites.filter((m) => m.id !== movie.id);
         user.favourites.push(movie);
@@ -549,6 +552,7 @@ export default {
           this.img =
             `https://image.tmdb.org/t/p/original` + response.poster_path;
             this.apiVotes=response.vote_count;
+            this.genres=response.genres[0].name;
 
         })
         .catch((err) => console.error(err));
