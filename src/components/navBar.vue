@@ -17,7 +17,7 @@
             @input="searchMov"
             @click="trackSearch"
           />
-          <div class="input-group-append searchbtn">
+          <!-- <div class="input-group-append searchbtn">
             <a
               class="nav-link dropdown-toggle"
               data-bs-toggle="dropdown"
@@ -25,12 +25,12 @@
               role="button"
               aria-expanded="false"
             >
-              <!-- <button class="btn btn-dark" type="button">all</button> -->
+              <button class="btn btn-dark" type="button">all</button>
             </a>
-            <!-- <ul class="dropdown-menu">
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">TBC</a></li>
-            </ul> -->
-          </div>
+            </ul> 
+          </div> -->
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
       </li>

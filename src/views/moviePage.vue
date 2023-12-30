@@ -170,20 +170,21 @@ export default {
       genres: "",
     };
   },
+
   mounted() {
     window.scrollTo(0, 0);
     console.log(this.id);
     this.loadData();
     this.actorFetch();
-
     setTimeout(() => {
       this.loadComments();
+      this.notAtFav();
+      this.notAtList();
     }, 100);
   },
   unmounted() {
     $store.commit("setsearchMovs", []);
   },
-
   methods: {
     addComment() {
       if ($store.state.currUser !== null) {
@@ -354,8 +355,9 @@ export default {
           rate: this.rate,
           date: this.date,
           img: this.img,
+          genres: [],
         };
-        let x = user.watchlist.filter((m) => m.id === movie.id);
+        let x = user.watchlist.filter((m) => m.id.toString() === movie.id);
         if (x.length === 0) {
           return true;
         } else {
@@ -374,8 +376,9 @@ export default {
           rate: this.rate,
           date: this.date,
           img: this.img,
+          genres: [],
         };
-        let x = user.favourites.filter((m) => m.id === movie.id);
+        let x = user.favourites.filter((m) => m.id.toString() === movie.id);
         if (x.length === 0) {
           return true;
         } else {
@@ -474,7 +477,7 @@ export default {
         date: this.date,
         img: this.img,
       };
-      user.watchlist = user.watchlist.filter((m) => m.id !== movie.id);
+      user.watchlist = user.watchlist.filter((m) => m.id.toString() !== movie.id.toString());
       $store.commit("setCurrUser", user);
       localStorage.setItem("userData", JSON.stringify(user));
       console.log($store.state.currUser);
@@ -506,7 +509,7 @@ export default {
         date: this.date,
         img: this.img,
       };
-      user.favourites = user.favourites.filter((m) => m.id !== movie.id);
+      user.favourites = user.favourites.filter((m) => m.id.toString() !== movie.id.toString());
       $store.commit("setCurrUser", user);
       localStorage.setItem("userData", JSON.stringify(user));
       console.log($store.state.currUser);
