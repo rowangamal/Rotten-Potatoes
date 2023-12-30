@@ -463,8 +463,12 @@ export default {
         this.confirmPassword.length == 0 ||
         this.securityQuestion.length == 0 ||
         this.securityAnswer.length == 0 ||
-        this.gender.length == 0
+        this.gender.length == 0||
+        this.year.length<4||
+        this.month.length==0||
+        this.day.length==0
       ) {
+        scroll(0, 0);
         this.missingData = true;
       } else {
         this.missingData = false;
@@ -477,7 +481,7 @@ export default {
       if (
         !this.checkPassword(this.password) ||
         !this.matchPassword(this.password, this.confirmPassword) ||
-        !this.isChecked
+        !this.isChecked||this.year.length<4
       ) {
         event.preventDefault();
       } else {

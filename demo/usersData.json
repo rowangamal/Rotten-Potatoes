@@ -1,1 +1,96 @@
-[{"email":"rowan@gmail.com","password":"99104009048737958952229761477394353235133016142905029487228087641071037509151","securityQuestion":"In which city were you born?","securityAnswer":"alex","favourites":[{"id":787699,"title":"Wonka","rate":7.147,"img":"https://image.tmdb.org/t/p/original/qhb1qOilapbapxWQn9jtRCMwXJF.jpg","genres":"Comedy","genre":"Comedy"}],"watchlist":[{"id":891699,"title":"Silent Night","rate":5.9,"img":"https://image.tmdb.org/t/p/original/tlcuhdNMKNGEVpGqBZrAaOOf1A6.jpg","genres":"Action","genre":"Action"},{"id":572802,"title":"Aquaman and the Lost Kingdom","rate":6.53,"img":"https://image.tmdb.org/t/p/original/8xV47NDrjdZDpkVcCFqkdHa3T0C.jpg","genres":"Action","genre":"Action"},{"id":346698,"title":"Barbie","rate":7.162,"img":"https://image.tmdb.org/t/p/original/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg","genres":"Comedy","genre":"Comedy"},{"id":695721,"title":"The Hunger Games: The Ballad of Songbirds & Snakes","rate":7.224,"img":"https://image.tmdb.org/t/p/original/mBaXZ95R2OxueZhvQbcEWy2DqyO.jpg","genres":"Drama","genre":"Drama"}],"firstName":"Rowan","lastName":"gamal","gender":"female","id":0,"userName":"rowan"},{"email":"RowanGamal@gmail.com","password":"99104009048737958952229761477394353235133016142905029487228087641071037509151","securityQuestion":"In which city were you born?","securityAnswer":"jhsgdfhdso","favourites":[],"watchlist":[],"firstName":"rowantest","lastName":"test","gender":"female","id":0,"userName":"test"},{"email":"bahaakhaled@gmail.com","password":"85090380010782372941382655952393983497455398213852117222028703363455957339276","securityQuestion":"What is your favorite book or movie?","securityAnswer":"qweqwe","favourites":[],"watchlist":[],"firstName":"bahaa","lastName":"khaled","gender":"male","id":0,"userName":"bahaaaa"}]
+[
+    {
+        "email": "rowan@gmail.com",
+        "password": "99104009048737958952229761477394353235133016142905029487228087641071037509151",
+        "securityQuestion": "In which city were you born?",
+        "securityAnswer": "alex",
+        "favourites": [
+            {
+                "id": 787699,
+                "title": "Wonka",
+                "rate": 7.147,
+                "img": "https://image.tmdb.org/t/p/original/qhb1qOilapbapxWQn9jtRCMwXJF.jpg",
+                "genres": "Comedy",
+                "genre": "Comedy"
+            }
+        ],
+        "watchlist": [
+            {
+                "id": 891699,
+                "title": "Silent Night",
+                "rate": 5.9,
+                "img": "https://image.tmdb.org/t/p/original/tlcuhdNMKNGEVpGqBZrAaOOf1A6.jpg",
+                "genres": "Action",
+                "genre": "Action"
+            },
+            {
+                "id": 572802,
+                "title": "Aquaman and the Lost Kingdom",
+                "rate": 6.53,
+                "img": "https://image.tmdb.org/t/p/original/8xV47NDrjdZDpkVcCFqkdHa3T0C.jpg",
+                "genres": "Action",
+                "genre": "Action"
+            },
+            {
+                "id": 346698,
+                "title": "Barbie",
+                "rate": 7.162,
+                "img": "https://image.tmdb.org/t/p/original/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
+                "genres": "Comedy",
+                "genre": "Comedy"
+            },
+            {
+                "id": 695721,
+                "title": "The Hunger Games: The Ballad of Songbirds & Snakes",
+                "rate": 7.224,
+                "img": "https://image.tmdb.org/t/p/original/mBaXZ95R2OxueZhvQbcEWy2DqyO.jpg",
+                "genres": "Drama",
+                "genre": "Drama"
+            }
+        ],
+        "firstName": "Rowan",
+        "lastName": "gamal",
+        "gender": "female",
+        "id": 0,
+        "userName": "rowan"
+    },
+    {
+        "email": "RowanGamal@gmail.com",
+        "password": "99104009048737958952229761477394353235133016142905029487228087641071037509151",
+        "securityQuestion": "In which city were you born?",
+        "securityAnswer": "jhsgdfhdso",
+        "favourites": [],
+        "watchlist": [],
+        "firstName": "rowantest",
+        "lastName": "test",
+        "gender": "female",
+        "id": 0,
+        "userName": "test"
+    },
+    {
+        "email": "bahaakhaled@gmail.com",
+        "password": "85090380010782372941382655952393983497455398213852117222028703363455957339276",
+        "securityQuestion": "What is your favorite book or movie?",
+        "securityAnswer": "qweqwe",
+        "favourites": [],
+        "watchlist": [],
+        "firstName": "bahaa",
+        "lastName": "khaled",
+        "gender": "male",
+        "id": 0,
+        "userName": "bahaaaa"
+    },
+    {
+        "email": "bahaak@gmail.com",
+        "password": "85090380010782372941382655952393983497455398213852117222028703363455957339276",
+        "securityQuestion": "What was the name of your first pet?",
+        "securityAnswer": "ssss",
+        "favourites": [],
+        "watchlist": [],
+        "firstName": "bahaa",
+        "lastName": "khaled",
+        "gender": "female",
+        "id": 0,
+        "userName": "sdsad"
+    }
+]
