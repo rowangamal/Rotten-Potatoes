@@ -78,22 +78,23 @@ public class Control {
     }
     public AnalysisResultsDTO dataAnalysis(UserData userData){
         AnalysisResultsDTO analysisResultsDTO = new AnalysisResultsDTO();
+        ArrayList<String> addedMovies = new ArrayList<>();
         Double totalRating= (double) 0;
         int movieCount = 0;
         for (MovieMetadata movieMetadata : userData.getFavourites()){
             String genre = movieMetadata.getGenre();
-//            int year = movieMetadata.getDate().getYear();
+            addedMovies.add(movieMetadata.getTitle());
             analysisResultsDTO.genrePreferences.put(genre, analysisResultsDTO.genrePreferences.getOrDefault(genre, 0) + 1);
-//            analysisResultsDTO.yearFrequency.put(year, analysisResultsDTO.genrePreferences.getOrDefault(year, 0) + 1);
             totalRating += movieMetadata.getRate();
             movieCount++;
         }
         for (MovieMetadata movieMetadata : userData.getWatchlist()){
             String genre = movieMetadata.getGenre();
-//            int year = movieMetadata.getDate().getYear();
+            if (addedMovies.contains(movieMetadata.getTitle()))
+                continue;
             analysisResultsDTO.genrePreferences.put(genre, analysisResultsDTO.genrePreferences.getOrDefault(genre, 0) + 1);
-//            analysisResultsDTO.yearFrequency.put(year, analysisResultsDTO.genrePreferences.getOrDefault(year, 0) + 1);
             totalRating += movieMetadata.getRate();
+            addedMovies.add(movieMetadata.getTitle());
             movieCount++;
         }
         analysisResultsDTO.averageRating = totalRating/movieCount;
