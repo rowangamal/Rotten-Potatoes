@@ -143,12 +143,12 @@ export default {
         .catch((err) => console.error(err));
     },
     signOut() {
-      this.$router.push({ name: "home" });
       localStorage.removeItem("token");
       localStorage.removeItem("userData");
       this.$store.commit("setLoginStatus", false);
       this.$store.commit("setCurrUser", null);
       this.loginState = $store.state.loginStatus;
+      this.$router.replace({ name: "home" });
     },
     track() {
       console.log("Here");

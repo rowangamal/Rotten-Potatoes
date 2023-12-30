@@ -108,7 +108,7 @@ export default {
             localStorage.setItem("token", fakeToken);
             $store.commit("setLoginStatus", true);
             $store.commit("setCurrUser", userData);
-            this.$router.push({ name: "home" });
+            this.$router.replace({ name: "home" });
           } else {
             this.userNotFound = true;
           }
@@ -149,6 +149,7 @@ export default {
       if (token) {
         const userDataString = localStorage.getItem("userData");
         const userData = JSON.parse(userDataString);
+        this.$router.replace({ name: "home" });
       }
     },
     checkMissingData() {
