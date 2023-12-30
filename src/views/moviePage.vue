@@ -27,7 +27,11 @@
                 @click="removeFromList"
                 class="fa-solid fa-bookmark"
               ></i>
-              <i v-if="notAtFav()" @click="addToFav" class="fa-regular fa-heart"></i>
+              <i
+                v-if="notAtFav()"
+                @click="addToFav"
+                class="fa-regular fa-heart"
+              ></i>
               <i v-else @click="removeFromFav" class="fa-solid fa-heart"></i>
             </h1>
             <div class="info d-flex justify-content-start gap-4">
@@ -138,7 +142,7 @@ export default {
     carouselActors,
     navBar,
     comments,
-    carousel
+    carousel,
   },
   data() {
     return {
@@ -161,30 +165,28 @@ export default {
       urlll: "",
       updated: false,
       commentUpdate: true,
-      smililarId:`${this.id}/similar`,
-      apiVotes:0,
-      genres:""
+      smililarId: `${this.id}/similar`,
+      apiVotes: 0,
+      genres: "",
     };
   },
   mounted() {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     console.log(this.id);
     this.loadData();
     this.actorFetch();
-    
-    setTimeout(()=>{
+
+    setTimeout(() => {
       this.loadComments();
-    },100)
-    
+    }, 100);
   },
-  unmounted(){
+  unmounted() {
     $store.commit("setsearchMovs", []);
   },
 
   methods: {
     addComment() {
       if ($store.state.currUser !== null) {
-        
         console.log(this.id);
         let comment = {
           id: this.id,
@@ -192,6 +194,7 @@ export default {
           comment: this.text,
           username: $store.state.currUser.userName,
         };
+        this.usersRate = 0;
         fetch(`http://localhost:8080/addComment`, {
           method: "POST",
           headers: {
@@ -230,18 +233,20 @@ export default {
           }
         })
         .then((res) => {
-          this.comments = res;
-          let x=0;
-          for(let i=0;i<this.comments.length;i++){
-            x+=this.comments[i].rate;
+          this.comments = res.reverse();
+          let x = 0;
+          for (let i = 0; i < this.comments.length; i++) {
+            x += this.comments[i].rate;
             console.log(x);
           }
           console.log(this.rate);
           console.log(this.apiVotes);
-          this.rate=((this.rate*this.apiVotes)+x)/(this.comments.length+this.apiVotes);
+          this.rate =
+            (this.rate * this.apiVotes + x) /
+            (this.comments.length + this.apiVotes);
           console.log(this.rate);
           console.log("User comments:", res);
-          this.rate=Math.round(this.rate*100)/100
+          this.rate = Math.round(this.rate * 100) / 100;
         })
         .catch((error) => {
           console.error("Error fetching user comments:", error);
@@ -389,7 +394,7 @@ export default {
           rate: this.rate,
           date: this.date,
           img: this.img,
-          genres:this.genres
+          genres: this.genres,
         };
         user.watchlist = user.watchlist.filter((m) => m.id !== movie.id);
         user.watchlist.push(movie);
@@ -430,7 +435,7 @@ export default {
           rate: this.rate,
           date: this.date,
           img: this.img,
-          genres:this.genres
+          genres: this.genres,
         };
         user.favourites = user.favourites.filter((m) => m.id !== movie.id);
         user.favourites.push(movie);
@@ -551,9 +556,8 @@ export default {
           this.date = response.release_date;
           this.img =
             `https://image.tmdb.org/t/p/original` + response.poster_path;
-            this.apiVotes=response.vote_count;
-            this.genres=response.genres[0].name;
-
+          this.apiVotes = response.vote_count;
+          this.genres = response.genres[0].name;
         })
         .catch((err) => console.error(err));
     },

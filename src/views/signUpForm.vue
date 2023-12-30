@@ -201,7 +201,7 @@
                 />
                 <label for="myCheckbox">Check terms and conditions</label>
                 <div class="popup" v-show="isChecked & termsDisplay">
-                  <h4 @click="termsDisplay=false">X</h4>
+                  <h4 @click="termsDisplay = false">X</h4>
                   <div id="terms-and-conditions">
                     <h1>Potatoes and Conditions</h1>
                     <br />
@@ -357,7 +357,7 @@ export default {
       let formattedValue = "";
 
       const today = new Date();
-      const currentYear = today.getFullYear();
+      const currentYear = today.getFullYear() - 11;
       const currentMonth = today.getMonth() + 1;
       const currentDay = today.getDate();
 
@@ -381,10 +381,13 @@ export default {
             formattedValue && formattedValue >= minYear
               ? formattedValue
               : this.year;
-          this.year =
-            this.year && this.year <= currentYear
-              ? this.year
-              : currentYear.toString();
+          if (this.year.length == 4) {
+            if (parseInt(this.year, 10) < minYear) {
+              this.year = 1900;
+            } else if (parseInt(this.year, 10) > currentYear) {
+              this.year = currentYear;
+            }
+          }
           break;
 
         default:
@@ -615,7 +618,7 @@ h6 {
   padding: 20px;
   text-decoration: underline;
 }
-h4{
+h4 {
   cursor: pointer;
   direction: rtl;
 }

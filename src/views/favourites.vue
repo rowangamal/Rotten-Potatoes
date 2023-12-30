@@ -2,9 +2,11 @@
   <navBar />
   <section>
     <div class="all">
-      <div class="container">
-        <h2>Your Favorites</h2>
-        <div class="row flex-wrap justify-content-center">
+        <div
+          v-if="movs.length === 0"
+          class="row flex-wrap justify-content-center"
+        >
+          <h2>Your Favourites</h2>
           <movieCard
             class="col-2"
             v-for="movie in movies"
@@ -16,8 +18,21 @@
             :id="movie.id"
           />
         </div>
+        <div class="body" v-else>
+          <div class="row justify-content-center">
+            <movieCard
+              class="col-2"
+              v-for="movie in movs"
+              :key="movie"
+              :img="movie.img"
+              :rate="movie.rate"
+              :title="movie.title"
+              :date="movie.date"
+              :id="movie.id"
+            />
+          </div>
+        </div>
       </div>
-    </div>
   </section>
 </template>
 
@@ -34,9 +49,15 @@ export default {
     navBar,
     movieCard,
   },
+  watch: {
+    "$store.state.searchMovs": function (newMovs) {
+      this.movs = newMovs;
+    },
+  },
   data() {
     return {
       movies: $store.state.currUser.favourites,
+      movs: [],
     };
   },
 };
@@ -143,7 +164,9 @@ p {
   position: relative;
   padding: 0px;
   box-shadow: 1px 1px 8px 0px #000000;
+  margin-bottom: 25px;
 }
+
 
 .scrollable-row {
   margin-left: 20px;
@@ -177,5 +200,8 @@ p {
 }
 .carouselll {
   position: relative;
+}
+h2{
+  margin-bottom: 20px;
 }
 </style>

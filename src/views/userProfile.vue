@@ -1,12 +1,12 @@
 <template>
   <navBar />
   <div class="all">
-    <section class="content">
+    <section v-if="movs.length === 0" class="content">
       <div class="left-content">
         <ul class="info">
-          <li>User info</li>
-          <li><router-link to="/favourites"> Favourites </router-link> </li>
-          <li><router-link to="/watchList"> Watch list </router-link> </li>
+          <li @click="offWrap">User info</li>
+          <li><router-link to="/favourites"> Favourites </router-link></li>
+          <li><router-link to="/watchList"> Watch list </router-link></li>
           <li @click="wrap">Potato Wrapped 2023</li>
         </ul>
       </div>
@@ -59,19 +59,35 @@
           <h1>{{ this.user.firstName }}'s Potato Wrapped</h1>
           <h2>THIS YEAR YOUR TOP GENRE WERE:</h2>
           <ul>
-            <li v-for="(count, genre) in analysisResults.genrePreferences" :key="genre">
+            <li
+              v-for="(count, genre) in analysisResults.genrePreferences"
+              :key="genre"
+            >
               {{ genre }}: {{ count }}
             </li>
           </ul>
           <h2>YOUR AVERAGE RATING IN 2023 WAS:</h2>
           <li>{{ analysisResults.averageRating }}</li>
-          
+
           <h2>MOVIES WERE POTATO FAVORED/WATCHLISTED</h2>
           <li>{{ analysisResults.movieCount }}</li>
         </ul>
-        
       </div>
     </section>
+    <div class="body" v-else>
+      <div class="row justify-content-center">
+        <movieCard
+          class="col-2"
+          v-for="movie in movs"
+          :key="movie"
+          :img="movie.img"
+          :rate="movie.rate"
+          :title="movie.title"
+          :date="movie.date"
+          :id="movie.id"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -79,9 +95,11 @@
 import $store from "../store/index.js";
 
 import navBar from "@/components/navBar.vue";
+import movieCard from "@/components/movieCard.vue";
 export default {
   components: {
     navBar,
+    movieCard,
   },
   data() {
     return {
@@ -89,7 +107,13 @@ export default {
       wrapped: false,
       analysisResults: {},
       email: "",
+      movs: [],
     };
+  },
+  watch: {
+    "$store.state.searchMovs": function (newMovs) {
+      this.movs = newMovs;
+    },
   },
   methods: {
     wrap() {
@@ -100,24 +124,31 @@ export default {
         this.getAnalysisData();
       }
     },
-    getAnalysisData(){
+    offWrap() {
+      this.wrapped = false;
+    },
+    getAnalysisData() {
       console.log(this.email);
-      console.log("hi from fetch potato wrap")
-      fetch(`http://localhost:8080/potatoWrap/${this.user.email}`,{
+      console.log("hi from fetch potato wrap");
+      fetch(`http://localhost:8080/potatoWrap/${this.user.email}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-      }).then((res) => {
-        return res.json();
-      }).then((data) => {
-        this.analysisResults = data;
-        this.analysisResults.averageRating = this.analysisResults.averageRating.toFixed(2);
-        console.log(this.analysisResults);
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          this.analysisResults = data;
+          this.analysisResults.averageRating =
+            this.analysisResults.averageRating.toFixed(2);
+          console.log(this.analysisResults);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   mounted() {
     this.user = $store.state.currUser;
@@ -225,9 +256,8 @@ a {
 .potato-wrap ul {
   list-style-type: none;
   padding: 0;
-
 }
-.potato-wrap{
+.potato-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -240,7 +270,7 @@ a {
   padding: 10px;
   border-radius: 10px;
   width: 500px;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 }
 .potato-wrap li:hover {
   background-color: #e0e0e0;
@@ -271,11 +301,13 @@ button:hover {
 }
 
 /* Transition effect */
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.5s;
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 .display {
@@ -287,5 +319,17 @@ button:hover {
   align-items: center;
   width: 600px;
   font-size: 30px;
+}
+.card {
+  width: 200px;
+  margin-right: 20px;
+  border-radius: 10px;
+  position: relative;
+  padding: 0px;
+  box-shadow: 1px 1px 8px 0px #000000;
+  margin-bottom: 25px;
+}
+.body {
+  margin-top: 100px;
 }
 </style>
