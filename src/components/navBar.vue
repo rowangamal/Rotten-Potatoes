@@ -41,7 +41,10 @@
           @click="track"
           ><p>Watch list</p></router-link
         >
+        
       </li>
+      
+      <li class="nav-item"><router-link class="nav-link links" to="/favourites"> Favourites </router-link></li>
       <li class="nav-item">
         <router-link to="/about" class="nav-link links"
           ><p>About/Contact us</p></router-link
@@ -219,6 +222,10 @@ a:hover {
 
 .links {
   margin-top: 20px;
+  font-size: 17px;
+  color: #fff;
+  letter-spacing: 0.9px;
+  
 }
 .input-group {
   position: relative;

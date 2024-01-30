@@ -5,7 +5,7 @@
       <div class="left-content">
         <ul class="info">
           <li @click="offWrap">User info</li>
-          <li><router-link to="/favourites"> Favourites </router-link></li>
+          
           <li><router-link to="/watchList"> Watch list </router-link></li>
           <li @click="wrap">Potato Wrapped 2023</li>
         </ul>

@@ -6,8 +6,12 @@ export default createStore({
         loginStatus: false,
         forgetUser: null,
         searchMovs:[],
+        first:true,
     },
     mutations:{
+        setFirst(state,status){
+            state.first=status;
+        },
         setsearchMovs(state,status){
             state.searchMovs=status;
         },
