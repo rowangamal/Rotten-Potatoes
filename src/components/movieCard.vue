@@ -34,6 +34,7 @@ export default {
     openmoviepage() {
       $store.commit("setsearchMovs", []);
       this.$router.push({ name: "movie", params: { id: this.id } });
+      
     },
     handleImageError() {
       this.loaded = true;

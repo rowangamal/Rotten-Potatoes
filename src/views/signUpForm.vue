@@ -177,12 +177,19 @@
               </div>
               <div class="col-4">
                 <input
-                  type="text"
+                  type="number"
                   placeholder="YYYY"
                   v-model="year"
                   @input="formatDatePart('year')"
                 />
               </div>
+              <div
+              v-show="this.wrongAge"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <h5>Invalid Age</h5>
+            </div>
             </div>
             <div class="row">
               <label>Gender</label>
@@ -349,6 +356,7 @@ export default {
       submitState: false,
       userDuplicate: false,
       missingData: false,
+      wrongAge: false,
     };
   },
 
@@ -375,6 +383,9 @@ export default {
           break;
 
         case "year":
+          this.checkAge();
+          this.year=this.year.toString();
+          
           formattedValue = this.year.replace(/\D/g, "").slice(0, 4);
           const minYear = 1900;
           this.year =
@@ -453,6 +464,23 @@ export default {
         return false;
       }
     },
+    checkAge(){
+      if(this.year.length<4||
+        this.month.length==0||
+        this.day.length==0){
+          this.wrongAge = true;
+        }
+        else{
+          this.wrongAge = false;
+        }
+        let nums=["+","-",".","/"]
+      for(let i=0;i<this.year.length;i++){
+        if(nums.includes(this.year.charAt(i))){
+          this.wrongAge=true;
+        }
+        
+      }
+    },
     checkMissing() {
       if (
         this.firstName.length == 0 ||
@@ -463,10 +491,10 @@ export default {
         this.confirmPassword.length == 0 ||
         this.securityQuestion.length == 0 ||
         this.securityAnswer.length == 0 ||
-        this.gender.length == 0||
-        this.year.length<4||
-        this.month.length==0||
-        this.day.length==0
+        this.gender.length == 0
+        // this.year.length<4||
+        // this.month.length==0||
+        // this.day.length==0
       ) {
         scroll(0, 0);
         this.missingData = true;
@@ -476,12 +504,14 @@ export default {
     },
     signUp(event) {
       this.checkMissing();
+      
+      this.checkAge();
       this.submitState = !this.submitState;
       this.userDuplicate = false;
       if (
         !this.checkPassword(this.password) ||
         !this.matchPassword(this.password, this.confirmPassword) ||
-        !this.isChecked||this.year.length<4
+        !this.isChecked||this.year.length<4|| this.wrongAge
       ) {
         event.preventDefault();
       } else {
@@ -516,6 +546,9 @@ export default {
                 this.userDuplicate = true;
                 break;
               }
+              else{
+                this.userDuplicate = false;
+              }
             }
           })
           .then(() => {
@@ -532,6 +565,9 @@ export default {
                 .catch((error) => {
                   console.error("Error during signup:", error);
                 });
+            }
+            else{
+              window.scroll(0,0)
             }
           })
           .catch((error) => {
@@ -614,7 +650,7 @@ section {
   justify-content: space-between;
   align-items: center;
   margin-top: 60px;
-  height: 1000px;
+  height: 1200px;
 }
 h6 {
   direction: rtl;
