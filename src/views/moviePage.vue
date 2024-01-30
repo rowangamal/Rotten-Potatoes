@@ -136,6 +136,7 @@ import navBar from "@/components/navBar.vue";
 import $store from "../store/index.js";
 import comments from "@/components/comments.vue";
 import carousel from "@/components/carousel.vue";
+import movieCard from "@/components/movieCard.vue";
 export default {
   props: ["id"],
   components: {
@@ -143,6 +144,7 @@ export default {
     navBar,
     comments,
     carousel,
+    movieCard
   },
   data() {
     return {
@@ -261,7 +263,7 @@ export default {
         method: "GET",
         headers: {
           "X-RapidAPI-Key":
-            "72b0a49e61msh60849d7630f09f4p1f7053jsn06c00cf2eaaf",
+            "fe9219690cmshc641c468ac1874dp156f63jsna03d6a220172",
           //backUP:fe9219690cmshc641c468ac1874dp156f63jsna03d6a220172
           //72b0a49e61msh60849d7630f09f4p1f7053jsn06c00cf2eaaf
           "X-RapidAPI-Host":
