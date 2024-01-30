@@ -183,6 +183,7 @@ export default {
       this.notAtFav();
       this.notAtList();
     }, 100);
+    $store.commit("setFirst",false);
   },
   unmounted() {
     $store.commit("setsearchMovs", []);

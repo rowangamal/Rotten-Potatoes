@@ -51,6 +51,7 @@ export default {
     this.movs = $store.state.searchMovs;
     console.log($store.state.currUser);
     console.log($store.state.loginStatus);
+    $store.commit("setFirst",true);
   },
   data() {
     return {
