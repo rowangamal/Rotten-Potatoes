@@ -759,6 +759,9 @@ h1 {
   width: 70%;
   height: 70%;
 }
+.all{
+  overflow-x: hidden;
+}
 
 .cmnts {
   margin-top: 100px;
