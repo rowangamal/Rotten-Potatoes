@@ -4,4 +4,4 @@ Users can click on a movie to access its brief description, trailer, reviews, an
 The platform also allows users to search for movies, adding them to personalized watchlists and favorites for easy access.
 
 
-Just create your account and have teh full experience of movies' fantasy.😝😝🥰🥰
+Just create your account and have the full experience of movies' fantasy.😝😝🥰🥰
